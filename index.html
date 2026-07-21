@@ -7,19 +7,52 @@
     <title>Manoel Corpus - Site Oficial</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background: #1a1a2e; color: #fff; text-align: center; padding: 40px 20px; }
+        body { background: #1a1a2e; color: #fff; text-align: center; padding: 20px 20px; }
         .container { max-width: 800px; margin: 0 auto; }
+
+        /* 🖼️ BANNER NO TOPO */
+        .banner {
+            background: #16213e;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .banner img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+
         h1 { color: #00f5d4; font-size: 3em; margin-bottom: 15px; }
-        p { font-size: 1.2em; line-height: 1.6; margin-bottom: 25px; color: #eee; }
+        p { font-size: 1.2em; line-height: 1.6; margin-bottom: 20px; color: #eee; }
         .destaque { color: #ff2e63; font-weight: bold; }
-        .info, .mural, .fotos, .player { background: #16213e; padding: 25px; border-radius: 12px; margin: 30px auto; max-width: 600px; }
-        .mural { border: 2px solid #ff2e63; }
-        .mural h3 { color: #ff2e63; margin-bottom: 15px; }
-        .fotos img { max-width: 100%; border-radius: 8px; margin: 10px 0; }
+
+        .info, .mural, .fotos, .player {
+            background: #16213e;
+            padding: 25px;
+            border-radius: 12px;
+            margin: 30px auto;
+            max-width: 600px;
+        }
+
+        .mural { border: 2px solid #ff2e63; min-height: 140px; }
+        .mural h3 { color: #ff2e63; margin-bottom: 15px; font-size: 1.5em; }
+
+        .fotos { min-height: 200px; }
+        .fotos h3 { color: #00f5d4; margin-bottom: 15px; font-size: 1.5em; }
+        .fotos img { max-width: 100%; border-radius: 8px; margin: 10px 0; display: inline-block; }
+
+        .aviso { font-size: 0.9em; color: #aaa; margin-top: 10px; }
     </style>
 </head>
 <body>
     <div class="container">
+
+        <!-- 🖼️ ESPAÇO PARA BANNER -->
+        <div class="banner">
+            <img src="COLOQUE_LINK_DO_SEU_BANNER_AQUI" alt="Banner Manoel Corpus">
+            <p class="aviso">💡 Troque o link acima para colocar seu banner principal</p>
+        </div>
+
         <h1>MANOEL CORPUS</h1>
         <p>Seu espaço de notícias, entretenimento e conteúdo de qualidade!</p>
         <p class="destaque">Bem-vindo ao meu site oficial 🚀</p>
@@ -29,20 +62,26 @@
             <p>Criador de conteúdo, apaixonado por futebol, rádio web e projetos criativos. Aqui você encontra tudo o que preparo com carinho!</p>
         </div>
 
-        <!-- 📢 MURAL DE AVISOS -->
+        <!-- 📢 MURAL DE AVISOS - AMPLO E FÁCIL DE EDITAR -->
         <div class="mural">
             <h3>📢 MURAL DE AVISOS</h3>
             <p>✅ Transmissão ao vivo todos os dias das 08h às 18h!</p>
             <p>🎙️ Novos programas chegando em breve!</p>
             <p>⚽ Fique ligado nas notícias do futebol!</p>
+            <p>📢 Avisos importantes aqui!</p>
+            <p class="aviso">💡 Basta alterar o texto acima quando quiser</p>
         </div>
 
+        <!-- 🖼️ ÁREA DE FOTOS - ESPAÇO PARA VÁRIAS IMAGENS -->
         <div class="fotos">
-            <h3 style="color:#00f5d4; margin-bottom:15px;">🖼️ NOSSAS FOTOS</h3>
-            <p>Em breve suas fotos aqui!</p>
+            <h3>🖼️ NOSSAS FOTOS</h3>
+            <img src="COLOQUE_LINK_DA_FOTO_AQUI" alt="Foto 1">
+            <img src="COLOQUE_LINK_DA_FOTO_AQUI" alt="Foto 2">
+            <img src="COLOQUE_LINK_DA_FOTO_AQUI" alt="Foto 3">
+            <p class="aviso">💡 Adicione quantas fotos quiser, só copiar e trocar o link</p>
         </div>
 
-        <!-- 🎙️ PLAYER COM LINK CORRETO -->
+        <!-- 🎙️ PLAYER DA RÁDIO JÁ FUNCIONANDO -->
         <div class="player">
             <h3 style="color:#00f5d4; margin-bottom:15px;">🔊 OUÇA NOSSA RÁDIO AO VIVO</h3>
             <audio controls preload="metadata" style="width:100%; height:45px;">
