@@ -12,8 +12,10 @@
         h1 { color: #00f5d4; font-size: 3em; margin-bottom: 15px; }
         p { font-size: 1.2em; line-height: 1.6; margin-bottom: 25px; color: #eee; }
         .destaque { color: #ff2e63; font-weight: bold; }
-        .info { background: #16213e; padding: 25px; border-radius: 12px; margin-top: 30px; }
-        .player { background: #16213e; padding: 25px; border-radius: 12px; margin: 30px auto; max-width: 600px; }
+        .info, .mural, .fotos, .player { background: #16213e; padding: 25px; border-radius: 12px; margin: 30px auto; max-width: 600px; }
+        .mural { border: 2px solid #ff2e63; }
+        .mural h3 { color: #ff2e63; margin-bottom: 15px; }
+        .fotos img { max-width: 100%; border-radius: 8px; margin: 10px 0; }
     </style>
 </head>
 <body>
@@ -27,12 +29,25 @@
             <p>Criador de conteúdo, apaixonado por futebol, rádio web e projetos criativos. Aqui você encontra tudo o que preparo com carinho!</p>
         </div>
 
-        <!-- PLAYER DA RÁDIO JÁ NO LUGAR CERTO -->
+        <!-- 📢 MURAL DE AVISOS -->
+        <div class="mural">
+            <h3>📢 MURAL DE AVISOS</h3>
+            <p>✅ Transmissão ao vivo todos os dias das 08h às 18h!</p>
+            <p>🎙️ Novos programas chegando em breve!</p>
+            <p>⚽ Fique ligado nas notícias do futebol!</p>
+        </div>
+
+        <div class="fotos">
+            <h3 style="color:#00f5d4; margin-bottom:15px;">🖼️ NOSSAS FOTOS</h3>
+            <p>Em breve suas fotos aqui!</p>
+        </div>
+
+        <!-- 🎙️ PLAYER COM LINK CORRETO -->
         <div class="player">
             <h3 style="color:#00f5d4; margin-bottom:15px;">🔊 OUÇA NOSSA RÁDIO AO VIVO</h3>
-            <audio controls style="width:100%; height:45px;">
-                <source src="https://stream.zeno.fm/tnzj3smf3abvv type="audio/mpeg">
-                Seu navegador não suporta áudio.
+            <audio controls preload="metadata" style="width:100%; height:45px;">
+                <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
+                Seu navegador não suporta reproduzir áudio.
             
             <p style="margin-top:10px; font-size:0.9em; color:#ccc;">Clique no play para ouvir!</p>
         </div>
