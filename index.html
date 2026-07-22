@@ -1,5 +1,7 @@
 
-<!DOCTYPE html>
+
+
+            <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
@@ -37,15 +39,14 @@
         .botao-enviar { background: #00f5d4; color: #000; border: none; padding: 10px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1em; }
         .botao-enviar:hover { background: #00cccc; }
 
-        /* 🛠️ ÁREA DO ADMIN - SÓ VOCÊ VÊ */
+        /* ÁREA ADMIN - AGORA FUNCIONANDO */
         .admin-area { margin-top: 15px; border-top: 1px solid #333; padding-top: 15px; }
         .admin-login { display: flex; gap: 5px; margin-bottom: 10px; }
         .admin-login input { flex: 1; padding: 8px; border-radius: 6px; border: none; color: #000; }
         .btn-admin { background: #ff2e63; color: white; border: none; padding: 8px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }
-        .caixa-admin { background: #0f162b; border-radius: 8px; padding: 10px; max-height: 250px; overflow-y: auto; display: none; }
+        .caixa-admin { background: #0f162b; border-radius: 8px; padding: 10px; max-height: 250px; overflow-y: auto; display: none; margin-top:10px; }
         .msg-admin { background: #2a3b5a; padding: 10px; border-radius: 6px; margin-bottom: 8px; font-size: 0.9em; border-left: 3px solid #ff2e63; }
 
-        /* 📩 BOTÃO MESSENGER */
         .btn-messenger { display: inline-block; background: #0084ff; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px; }
         .btn-messenger:hover { background: #0066cc; }
 
@@ -106,15 +107,13 @@
                     <button class="botao-enviar" onclick="enviarMensagem()">ENVIAR</button>
                 </div>
 
-                <!-- 📩 CONTATO PELO MESSENGER -->
                 <a href="https://m.me/seu_perfil_aqui" target="_blank" class="btn-messenger">📩 FALAR PELO MESSENGER</a>
-                <p style="font-size:0.8em; color:#aaa; margin-top:5px;">💡 Para propagandas ou parcerias, envie detalhes por aqui!</p>
 
-                <!-- 🛠️ ÁREA DO ADMIN - SÓ VOCÊ ACESSA -->
+                <!-- ÁREA ADMIN FUNCIONAL -->
                 <div class="admin-area">
                     <div class="admin-login">
-                        <input type="password" id="senha-admin" placeholder="Senha do Administrador">
-                        <button class="btn-admin" onclick="entrarAdmin()">ENTRAR</button>
+                        <input type="password" id="senha-admin" placeholder="Senha Admin: 123456">
+                        <button class="btn-admin" onclick="verificarAdmin()">ENTRAR</button>
                     </div>
                     <div id="caixa-admin" class="caixa-admin">
                         <h4 style="color:#ff2e63; margin-bottom:8px;">📋 TODAS AS MENSAGENS RECEBIDAS:</h4>
@@ -150,43 +149,47 @@
     </div>
 
     <script>
-        // 📝 ARMAZENA TODAS AS MENSAGENS (VOCÊ VÊ TUDO)
-        let todasMensagens = JSON.parse(localStorage.getItem('mensagensAdmin') || '[]');
+        // GUARDA TODAS AS MENSAGENS
+        let mensagens = JSON.parse(localStorage.getItem('msgRedeRadio') || '[]');
 
         function enviarMensagem(){
             const texto = document.getElementById('entrada-msg').value.trim();
-            if(texto !== ''){
-                const data = new Date().toLocaleString('pt-BR');
-                // Mostra para quem enviou
-                document.getElementById('caixa-msg').innerHTML += <div class="mensagem">👤 Você: ${texto} <br><small>${data}</small></div>;
-                // SALVA PARA VOCÊ VER DEPOIS
-                todasMensagens.push({texto, data});
-                localStorage.setItem('mensagensAdmin', JSON.stringify(todasMensagens));
-                document.getElementById('entrada-msg').value = '';
-                atualizarAdmin();
-            }
+            if(texto === '') return;
+
+            const dataHora = new Date().toLocaleString('pt-BR');
+            // Mostra para quem enviou
+            document.getElementById('caixa-msg').innerHTML += <div class="mensagem">👤 Você: ${texto}<br><small>${dataHora}</small></div>;
+            
+            // SALVA PARA VOCÊ VER
+            mensagens.push({texto, data: dataHora});
+            localStorage.setItem('msgRedeRadio', JSON.stringify(mensagens));
+            document.getElementById('entrada-msg').value = '';
         }
 
-        // 🔐 ÁREA ADMIN - SENHA PADRÃO: 123456 (VOCÊ PODE MUDAR DEPOIS)
-        function entrarAdmin(){
+        // LOGIN ADMIN - AGORA CERTO
+        function verificarAdmin(){
             const senha = document.getElementById('senha-admin').value;
             if(senha === '123456'){
                 document.getElementById('caixa-admin').style.display = 'block';
-                atualizarAdmin();
+                carregarMensagensAdmin();
             }else{
-                alert('Senha incorreta!');
+                alert('❌ Senha errada! Use: 123456');
             }
         }
 
-        function atualizarAdmin(){
+        function carregarMensagensAdmin(){
             const lista = document.getElementById('lista-msg-admin');
             lista.innerHTML = '';
-            todasMensagens.forEach((msg, i) => {
-                lista.innerHTML += <div class="msg-admin">📩 Mensagem ${i+1}:<br> ${msg.texto}<br><small>Enviado em: ${msg.data}</small></div>;
+            if(mensagens.length === 0){
+                lista.innerHTML = '<p style="color:#aaa;">Nenhuma mensagem recebida ainda.</p>';
+                return;
+            }
+            mensagens.forEach((msg, indice) => {
+                lista.innerHTML += <div class="msg-admin">📩 Msg ${indice+1}:<br>${msg.texto}<br><small>Enviado: ${msg.data}</small></div>;
             });
         }
 
-        // FUNÇÕES PARA EDITAR MURAL E FOTOS
+        // FUNÇÕES DE EDIÇÃO
         function editarMural(){
             document.getElementById('texto-mural').style.display = 'none';
             document.getElementById('campo-mural').style.display = 'block';
@@ -194,8 +197,8 @@
             document.getElementById('campo-mural').value = document.getElementById('texto-mural').innerText;
         }
         function salvarMural(){
-            const novoTexto = document.getElementById('campo-mural').value.replace(/\n/g, '<br>');
-            document.getElementById('texto-mural').innerHTML = <p>${novoTexto}</p>;
+            const novo = document.getElementById('campo-mural').value.replace(/\n/g, '<br>');
+            document.getElementById('texto-mural').innerHTML = <p>${novo}</p>;
             document.getElementById('texto-mural').style.display = 'block';
             document.getElementById('campo-mural').style.display = 'none';
             document.getElementById('btn-salvar-mural').style.display = 'none';
