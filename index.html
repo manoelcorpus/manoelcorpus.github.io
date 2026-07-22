@@ -1,251 +1,202 @@
 
 
 
-            <!DOCTYPE html>
+          
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manoel Corpus - Site Oficial</title>
+    <title>Manoel Corpus - Web Rádioordiriarussas</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background: #1a1a2e; color: #fff; padding: 20px 10px; }
+        :root { --primaria:#ff2e63; --secundaria:#00f5d4; --fundo:#1a1a2e; --caixa:#16213e; --texto:#eee; }
+        body { background: var(--fundo); color: var(--texto); line-height: 1.6; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
-        .pagina { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 280px 1fr 280px; gap: 20px; }
-        .lateral-esquerda, .lateral-direita { display: flex; flex-direction: column; gap: 20px; }
-        .centro { display: flex; flex-direction: column; gap: 25px; }
+        /* CABEÇALHO */
+        header { background: linear-gradient(135deg, var(--caixa), var(--fundo)); padding: 60px 20px; text-align: center; border-bottom: 3px solid var(--primaria); }
+        header h1 { font-size: 3em; color: var(--secundaria); margin-bottom: 10px; }
+        header p { font-size: 1.3em; max-width: 700px; margin: 0 auto 20px; }
+        .botoes { display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+        .btn { background: var(--primaria); color: white; padding: 12px 25px; border-radius: 8px; text-decoration: none; font-weight: bold; transition: 0.3s; }
+        .btn.secundario { background: var(--secundaria); color: #000; }
+        .btn:hover { transform: scale(1.05); }
 
-        .caixa { background: #16213e; padding: 20px; border-radius: 12px; }
-        .mural { border: 2px solid #ff2e63; }
-        .mural h3 { color: #ff2e63; margin-bottom: 12px; font-size: 1.3em; }
-        .fotos { border: 2px solid #00f5d4; }
-        .fotos h3 { color: #00f5d4; margin-bottom: 12px; font-size: 1.3em; }
-        .fotos img { width: 100%; border-radius: 8px; margin: 8px 0; object-fit: cover; }
-        .botao-editar { background: #ff2e63; color: white; border: none; padding: 8px 12px; border-radius: 6px; margin-top: 8px; cursor: pointer; font-weight: bold; width: 100%; }
-        .botao-editar:hover { background: #ff5588; }
-        .area-texto { width: 100%; min-height: 80px; border-radius: 6px; padding: 8px; margin-top: 8px; display: none; color: #000; }
-        .input-foto { width: 100%; padding: 6px; border-radius: 6px; margin-top: 8px; display: none; color: #000; }
-
-        .banner img { max-width: 100%; border-radius: 8px; }
-        h1 { color: #00f5d4; font-size: 2.5em; text-align: center; margin-bottom: 10px; }
-        .destaque { color: #ff2e63; font-weight: bold; text-align: center; font-size: 1.2em; }
-
-        .chat { border: 2px solid #00f5d4; }
-        .chat h3 { color: #00f5d4; margin-bottom: 10px; text-align: center; }
-        .caixa-mensagens { background: #0f162b; border-radius: 8px; padding: 10px; min-height: 180px; max-height: 220px; overflow-y: auto; margin-bottom: 10px; }
-        .mensagem { background: #1a2b4a; padding: 10px; border-radius: 6px; margin-bottom: 8px; font-size: 0.95em; border-left: 3px solid #00f5d4; }
-        .enviar-chat { display: flex; gap: 6px; }
-        .enviar-chat input { flex: 1; padding: 10px; border-radius: 6px; border: none; color: #000; font-size: 1em; }
-        .botao-enviar { background: #00f5d4; color: #000; border: none; padding: 10px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 1em; }
-        .botao-enviar:hover { background: #00cccc; }
-
-        /* ÁREA ADMIN - AGORA FUNCIONANDO */
-        .admin-area { margin-top: 15px; border-top: 1px solid #333; padding-top: 15px; }
-        .admin-login { display: flex; gap: 5px; margin-bottom: 10px; }
-        .admin-login input { flex: 1; padding: 8px; border-radius: 6px; border: none; color: #000; }
-        .btn-admin { background: #ff2e63; color: white; border: none; padding: 8px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }
-        .caixa-admin { background: #0f162b; border-radius: 8px; padding: 10px; max-height: 250px; overflow-y: auto; display: none; margin-top:10px; }
-        .msg-admin { background: #2a3b5a; padding: 10px; border-radius: 6px; margin-bottom: 8px; font-size: 0.9em; border-left: 3px solid #ff2e63; }
-
-        .btn-messenger { display: inline-block; background: #0084ff; color: white; padding: 12px 20px; border-radius: 8px; text-decoration: none; font-weight: bold; margin-top: 10px; }
-        .btn-messenger:hover { background: #0066cc; }
-
-        .player { border: 2px solid #00f5d4; }
-        .player h3 { color: #00f5d4; margin-bottom: 10px; text-align: center; }
+        /* PLAYER */
+        .player-secao { background: var(--caixa); padding: 30px; border-radius: 12px; margin: 30px auto; max-width: 700px; text-align: center; border: 2px solid var(--secundaria); }
+        .player-secao h3 { color: var(--secundaria); margin-bottom: 15px; }
         audio { width: 100%; height: 45px; }
 
-        @media (max-width: 900px) {
-            .pagina { grid-template-columns: 1fr; }
-            .lateral-esquerda, .lateral-direita { order: 2; }
-            .centro { order: 1; }
+        /* OFERECEMOS */
+        .secao { padding: 40px 20px; }
+        .secao h2 { text-align: center; font-size: 2em; color: var(--primaria); margin-bottom: 30px; }
+        .grade { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
+        .card { background: var(--caixa); padding: 25px; border-radius: 12px; border-left: 4px solid var(--secundaria); }
+        .card h3 { color: var(--secundaria); margin-bottom: 10px; }
+
+        /* SOBRE */
+        .sobre { background: var(--caixa); border-radius: 12px; padding: 30px; margin: 30px auto; max-width: 800px; }
+        .sobre h2 { color: var(--primaria); text-align: center; margin-bottom: 20px; }
+
+        /* CONTATO */
+        .contato { text-align: center; padding: 40px 20px; }
+        .contato h2 { color: var(--primaria); margin-bottom: 20px; }
+
+        /* CHAT E ADMIN */
+        .chat-area { max-width: 600px; margin: 30px auto; background: var(--caixa); border-radius: 12px; padding: 20px; border: 2px solid var(--secundaria); }
+        .chat-area h3 { color: var(--secundaria); text-align: center; margin-bottom: 15px; }
+        .caixa-msg { background: #0f162b; border-radius: 8px; padding: 10px; min-height: 180px; max-height: 220px; overflow-y: auto; margin-bottom: 10px; }
+        .msg { background: #1a2b4a; padding: 8px; border-radius: 6px; margin-bottom: 6px; border-left: 3px solid var(--secundaria); }
+        .envio { display: flex; gap: 6px; }
+        .envio input { flex: 1; padding: 10px; border-radius: 6px; border: none; color: #000; }
+        .btn-enviar { background: var(--secundaria); color: #000; border: none; padding: 10px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+
+        .admin { margin-top: 15px; border-top: 1px solid #333; padding-top: 15px; }
+        .admin-login { display: flex; gap: 5px; margin-bottom: 10px; }
+        .admin-login input { flex:1; padding:8px; border-radius:6px; border:none; color:#000; }
+        .btn-admin { background: var(--primaria); color:white; border: none; padding:8px 12px; border-radius:6px; font-weight:bold; cursor:pointer; }
+        .painel-admin { display: none; background: #0f162b; border-radius: 8px; padding: 10px; margin-top:10px; max-height:250px; overflow-y:auto; }
+        .msg-admin { background: #2a3b5a; padding: 8px; border-radius: 6px; margin-bottom: 6px; border-left: 3px solid var(--primaria); }
+
+        /* RODAPÉ */
+        footer { text-align: center; padding: 20px; color: #888; font-size: 0.9em; }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2em; }
+            .botoes { flex-direction: column; align-items: center; }
         }
     </style>
 </head>
 <body>
-    <div class="pagina">
 
-        <div class="lateral-esquerda">
-            <div class="caixa mural">
-                <h3>📢 MURAL DE AVISOS</h3>
-                <div id="texto-mural">
-                    <p>✅ Transmissão ao vivo: 08h às 18h</p>
-                    <p>🎙️ Novos programas em breve!</p>
-                    <p>⚽ Fique ligado nas notícias!</p>
-                </div>
-                <button class="botao-editar" onclick="editarMural()">✏️ EDITAR AVISOS</button>
-                <textarea id="campo-mural" class="area-texto" placeholder="Escreva seus avisos aqui..."></textarea>
-                <button class="botao-editar" style="background:#00f5d4; display:none;" id="btn-salvar-mural" onclick="salvarMural()">✅ SALVAR</button>
-            </div>
-
-            <div class="caixa fotos">
-                <h3>👤 FOTO PERFIL</h3>
-                <img id="foto-perfil" src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?w=300&q=80" alt="Perfil">
-                <button class="botao-editar" onclick="mudarFotoPerfil()">🖼️ TROCAR FOTO</button>
-                <input type="text" id="link-perfil" class="input-foto" placeholder="Cole o link da nova foto aqui...">
-                <button class="botao-editar" style="background:#00f5d4; display:none;" id="btn-salvar-perfil" onclick="aplicarFotoPerfil()">✅ COLOCAR</button>
-            </div>
-        </div>
-
-        <div class="centro">
-            <div class="banner">
-                <img id="banner-principal" src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=800&q=80" alt="Banner">
-                <button class="botao-editar" onclick="mudarBanner()">🖼️ TROCAR BANNER</button>
-                <input type="text" id="link-banner" class="input-foto" placeholder="Cole o link do novo banner aqui...">
-                <button class="botao-editar" style="background:#00f5d4; display:none;" id="btn-salvar-banner" onclick="aplicarBanner()">✅ COLOCAR</button>
-            </div>
-
+    <header>
+        <div class="container">
             <h1>MANOEL CORPUS</h1>
-            <p class="destaque">Seu espaço de notícias, futebol e música!</p>
-
-            <div class="caixa chat">
-                <h3>💬 PEDIR MÚSICA / CONTATO</h3>
-                <div id="caixa-msg" class="caixa-mensagens">
-                    <div class="mensagem">📢 Escreva sua mensagem, pedido ou proposta aqui! 🎵</div>
-                </div>
-                <div class="enviar-chat">
-                    <input type="text" id="entrada-msg" placeholder="Digite aqui...">
-                    <button class="botao-enviar" onclick="enviarMensagem()">ENVIAR</button>
-                </div>
-
-                <a href="https://m.me/seu_perfil_aqui" target="_blank" class="btn-messenger">📩 FALAR PELO MESSENGER</a>
-
-                <!-- ÁREA ADMIN FUNCIONAL -->
-                <div class="admin-area">
-                    <div class="admin-login">
-                        <input type="password" id="senha-admin" placeholder="Senha Admin: 123456">
-                        <button class="btn-admin" onclick="verificarAdmin()">ENTRAR</button>
-                    </div>
-                    <div id="caixa-admin" class="caixa-admin">
-                        <h4 style="color:#ff2e63; margin-bottom:8px;">📋 TODAS AS MENSAGENS RECEBIDAS:</h4>
-                        <div id="lista-msg-admin"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="caixa player">
-                <h3>🔊 OUÇA NOSSA RÁDIO AO VIVO</h3>
-                <audio controls preload="metadata">
-                    <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
-                    Seu navegador não suporta áudio.
-                
+            <p>De Russas para o mundo! A webrádio que toca o que o povo quer ouvir — forró, sucessos e muita interação com você 🎵</p>
+            <div class="botoes">
+                <a href="https://wa.me/5588999999999" target="_blank" class="btn">📞 Falar no WhatsApp</a>
+                <a href="#programacao" class="btn secundario">📋 Ver Programação</a>
             </div>
         </div>
+    </header>
 
-        <div class="lateral-direita">
-            <div class="caixa fotos">
-                <h3>🖼️ NOSSAS FOTOS</h3>
-                <img id="foto1" src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&q=80" alt="Foto 1">
-                <button class="botao-editar" onclick="mudarFoto1()">🖼️ TROCAR FOTO 1</button>
-                <input type="text" id="link-foto1" class="input-foto" placeholder="Cole o link da foto aqui...">
-                <button class="botao-editar" style="background:#00f5d4; display:none;" id="btn-salvar-foto1" onclick="aplicarFoto1()">✅ COLOCAR</button>
+    <section class="player-secao">
+        <h3>🔊 Tocando Agora</h3>
+        <p>Forró da melhor qualidade • Ao vivo 24h</p>
+        <audio controls preload="metadata">
+            <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
+            Seu navegador não suporta áudio.
+        
+    </section>
 
-                <img id="foto2" src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=300&q=80" alt="Foto 2">
-                <button class="botao-editar" onclick="mudarFoto2()">🖼️ TROCAR FOTO 2</button>
-                <input type="text" id="link-foto2" class="input-foto" placeholder="Cole o link da foto aqui...">
-                <button class="botao-editar" style="background:#00f5d4; display:none;" id="btn-salvar-foto2" onclick="aplicarFoto2()">✅ COLOCAR</button>
+    <section class="secao">
+        <h2>O que oferecemos</h2>
+        <div class="container grade">
+            <div class="card">
+                <h3>01 • Ao Vivo</h3>
+                <p>Player 24h por dia, som direto sem parar. Ouça a qualquer hora!</p>
+            </div>
+            <div class="card">
+                <h3>02 • Programação</h3>
+                <p>Horários organizados, com programas variados para todos os gostos.</p>
+            </div>
+            <div class="card">
+                <h3>03 • Anúncios</h3>
+                <p>Espaço para sua marca aparecer na rádio e chegar até a região.</p>
+            </div>
+            <div class="card">
+                <h3>04 • Chat</h3>
+                <p>Peça músicas, mande recados e participe direto com a gente!</p>
+            </div>
+            <div class="card">
+                <h3>05 • Novidades</h3>
+                <p>Fique por dentro de tudo o que acontece na nossa rádio.</p>
+            </div>
+            <div class="card">
+                <h3>06 • Regional</h3>
+                <p>Feita em Russas, para Russas e toda a região do Ceará!</p>
             </div>
         </div>
+    </section>
 
-    </div>
+    <section class="sobre">
+        <h2>Sobre a Rádio</h2>
+        <p>Somos a voz da nossa gente! Nascemos pra levar música, informação e alegria. Temos forró raiz, sucessos, MPB e tudo que você gosta. Aqui o ouvinte é parte importante: manda mensagem, pede música e participa da programação ao vivo.</p>
+        <p>Se você quer anunciar ou parceria, temos espaço especial para comércios e empresas locais.</p>
+    </section>
+
+    <section class="chat-area">
+        <h3>💬 Peça sua Música / Fale Conosco</h3>
+        <div id="caixa-msg" class="caixa-msg">
+            <div class="msg">📢 Bem-vindo! Escreva aqui seu pedido ou mensagem 🎵</div>
+        </div>
+        <div class="envio">
+            <input type="text" id="entrada-msg" placeholder="Digite sua mensagem...">
+            <button class="btn-enviar" onclick="enviarMsg()">ENVIAR</button>
+        </div>
+
+        <!-- 🛠️ ÁREA DE ADMINISTRAÇÃO - SÓ VOCÊ ACESSA -->
+        <div class="admin">
+            <div class="admin-login">
+                <input type="password" id="senhaAdmin" placeholder="Senha Admin: 123456">
+                <button class="btn-admin" onclick="entrarAdmin()">ENTRAR</button>
+            </div>
+            <div id="painelAdmin" class="painel-admin">
+                <h4 style="color:#ff2e63; margin-bottom:8px;">📋 TODAS AS MENSAGENS RECEBIDAS:</h4>
+                <div id="listaAdmin"></div>
+            </div>
+        </div>
+    </section>
+
+    <section class="contato">
+        <h2>Fale com a gente</h2>
+        <p>Quer pedir música, anunciar ou parceria? Fale diretamente pelo WhatsApp!</p>
+        <a href="https://wa.me/5588999275328" target="_blank" class="btn">📞 Falar Agora</a>
+    </section>
+
+    <footer>
+        © 2026 Manoel Corpus Web Rádio • Russas - CE • Todos os direitos reservados
+                siga @ordinariarussas
+    </footer>
 
     <script>
         // GUARDA TODAS AS MENSAGENS
-        let mensagens = JSON.parse(localStorage.getItem('msgRedeRadio') || '[]');
+        let todasMsgs = JSON.parse(localStorage.getItem('mensagensRadio') || '[]');
 
-        function enviarMensagem(){
+        function enviarMsg(){
             const texto = document.getElementById('entrada-msg').value.trim();
-            if(texto === '') return;
-
-            const dataHora = new Date().toLocaleString('pt-BR');
+            if(!texto) return;
+            const data = new Date().toLocaleString('pt-BR');
             // Mostra para quem enviou
-            document.getElementById('caixa-msg').innerHTML += <div class="mensagem">👤 Você: ${texto}<br><small>${dataHora}</small></div>;
-            
-            // SALVA PARA VOCÊ VER
-            mensagens.push({texto, data: dataHora});
-            localStorage.setItem('msgRedeRadio', JSON.stringify(mensagens));
+            document.getElementById('caixa-msg').innerHTML += <div class="msg">👤 Você: ${texto}<br><small>${data}</small></div>;
+            // SALVA PARA VOCÊ VER NO ADMIN
+            todasMsgs.push({texto, data});
+            localStorage.setItem('mensagensRadio', JSON.stringify(todasMsgs));
             document.getElementById('entrada-msg').value = '';
         }
 
-        // LOGIN ADMIN - AGORA CERTO
-        function verificarAdmin(){
-            const senha = document.getElementById('senha-admin').value;
+        // ACESSO ADMIN
+        function entrarAdmin(){
+            const senha = document.getElementById('senhaAdmin').value;
             if(senha === '123456'){
-                document.getElementById('caixa-admin').style.display = 'block';
-                carregarMensagensAdmin();
+                document.getElementById('painelAdmin').style.display = 'block';
+                atualizarPainel();
             }else{
-                alert('❌ Senha errada! Use: 123456');
+                alert('❌ Senha incorreta! Use: 123456');
             }
         }
 
-        function carregarMensagensAdmin(){
-            const lista = document.getElementById('lista-msg-admin');
+        function atualizarPainel(){
+            const lista = document.getElementById('listaAdmin');
             lista.innerHTML = '';
-            if(mensagens.length === 0){
-                lista.innerHTML = '<p style="color:#aaa;">Nenhuma mensagem recebida ainda.</p>';
+            if(todasMsgs.length === 0){
+                lista.innerHTML = '<p style="color:#aaa;">Nenhuma mensagem ainda.</p>';
                 return;
             }
-            mensagens.forEach((msg, indice) => {
-                lista.innerHTML += <div class="msg-admin">📩 Msg ${indice+1}:<br>${msg.texto}<br><small>Enviado: ${msg.data}</small></div>;
+            todasMsgs.forEach((m, i) => {
+                lista.innerHTML += <div class="msg-admin">📩 Msg ${i+1}:<br>${m.texto}<br><small>Enviado: ${m.data}</small></div>;
             });
-        }
-
-        // FUNÇÕES DE EDIÇÃO
-        function editarMural(){
-            document.getElementById('texto-mural').style.display = 'none';
-            document.getElementById('campo-mural').style.display = 'block';
-            document.getElementById('btn-salvar-mural').style.display = 'block';
-            document.getElementById('campo-mural').value = document.getElementById('texto-mural').innerText;
-        }
-        function salvarMural(){
-            const novo = document.getElementById('campo-mural').value.replace(/\n/g, '<br>');
-            document.getElementById('texto-mural').innerHTML = <p>${novo}</p>;
-            document.getElementById('texto-mural').style.display = 'block';
-            document.getElementById('campo-mural').style.display = 'none';
-            document.getElementById('btn-salvar-mural').style.display = 'none';
-        }
-
-        function mudarFotoPerfil(){
-            document.getElementById('link-perfil').style.display = 'block';
-            document.getElementById('btn-salvar-perfil').style.display = 'block';
-        }
-        function aplicarFotoPerfil(){
-            const link = document.getElementById('link-perfil').value;
-            if(link) document.getElementById('foto-perfil').src = link;
-            document.getElementById('link-perfil').style.display = 'none';
-            document.getElementById('btn-salvar-perfil').style.display = 'none';
-        }
-
-        function mudarBanner(){
-            document.getElementById('link-banner').style.display = 'block';
-            document.getElementById('btn-salvar-banner').style.display = 'block';
-        }
-        function aplicarBanner(){
-            const link = document.getElementById('link-banner').value;
-            if(link) document.getElementById('banner-principal').src = link;
-            document.getElementById('link-banner').style.display = 'none';
-            document.getElementById('btn-salvar-banner').style.display = 'none';
-        }
-
-        function mudarFoto1(){
-            document.getElementById('link-foto1').style.display = 'block';
-            document.getElementById('btn-salvar-foto1').style.display = 'block';
-        }
-        function aplicarFoto1(){
-            const link = document.getElementById('link-foto1').value;
-            if(link) document.getElementById('foto1').src = link;
-            document.getElementById('link-foto1').style.display = 'none';
-            document.getElementById('btn-salvar-foto1').style.display = 'none';
-        }
-
-        function mudarFoto2(){
-            document.getElementById('link-foto2').style.display = 'block';
-            document.getElementById('btn-salvar-foto2').style.display = 'block';
-        }
-        function aplicarFoto2(){
-            const link = document.getElementById('link-foto2').value;
-            if(link) document.getElementById('foto2').src = link;
-            document.getElementById('link-foto2').style.display = 'none';
-            document.getElementById('btn-salvar-foto2').style.display = 'none';
         }
     </script>
 </body>
