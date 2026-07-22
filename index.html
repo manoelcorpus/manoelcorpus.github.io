@@ -7,89 +7,136 @@
     <title>Manoel Corpus - Site Oficial</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background: #1a1a2e; color: #fff; text-align: center; padding: 20px 20px; }
-        .container { max-width: 800px; margin: 0 auto; }
+        body { background: #1a1a2e; color: #fff; padding: 20px 10px; }
 
-        /* 🖼️ BANNER NO TOPO */
-        .banner {
+        /* 📐 LAYOUT COM LATERAIS */
+        .pagina {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 280px 1fr 280px;
+            gap: 20px;
+        }
+        .lateral-esquerda, .lateral-direita {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .centro {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* 🎨 ESTILO DAS CAIXAS */
+        .caixa {
             background: #16213e;
-            border-radius: 12px;
             padding: 20px;
-            margin-bottom: 30px;
-        }
-        .banner img {
-            max-width: 100%;
-            border-radius: 8px;
-        }
-
-        h1 { color: #00f5d4; font-size: 3em; margin-bottom: 15px; }
-        p { font-size: 1.2em; line-height: 1.6; margin-bottom: 20px; color: #eee; }
-        .destaque { color: #ff2e63; font-weight: bold; }
-
-        .info, .mural, .fotos, .player {
-            background: #16213e;
-            padding: 25px;
             border-radius: 12px;
-            margin: 30px auto;
-            max-width: 600px;
+        }
+        .mural { border: 2px solid #ff2e63; }
+        .mural h3 { color: #ff2e63; margin-bottom: 12px; font-size: 1.3em; }
+        .fotos { border: 2px solid #00f5d4; }
+        .fotos h3 { color: #00f5d4; margin-bottom: 12px; font-size: 1.3em; }
+        .fotos img {
+            width: 100%;
+            border-radius: 8px;
+            margin: 8px 0;
+            object-fit: cover;
         }
 
-        .mural { border: 2px solid #ff2e63; min-height: 140px; }
-        .mural h3 { color: #ff2e63; margin-bottom: 15px; font-size: 1.5em; }
+        /* 📍 CONTEÚDO DO CENTRO */
+        .banner img { max-width: 100%; border-radius: 8px; }
+        h1 { color: #00f5d4; font-size: 2.5em; text-align: center; margin-bottom: 10px; }
+        .destaque { color: #ff2e63; font-weight: bold; text-align: center; font-size: 1.2em; }
+        p { font-size: 1.1em; line-height: 1.5; color: #eee; }
 
-        .fotos { min-height: 200px; }
-        .fotos h3 { color: #00f5d4; margin-bottom: 15px; font-size: 1.5em; }
-        .fotos img { max-width: 100%; border-radius: 8px; margin: 10px 0; display: inline-block; }
+        .chat { border: 2px solid #00f5d4; text-align: center; }
+        .chat a {
+            display: inline-block;
+            background: #ff2e63;
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+        .chat a:hover { background: #ff5588; }
 
-        .aviso { font-size: 0.9em; color: #aaa; margin-top: 10px; }
+        .player { border: 2px solid #00f5d4; }
+        .player h3 { color: #00f5d4; margin-bottom: 10px; text-align: center; }
+        audio { width: 100%; height: 45px; }
+
+        /* 📱 AJUSTE PARA CELULAR */
+        @media (max-width: 900px) {
+            .pagina { grid-template-columns: 1fr; }
+            .lateral-esquerda, .lateral-direita { order: 2; }
+            .centro { order: 1; }
+        }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="pagina">
 
-        <!-- 🖼️ ESPAÇO PARA BANNER -->
-        <div class="banner">
-            <img src="COLOQUE_LINK_DO_SEU_BANNER_AQUI" alt="Banner Manoel Corpus">
-            <p class="aviso">💡 Troque o link acima para colocar seu banner principal</p>
+        <!-- 📌 LATERAL ESQUERDA: MURAL DE AVISOS -->
+        <div class="lateral-esquerda">
+            <div class="caixa mural">
+                <h3>📢 MURAL DE AVISOS</h3>
+                <p>✅ Transmissão ao vivo: 08h às 18h</p>
+                <p>🎙️ Novos programas em breve!</p>
+                <p>⚽ Fique ligado nas notícias!</p>
+                <p>📢 Avisos importantes aqui</p>
+            </div>
+
+            <div class="caixa fotos">
+                <h3>👤 PERFIL</h3>
+                <!-- FOTO PRONTA COM LINK -->
+                <img src="https://images.unsplash.com/photo-1511367461989-f85a21fda167?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Perfil Manoel Corpus">
+                <p style="font-size:0.9em;">Manoel Corpus</p>
+            </div>
         </div>
 
-        <h1>MANOEL CORPUS</h1>
-        <p>Seu espaço de notícias, entretenimento e conteúdo de qualidade!</p>
-        <p class="destaque">Bem-vindo ao meu site oficial 🚀</p>
+        <!-- 📌 CENTRO: CONTEÚDO PRINCIPAL -->
+        <div class="centro">
+            <div class="banner">
+                <!--WhatsApp Image 2026-07-21 at 21.18.12 (1) -->
+                <img src="https://images.unsplash.com/photo-1478737270239-2f02b77fc618?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Banner Rádio">
+            </div>
 
-        <div class="info">
-            <h3>Sobre mim</h3>
-            <p>Criador de conteúdo, apaixonado por futebol, rádio web e projetos criativos. Aqui você encontra tudo o que preparo com carinho!</p>
+            <h1>MANOEL CORPUS</h1>
+            <p class="destaque">Seu espaço de notícias, futebol e música!</p>
+            <p style="text-align:center;">Criador de conteúdo, apaixonado por rádio web e projetos criativos. Aqui você encontra tudo o que preparo com carinho!</p>
+
+            <div class="caixa chat">
+                <h3>💬 PEDIR MÚSICA</h3>
+                <p>Clique abaixo para falar com a gente!</p>
+                <!-- COLOQUE SEU NÚMERO AQUI -->
+                <a href="https://wa.me/5588999275328?text=Olá! Quero pedir a música:" target="_blank">📩 ABRIR CHAT</a>
+            </div>
+
+            <div class="caixa player">
+                <h3>🔊 OUÇA NOSSA RÁDIO AO VIVO</h3>
+                <audio controls preload="metadata">
+                    <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
+                    Seu navegador não suporta áudio.
+                
+            </div>
         </div>
 
-        <!-- 📢 MURAL DE AVISOS - AMPLO E FÁCIL DE EDITAR -->
-        <div class="mural">
-            <h3>📢 MURAL DE AVISOS</h3>
-            <p>✅ Transmissão ao vivo todos os dias das 08h às 18h!</p>
-            <p>🎙️ Novos programas chegando em breve!</p>
-            <p>⚽ Fique ligado nas notícias do futebol!</p>
-            <p>📢 Avisos importantes aqui!</p>
-            <p class="aviso">💡 Basta alterar o texto acima quando quiser</p>
+        <!-- 📌 LATERAL DIREITA: FOTOS -->
+        <div class="lateral-direita">
+            <div class="caixa fotos">
+                <h3>🖼️ NOSSAS FOTOS</h3>
+                <!-- FOTOS PRONTAS COM LINK -->
+                <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Música">
+                <img src="https://images.unsplash.com/photo-1574629810360-7efbbe195018?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Futebol">
+                <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Estúdio">
+                <p style="font-size:0.85em; color:#aaa;">💡 Troque esses links pelas suas fotos depois</p>
+            </div>
         </div>
 
-        <!-- 🖼️ ÁREA DE FOTOS - ESPAÇO PARA VÁRIAS IMAGENS -->
-        <div class="fotos">
-            <h3>🖼️ NOSSAS FOTOS</h3>
-            <img src="WhatsApp Image 2026-07-21 at 21.18.12 (1)" alt="Foto 1">
-            <img src="COLOQUE_LINK_DA_FOTO_AQUI" alt="Foto 2">
-            <img src="COLOQUE_LINK_DA_FOTO_AQUI" alt="Foto 3">
-            <p class="aviso">💡 Adicione quantas fotos quiser, só copiar e trocar o link</p>
-        </div>
-
-        <!-- 🎙️ PLAYER DA RÁDIO JÁ FUNCIONANDO -->
-        <div class="player">
-            <h3 style="color:#00f5d4; margin-bottom:15px;">🔊 OUÇA NOSSA RÁDIO AO VIVO</h3>
-            <audio controls preload="metadata" style="width:100%; height:45px;">
-                <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
-                Seu navegador não suporta reproduzir áudio.
-            
-            <p style="margin-top:10px; font-size:0.9em; color:#ccc;">Clique no play para ouvir!</p>
-        </div>
     </div>
 </body>
 </html>
