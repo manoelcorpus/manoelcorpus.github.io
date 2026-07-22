@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manoel Corpus - WebRádio</title>
+    <title>Manoel Corpus - Web Rádio</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
         :root { 
-            --primaria:#d32f2f; 
-            --secundaria:#ffc107; 
+            --primaria:#ffc107; 
+            --secundaria:#d32f2f; 
             --fundo:#121212; 
             --caixa:#1e1e1e; 
             --texto:#f5f5f5; 
@@ -17,20 +17,62 @@
         body { background: var(--fundo); color: var(--texto); line-height: 1.6; }
         .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
 
-        /* CABEÇALHO */
-        header { background: linear-gradient(135deg, var(--primaria), #b71c1c); padding: 30px 20px; text-align: center; border-bottom: 3px solid var(--secundaria); }
-        header h1 { font-size: 2.8em; color: #fff; margin-bottom: 8px; }
-        header p { font-size: 1.1em; color: var(--secundaria); }
+        /* CABEÇALHO COM FOTO DE FUNDO */
+        header {
+            background: url('https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=1200&h=400&fit=crop') center/cover no-repeat;
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.55);
+        }
+        .texto-cabecalho { position: relative; z-index: 1; }
+        header h1 {
+            font-size: 3.5em;
+            color: #fff;
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.8), 0 0 25px var(--primaria);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+        .frase-on {
+            font-size: 1.3em;
+            color: #00ff44;
+            font-weight: bold;
+            margin-bottom: 12px;
+            animation: piscar 1.5s infinite alternate;
+        }
+        @keyframes piscar {
+            from { opacity: 0.8; }
+            to { opacity: 1; }
+        }
+        header p {
+            font-size: 1.2em;
+            color: var(--primaria);
+            font-weight: bold;
+        }
+        .link-radio {
+            margin-top: 15px;
+            font-size: 1em;
+            color: #fff;
+            background: rgba(211, 47, 47, 0.7);
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 6px;
+        }
 
         /* MENU */
         nav { background: var(--caixa); padding: 12px 0; border-bottom: 1px solid var(--borda); }
         nav ul { list-style: none; display: flex; justify-content: center; gap: 25px; flex-wrap: wrap; }
         nav a { color: var(--texto); text-decoration: none; font-weight: bold; transition: 0.2s; }
-        nav a:hover { color: var(--secundaria); }
+        nav a:hover { color: var(--primaria); }
 
         /* PLAYER PRINCIPAL */
         .player-principal { background: var(--caixa); padding: 25px; border-radius: 10px; margin: 30px auto; max-width: 700px; text-align: center; border: 2px solid var(--primaria); }
-        .player-principal h3 { color: var(--secundaria); margin-bottom: 15px; font-size: 1.4em; }
+        .player-principal h3 { color: var(--primaria); margin-bottom: 15px; font-size: 1.4em; }
         audio { width: 100%; height: 48px; border-radius: 5px; }
         .info-transmissao { margin-top: 10px; font-size: 0.95em; color: #aaa; }
 
@@ -38,47 +80,70 @@
         .grade-banners { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin: 30px 0; }
         .banner-item { background: var(--caixa); border-radius: 8px; overflow: hidden; border: 1px solid var(--borda); }
         .banner-item img { width: 100%; height: auto; display: block; }
-        .banner-item .legenda { padding: 12px; text-align: center; font-weight: bold; color: var(--secundaria); }
+        .banner-item .legenda { padding: 12px; text-align: center; font-weight: bold; color: var(--primaria); }
 
         /* SEÇÕES */
         .secao { padding: 35px 20px; }
-        .secao h2 { text-align: center; font-size: 2em; color: var(--primaria); margin-bottom: 25px; border-bottom: 2px solid var(--secundaria); padding-bottom: 8px; display: inline-block; }
+        .secao h2 { text-align: center; font-size: 2em; color: var(--secundaria); margin-bottom: 25px; border-bottom: 2px solid var(--primaria); padding-bottom: 8px; display: inline-block; }
         .sobre-conteudo { background: var(--caixa); padding: 25px; border-radius: 10px; max-width: 800px; margin: 0 auto; border: 1px solid var(--borda); }
 
         /* CHAT E PEDIDOS */
-        .chat-pedidos { max-width: 650px; margin: 30px auto; background: var(--caixa); border-radius: 10px; padding: 20px; border: 2px solid var(--secundaria); }
-        .chat-pedidos h3 { color: var(--secundaria); text-align: center; margin-bottom: 15px; }
+        .chat-pedidos { max-width: 650px; margin: 30px auto; background: var(--caixa); border-radius: 10px; padding: 20px; border: 2px solid var(--primaria); }
+        .chat-pedidos h3 { color: var(--primaria); text-align: center; margin-bottom: 15px; }
         .caixa-mensagens { background: #0a0a0a; border-radius: 6px; padding: 12px; min-height: 160px; max-height: 220px; overflow-y: auto; margin-bottom: 10px; }
-        .mensagem { background: #252525; padding: 8px; border-radius: 4px; margin-bottom: 6px; border-left: 3px solid var(--primaria); font-size: 0.9em; }
+        .mensagem { background: #252525; padding: 8px; border-radius: 4px; margin-bottom: 6px; border-left: 3px solid var(--secundaria); font-size: 0.9em; }
         .area-envio { display: flex; gap: 8px; }
         .area-envio input { flex: 1; padding: 10px; border-radius: 4px; border: none; color: #000; font-size: 1em; }
-        .btn-enviar { background: var(--primaria); color: white; border: none; padding: 10px 18px; border-radius: 4px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .btn-enviar { background: var(--secundaria); color: white; border: none; padding: 10px 18px; border-radius: 4px; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .btn-enviar:hover { background: #b71c1c; }
 
-        /* 🛠️ ÁREA DE ADMINISTRAÇÃO */
+        /* ÁREA DE ADMINISTRAÇÃO */
         .painel-admin { margin-top: 15px; border-top: 1px solid var(--borda); padding-top: 15px; }
         .login-admin { display: flex; gap: 6px; margin-bottom: 10px; }
         .login-admin input { flex: 1; padding: 8px; border-radius: 4px; border: none; color: #000; }
-        .btn-admin { background: var(--secundaria); color: #000; border: none; padding: 8px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        .btn-admin { background: var(--primaria); color: #000; border: none; padding: 8px 12px; border-radius: 4px; font-weight: bold; cursor: pointer; }
         .caixa-admin { display: none; background: #0a0a0a; border-radius: 6px; padding: 10px; margin-top: 10px; max-height: 240px; overflow-y: auto; }
-        .msg-admin { background: #252525; padding: 8px; border-radius: 4px; margin-bottom: 6px; border-left: 3px solid var(--secundaria); font-size: 0.9em; }
+        .msg-admin { background: #252525; padding: 8px; border-radius: 4px; margin-bottom: 6px; border-left: 3px solid var(--primaria); font-size: 0.9em; }
 
         /* RODAPÉ */
-        footer { background: var(--caixa); text-align: center; padding: 20px; margin-top: 40px; border-top: 1px solid var(--borda); color: #888; font-size: 0.9em; }
+        footer {
+            background: url('https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=1200&h=250&fit=crop') center/cover no-repeat;
+            padding: 50px 20px;
+            text-align: center;
+            position: relative;
+            margin-top: 40px;
+        }
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+        }
+        .texto-rodape { position: relative; z-index: 1; }
+        footer h2 {
+            color: var(--primaria);
+            font-size: 2em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            margin-bottom: 8px;
+        }
+        footer p { color: #fff; font-size: 1em; margin-bottom: 5px; }
+        footer .link-final { color: var(--primaria); font-weight: bold; text-decoration: none; }
 
-        /* 📱 CELULAR */88992811188
+        /* CELULAR */
         @media (max-width: 768px) {
             nav ul { gap: 12px; }
-            header h1 { font-size: 2em; }
+            header h1 { font-size: 2.2em; }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="container">
+        <div class="texto-cabecalho">
             <h1>MANOEL CORPUS</h1>
-            <p>Sua Web Rádio • Música e Alegria 24h</p>
+            <div class="frase-on">🔴 AGORA ESTAMOS ONLINE, SÓ UM MINUTO, AGORA ESTAMOS ONLINE RÁDIO!</div>
+            <p>Web Rádio • Música e Alegria 24h</p>
+            <div class="link-radio">🔗 stream.zeno.fm/tnzj3smf3abvv</div>
         </div>
     </header>
 
@@ -136,7 +201,6 @@
             <button class="btn-enviar" onclick="enviarMensagem()">ENVIAR</button>
         </div>
 
-        <!-- 🛠️ ÁREA DE ADMINISTRAÇÃO -->
         <div class="painel-admin">
             <div class="login-admin">
                 <input type="password" id="senhaAdmin" placeholder="Senha Admin: 123456">
@@ -150,28 +214,27 @@
     </section>
 
     <footer>
-        © 2026 Manoel Corpus Web Rádio • Russas - CE • Todos os direitos reservados
+        <div class="texto-rodape">
+            <h2>MANOEL CORPUS</h2>
+            <p>Web Rádio • Russas - CE</p>
+            <a class="link-final" href="https://stream.zeno.fm/tnzj3smf3abvv" target="_blank">🔗 stream.zeno.fm/tnzj3smf3abvv</a>
+            <p style="margin-top:8px; font-size:0.85em; color:#aaa;">© 2026 Todos os direitos reservados</p>
+        </div>
     </footer>
 
     <script>
-        // GUARDA MENSAGENS
         let armazenarMsg = JSON.parse(localStorage.getItem('radioMensagens') || '[]');
 
         function enviarMensagem(){
             const texto = document.getElementById('entrada-msg').value.trim();
             if(!texto) return;
             const dataHora = new Date().toLocaleString('pt-BR');
-
-            // Mostra para quem enviou
             document.getElementById('caixa-msg').innerHTML += <div class="mensagem">👤 Você: ${texto}<br><small>${dataHora}</small></div>;
-
-            // SALVA PARA VOCÊ VER NO ADMIN
             armazenarMsg.push({texto, data: dataHora});
             localStorage.setItem('radioMensagens', JSON.stringify(armazenarMsg));
             document.getElementById('entrada-msg').value = '';
         }
 
-        // ACESSO ADMIN
         function acessarAdmin(){
             const senha = document.getElementById('senhaAdmin').value;
             if(senha === '123456'){
@@ -196,6 +259,4 @@
     </script>
 </body>
 </html>
-
-
           
