@@ -8,27 +8,22 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
         body { background: #0f172a; color: #fff; }
 
-        /* CABEÇALHO MODERNO */
         header { background: linear-gradient(135deg, #003399, #001a4d); padding: 20px 15px; text-align: center; border-bottom: 3px solid #ffcc00; }
         .logo-img { max-width: 850px; width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; }
         h1 { color: #ffcc00; font-size: 36px; text-transform: uppercase; letter-spacing: 1px; }
         .slogan { color: #e0e0e0; font-size: 18px; margin-top: 5px; }
 
-        /* PLAYER ESTILIZADO */
         .player-container { background: #000; padding: 25px 15px; text-align: center; border-bottom: 2px solid #ffcc00; }
         .player-container audio { width: 95%; max-width: 750px; height: 45px; border-radius: 4px; }
         .status-live { color: #ff3333; font-weight: bold; margin-bottom: 10px; font-size: 16px; }
 
-        /* CONTEÚDO GERAL */
         .conteudo { max-width: 1200px; margin: 25px auto; padding: 0 15px; display: flex; flex-wrap: wrap; gap: 25px; }
 
-        /* MURAIS DE ANÚNCIOS */
         .lateral { flex: 1 1 300px; }
         .anuncio-box { background: #1e294b; border: 2px solid #ffcc00; border-radius: 10px; padding: 12px; margin-bottom: 20px; }
         .anuncio-box img { width: 100%; height: auto; border-radius: 6px; }
         .titulo-anuncio { color: #ffcc00; font-weight: bold; margin-bottom: 8px; text-align: center; }
 
-        /* ÁREA PRINCIPAL - PEDIDO DE MÚSICA */
         .principal { flex: 2 1 500px; }
         .bloco-pedido { background: #1e294b; border: 2px solid #ffcc00; border-radius: 10px; padding: 25px; }
         .bloco-pedido h2 { color: #ffcc00; margin-bottom: 15px; font-size: 22px; text-align: center; }
@@ -36,14 +31,12 @@
         .btn-pedir { width: 100%; padding: 14px; background: #0040ff; color: #ffcc00; border: none; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; transition: 0.3s; }
         .btn-pedir:hover { background: #0033cc; transform: scale(1.02); }
 
-        /* PAINEL ADMINISTRATIVO */
         .acesso-admin { text-align: center; margin: 20px 0; }
-        .acesso-admin a { color: #ffcc00; text-decoration: underline; cursor: pointer; font-weight: bold; }
+        .acesso-admin a { color: #ffcc00; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px; }
         #painel-admin { display: none; max-width: 1100px; margin: 0 auto 25px; padding: 20px; background: #1e294b; border: 2px solid #ffcc00; border-radius: 10px; }
-        #painel-admin h3 { color: #ffcc00; margin-bottom: 15px; }
-        .lista-pedidos { background: #2a3a66; padding: 12px; border-radius: 6px; }
+        #painel-admin h3 { color: #ffcc00; margin-bottom: 15px; font-size: 20px; }
+        .lista-pedidos { background: #2a3a66; padding: 12px; border-radius: 6px; min-height: 40px; }
 
-        /* RODAPÉ COM IDENTIDADE */
         footer { background: #000; padding: 25px 15px; border-top: 3px solid #ffcc00; margin-top: 30px; text-align: center; }
         .rodape-info { max-width: 1000px; margin: 0 auto 15px; }
         .rodape-info h3 { color: #ffcc00; font-size: 20px; margin-bottom: 10px; }
@@ -54,14 +47,12 @@
 </head>
 <body>
 
-<!-- CABEÇALHO EDITÁVEL -->
 <header>
     <img src="topo.png" alt="Web Rádio Ordinária Russas" class="logo-img">
     <h1>WEB RÁDIO ORDINÁRIA RUSSAS</h1>
     <p class="slogan">A sua melhor companhia, 24h ao vivo!</p>
 </header>
 
-<!-- PLAYER DA RÁDIO -->
 <div class="player-container">
     <p class="status-live">🔴 AO VIVO AGORA</p>
     <audio controls autoplay preload="auto">
@@ -71,7 +62,6 @@
 </div>
 
 <div class="conteudo">
-    <!-- MURAIS DE ANÚNCIOS -->
     <div class="lateral">
         <div class="anuncio-box">
             <p class="titulo-anuncio">📢 ANÚNCIO 1</p>
@@ -83,7 +73,6 @@
         </div>
     </div>
 
-    <!-- ÁREA PRINCIPAL: PEDIR MÚSICA -->
     <div class="principal">
         <div class="bloco-pedido">
             <h2>🎵 PEÇA SUA MÚSICA</h2>
@@ -94,7 +83,6 @@
     </div>
 </div>
 
-<!-- ACESSO ADMIN -->
 <div class="acesso-admin">
     <a onclick="abrirAdmin()">🔐 VER PEDIDOS RECEBIDOS (SÓ VOCÊ)</a>
 </div>
@@ -102,10 +90,9 @@
 <div id="painel-admin">
     <h3>📋 PEDIDOS DE MÚSICA</h3>
     <div class="lista-pedidos" id="listaPedidos">Nenhum pedido recebido ainda.</div>
-    <button onclick="fecharAdmin()" style="width:auto; margin-top:10px; padding:8px 15px;">FECHAR</button>
+    <button onclick="fecharAdmin()" style="width:auto; margin-top:10px; padding:8px 15px; background:#0040ff; color:#ffcc00; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">FECHAR</button>
 </div>
 
-<!-- RODAPÉ EDITÁVEL -->
 <footer>
     <div class="rodape-info">
         <h3>WEB RÁDIO ORDINÁRIA RUSSAS</h3>
@@ -123,31 +110,44 @@
 let pedidosRecebidos = [];
 
 function enviarPedido() {
-    let nome = document.getElementById('nomeOuvinte').value.trim();
-    let musica = document.getElementById('musicaPedido').value.trim();
-    if(nome && musica) {
-        pedidosRecebidos.push({nome, musica, hora: new Date().toLocaleString()});
-        alert('✅ Pedido enviado com sucesso! Obrigado.');
-        document.getElementById('nomeOuvinte').value = '';
-        document.getElementById('musicaPedido').value = '';
-        atualizarLista();
-    } else {
-        alert('⚠️ Preencha os dois campos corretamente!');
+    const nome = document.getElementById('nomeOuvinte').value.trim();
+    const musica = document.getElementById('musicaPedido').value.trim();
+
+    if(!nome || !musica) {
+        alert('⚠️ Preencha os dois campos! Nome e Música.');
+        return;
     }
+
+    pedidosRecebidos.push({
+        nome: nome,
+        musica: musica,
+        hora: new Date().toLocaleString('pt-BR')
+    });
+
+    alert('✅ Pedido enviado com sucesso! Obrigado.');
+    document.getElementById('nomeOuvinte').value = '';
+    document.getElementById('musicaPedido').value = '';
+    atualizarLista();
 }
 
 function abrirAdmin() {
     document.getElementById('painel-admin').style.display = 'block';
     atualizarLista();
 }
+
 function fecharAdmin() {
     document.getElementById('painel-admin').style.display = 'none';
 }
+
 function atualizarLista() {
-    let lista = document.getElementById('listaPedidos');
-    lista.innerHTML = pedidosRecebidos.length ? '' : 'Nenhum pedido recebido ainda.';
-    pedidosRecebidos.forEach((p, i) => {
-        lista.innerHTML += <p>${i+1}. ${p.nome} → ${p.musica} <small>(${p.hora})</small></p>;
+    const lista = document.getElementById('listaPedidos');
+    if(pedidosRecebidos.length === 0) {
+        lista.innerHTML = 'Nenhum pedido recebido ainda.';
+        return;
+    }
+    lista.innerHTML = '';
+    pedidosRecebidos.forEach((item, indice) => {
+        lista.innerHTML += <p style="margin:8px 0; padding:6px; border-bottom:1px solid #445588;">${indice+1}. ${item.nome} → ${item.musica} <small>(${item.hora})</small></p>;
     });
 }
 </script>
