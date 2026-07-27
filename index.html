@@ -4,15 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RÁDIO MANOEL CORPOS</title>
+    <title>RÁDIO MANOEL CORPUS</title>
     <style>
-        /* VISUAL AZUL E AMARELO - SEM VERMELHO */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
         body { background-color: #101828; color: #fff; }
 
-        /* CABEÇALHO AZUL */
         header { background: linear-gradient(#003399, #001a4d); padding: 15px; text-align: center; border-bottom: 3px solid #FFCC00; }
-        .imagem-topo { max-width: 100%; height: auto; margin-bottom: 8px; }
+        .imagem-topo { max-width: 900px; width: 100%; height: auto; margin-bottom: 8px; border-radius: 4px; }
         h1 { color: #FFCC00; font-size: 32px; text-transform: uppercase; margin-bottom: 8px; }
         .frase-topo { color: #fff; font-size: 18px; font-weight: bold; }
 
@@ -21,7 +19,6 @@
 
         .conteudo { max-width: 1100px; margin: 20px auto; padding: 0 15px; display: flex; flex-wrap: wrap; gap: 20px; }
 
-        /* LATERAL - MURAIS */
         .lateral { flex: 1 1 280px; }
         .mural { background: #1a2744; border: 2px solid #FFCC00; border-radius: 8px; padding: 10px; margin-bottom: 20px; }
         .mural img { width: 100%; height: auto; border-radius: 4px; }
@@ -40,19 +37,20 @@
         #painel-admin h2 { color: #FFCC00; margin-bottom: 15px; }
         .lista { background: #243866; padding: 10px; border-radius: 4px; }
 
-        footer { background: #000; text-align: center; padding: 15px; border-top: 2px solid #FFCC00; margin-top: 20px; }
+        footer { background: #000; text-align: center; padding: 20px 15px; border-top: 2px solid #FFCC00; margin-top: 20px; }
+        .espaco-edicao { max-width: 1000px; margin: 0 auto 15px; padding: 10px; border: 1px solid #333; border-radius: 4px; }
+        .espaco-edicao h3 { color: #FFCC00; margin-bottom: 8px; }
+        .espaco-edicao p { margin: 5px 0; font-size: 15px; }
     </style>
 </head>
 <body>
 
-<!-- CABEÇALHO COM SUA IMAGEM PNG -->
 <header>
-    <img src="topo.png" alt="Rádio Manoel Corpos" class="imagem-topo">
-    <h1>RÁDIO MANOEL CORPOS</h1>
+    <img src="https://i.imgur.com/8ZbKzLq.png" alt="Mesa de Som e Microfone" class="imagem-topo">
+    <h1>RÁDIO MANOEL CORPUS</h1>
     <p class="frase-topo">Agora estamos online, só um minuto!</p>
 </header>
 
-<!-- PLAYER DA RÁDIO -->
 <div class="player-area">
     <audio controls autoplay preload="auto">
         <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
@@ -61,17 +59,15 @@
 </div>
 
 <div class="conteudo">
-    <!-- LATERAL COM MURAIS -->
     <div class="lateral">
         <div class="mural">
-            <img src="mural1.png" alt="Mural 1">
+            <img src="https://i.imgur.com/9XyWpR8.png" alt="Apresentador com Microfone">
         </div>
         <div class="mural">
-            <img src="mural2.png" alt="Mural 2">
+            <img src="https://i.imgur.com/7DcFbA2.png" alt="Lendo a Bíblia">
         </div>
     </div>
 
-    <!-- ÁREA PRINCIPAL: SÓ PEDIR MÚSICA -->
     <div class="centro">
         <div class="bloco">
             <h3>🎵 PEDIR SUA MÚSICA</h3>
@@ -82,7 +78,6 @@
     </div>
 </div>
 
-<!-- ACESSO ADMINISTRATIVO SÓ PARA VOCÊ -->
 <div class="admin-link">
     <a onclick="mostraAdmin()">🔐 VER PEDIDOS (SÓ VOCÊ)</a>
 </div>
@@ -91,43 +86,38 @@
     <h2>PAINEL DE CONTROLE</h2>
     <h3>📋 Pedidos de Música:</h3>
     <div class="lista" id="listaPedidos">Nenhum pedido ainda.</div>
-
     <button onclick="fechaAdmin()" style="width:auto; margin-top:10px;">FECHAR PAINEL</button>
 </div>
 
 <footer>
-    <p>© 2026 RÁDIO MANOEL CORPOS - Todos os direitos reservados</p>
+    <div class="espaco-edicao">
+        <h3>📅 PROGRAMAÇÃO E PATROCINADORES</h3>
+        <p><strong>PROGRAMA:</strong> [Coloque aqui o nome do programa e horário]</p>
+        <p><strong>PATROCINADORES:</strong> [Coloque aqui os nomes dos patrocinadores]</p>
+        <p><strong>AVISOS:</strong> [Coloque aqui recados importantes]</p>
+    </div>
+    <p>© 2026 RÁDIO MANOEL CORPUS - Todos os direitos reservados</p>
 </footer>
 
 <script>
 let pedidos = [];
-
 function enviaPedido() {
     let n = document.getElementById('nomeP').value.trim();
     let m = document.getElementById('musicaP').value.trim();
     if(n && m) {
         pedidos.push({nome:n, musica:m, hora: new Date().toLocaleString()});
-        alert('✅ Pedido enviado com sucesso! Obrigado.');
+        alert('✅ Pedido enviado com sucesso!');
         document.getElementById('nomeP').value = '';
         document.getElementById('musicaP').value = '';
         atualizaAdmin();
-    } else {
-        alert('⚠️ Preencha os dois campos!');
-    }
+    } else { alert('⚠️ Preencha os dois campos!'); }
 }
-
-function mostraAdmin() {
-    document.getElementById('painel-admin').style.display = 'block';
-    atualizaAdmin();
-}
-function fechaAdmin() {
-    document.getElementById('painel-admin').style.display = 'none';
-}
+function mostraAdmin() { document.getElementById('painel-admin').style.display = 'block'; atualizaAdmin(); }
+function fechaAdmin() { document.getElementById('painel-admin').style.display = 'none'; }
 function atualizaAdmin() {
     let lp = document.getElementById('listaPedidos');
     lp.innerHTML = pedidos.length ? '' : 'Nenhum pedido ainda.';
-    pedidos.forEach((p,i) => lp.innerHTML += `<p>${i+1}. ${
-p.nome} → ${p.musica} <small>(${p.hora})</small></p>`);
+    pedidos.forEach((p,i) => lp.innerHTML += <p>${i+1}. ${p.nome} → ${p.musica} <small>(${p.hora})</small></p>);
 }
 </script>
 </body>
