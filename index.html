@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -5,150 +6,139 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Rádio Ordinária Russas</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background: #0f172a; color: #fff; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { background: linear-gradient(180deg, #050b24 0%, #101a40 100%); color: #fff; min-height: 100vh; }
 
-        header { background: linear-gradient(135deg, #003399, #001a4d); padding: 20px 15px; text-align: center; border-bottom: 3px solid #ffcc00; }
-        .logo-img { max-width: 850px; width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; }
-        h1 { color: #ffcc00; font-size: 36px; text-transform: uppercase; }
-        .slogan { color: #e0e0e0; font-size: 18px; margin-top: 5px; }
+        /* CABEÇALHO COM LOGO */
+        header { background: linear-gradient(135deg, #002b80, #001540); padding: 25px 15px; text-align: center; border-bottom: 4px solid #ffcc00; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
+        .logo-box { max-width: 700px; margin: 0 auto; background: rgba(255,255,255,0.05); border: 2px solid #ffcc00; border-radius: 12px; padding: 20px; }
+        .logo-titulo { font-size: 38px; font-weight: bold; color: #ffcc00; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px; }
+        .logo-sub { font-size: 18px; color: #fff; margin-bottom: 5px; }
+        .logo-fone { font-size: 16px; color: #ffcc00; font-weight: bold; }
 
-        .player-container { background: #000; padding: 25px 15px; text-align: center; border-bottom: 2px solid #ffcc00; }
-        .status-live { color: #ff3333; font-weight: bold; margin-bottom: 10px; font-size: 16px; }
-        .player-container audio { width: 95%; max-width: 750px; height: 45px; }
+        /* PLAYER ESTILIZADO */
+        .player-area { background: #000; padding: 30px 15px; text-align: center; border-bottom: 2px solid #ffcc00; }
+        .live-tag { color: #ff3333; font-weight: bold; font-size: 18px; margin-bottom: 12px; animation: piscar 1s infinite; }
+        @keyframes piscar { 0% {opacity:1;} 50% {opacity:0.5;} 100% {opacity:1;} }
+        .player-area audio { width: 95%; max-width: 750px; height: 50px; border-radius: 8px; }
 
-        .conteudo { max-width: 1200px; margin: 25px auto; padding: 0 15px; display: flex; flex-wrap: wrap; gap: 25px; }
+        /* CONTEÚDO PRINCIPAL */
+        .conteudo { max-width: 800px; margin: 40px auto; padding: 0 15px; }
+        .bloco-pedido { background: rgba(255,255,255,0.05); border: 2px solid #ffcc00; border-radius: 12px; padding: 30px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .bloco-pedido h2 { color: #ffcc00; font-size: 26px; text-align: center; margin-bottom: 20px; }
+        .campo { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ffcc00; border-radius: 8px; background: rgba(0,0,0,0.4); color: #fff; font-size: 16px; }
+        .campo::placeholder { color: #aaa; }
+        .btn-enviar { width: 100%; padding: 15px; background: #0040ff; color: #ffcc00; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.3s; }
+        .btn-enviar:hover { background: #0033cc; transform: translateY(-2px); }
 
-        .lateral { flex: 1 1 300px; }
-        . { background: #1e294b; border: 2px solid #ffcc00; border-radius: 10px; padding: 12px; margin-bottom: 20px; }
-        . { width: 100%; height: auto; border-radius: 6px; }
-        .titulo-anuncio { color: #ffcc00; font-weight: bold; margin-bottom: 8px; text-align: center; }
+        /* ÁREA ADMINISTRATIVA */
+        .link-admin { text-align: center; margin: 25px 0; }
+        .link-admin a { color: #ffcc00; font-size: 16px; font-weight: bold; text-decoration: underline; cursor: pointer; }
+        #painel-admin { display: none; max-width: 800px; margin: 0 auto 30px; padding: 25px; background: rgba(255,255,255,0.05); border: 2px solid #ffcc00; border-radius: 12px; }
+        #painel-admin h3 { color: #ffcc00; margin-bottom: 15px; font-size: 20px; }
+        .lista-pedidos { background: rgba(0,0,0,0.4); padding: 15px; border-radius: 8px; min-height: 50px; }
+        .item-pedido { padding: 8px 0; border-bottom: 1px solid #334477; font-size: 15px; }
+        .item-pedido:last-child { border: none; }
+        .btn-fechar { padding: 8px 20px; background: #0040ff; color: #ffcc00; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; }
 
-        .principal { flex: 2 1 500px; }
-        .bloco-pedido { background: #1e294b; border: 2px solid #ffcc00; border-radius: 10px; padding: 25px; }
-        .bloco-pedido h2 { color: #ffcc00; margin-bottom: 15px; font-size: 22px; text-align: center; }
-        .campo { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ffcc00; border-radius: 6px; background: #2a3a66; color: #fff; font-size: 15px; }
-        .btn-pedir { width: 100%; padding: 14px; background: #0040ff; color: #ffcc00; border: none; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; }
-        .btn-pedir:hover { background: #0033cc; }
-
-        .acesso-admin { text-align: center; margin: 20px 0; }
-        .acesso-admin a { color: #ffcc00; text-decoration: underline; cursor: pointer; font-weight: bold; }
-        #painel-admin { display: none; max-width: 1100px; margin: 0 auto 25px; padding: 20px; background: #1e294b; border: 2px solid #ffcc00; border-radius: 10px; }
-        #painel-admin h3 { color: #ffcc00; margin-bottom: 15px; }
-        .lista-pedidos { background: #2a3a66; padding: 12px; border-radius: 6px; min-height: 40px; }
-
-        footer { background: #000; padding: 25px 15px; border-top: 3px solid #ffcc00; margin-top: 30px; text-align: center; }
-        .rodape-info { max-width: 1000px; margin: 0 auto 15px; }
-        .rodape-info h3 { color: #ffcc00; font-size: 20px; margin-bottom: 10px; }
-        .rodape-info p { margin: 5px 0; font-size: 15px; color: #ccc; }
-        .editar-rodape { margin: 10px 0; padding: 10px; border: 1px solid #333; border-radius: 6px; }
-        .copyright { margin-top: 15px; padding-top: 10px; border-top: 1px solid #333; color: #888; font-size: 14px; }
+        /* RODAPÉ */
+        footer { background: #000; padding: 30px 15px; border-top: 3px solid #ffcc00; text-align: center; margin-top: 40px; }
+        .rodape-nome { font-size: 22px; font-weight: bold; color: #ffcc00; margin-bottom: 8px; }
+        .rodape-frase { font-size: 17px; color: #fff; margin-bottom: 10px; }
+        .rodape-copy { font-size: 14px; color: #888; }
     </style>
 </head>
 <body>
 
+<!-- CABEÇALHO COM LOGO -->
 <header>
-    <img src="topo.png" alt="Web Rádio Ordinária Russas" class="logo-img">
-    <h1>WEB RÁDIO ORDINÁRIA RUSSAS</h1>
-    <p class="slogan">A sua melhor companhia, 24h ao vivo!</p>
+    <div class="logo-box">
+        <div class="logo-titulo">WEB RÁDIO ORDINÁRIA RUSSAS</div>
+        <div class="logo-sub">A melhor companhia 24h com você</div>
+        <div class="logo-fone">📞 (88) 99281-1188</div>
+    </div>
 </header>
 
-<div class="player-container">
-    <p class="status-live">🔴 AO VIVO AGORA</p>
+<!-- PLAYER -->
+<div class="player-area">
+    <p class="live-tag">🔴 TRANSMITINDO AO VIVO</p>
     <audio controls autoplay preload="auto">
         <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
         Seu navegador não suporta áudio.
     
 </div>
 
+<!-- PEDIDO DE MÚSICA -->
 <div class="conteudo">
-    <div class="lateral">
-        <div class="anuncio-box">
-            <p class="titulo-anuncio">📢 ANÚNCIO 1</p>
-            <img src="anuncio1.png" alt="Espaço para anúncio">
-        </div>
-        <div class="anuncio-box">
-            <p class="titulo-anuncio">📢 ANÚNCIO 2</p>
-            <img src="anuncio2.png" alt="Espaço para anúncio">
-        </div>
-    </div>
-
-    <div class="principal">
-        <div class="bloco-pedido">
-            <h2>🎵 PEÇA SUA MÚSICA</h2>
-            <input type="text" id="nomeOuvinte" class="campo" placeholder="Seu nome completo">
-            <input type="text" id="musicaPedido" class="campo" placeholder="Nome da música + artista">
-            <button class="btn-pedir" onclick="enviarPedido()">ENVIAR PEDIDO</button>
-        </div>
+    <div class="bloco-pedido">
+        <h2>🎵 PEÇA SUA MÚSICA</h2>
+        <input type="text" id="nomeOuvinte" class="campo" placeholder="Digite seu nome">
+        <input type="text" id="musicaEscolhida" class="campo" placeholder="Nome da música e artista">
+        <button class="btn-enviar" onclick="enviar()">ENVIAR PEDIDO</button>
     </div>
 </div>
 
-<div class="acesso-admin">
-    <a onclick="abrirAdmin()">🔐 VER PEDIDOS RECEBIDOS (SÓ VOCÊ)</a>
+<!-- ACESSO ADMIN -->
+<div class="link-admin">
+    <a onclick="verPedidos()">🔐 VER PEDIDOS RECEBIDOS (SÓ VOCÊ)</a>
 </div>
 
 <div id="painel-admin">
-    <h3>📋 PEDIDOS DE MÚSICA</h3>
-    <div class="lista-pedidos" id="listaPedidos">Nenhum pedido recebido ainda.</div>
-    <button onclick="fecharAdmin()" style="width:auto; margin-top:10px; padding:8px 15px; background:#0040ff; color:#ffcc00; border:none; border-radius:4px; font-weight:bold; cursor:pointer;">FECHAR</button>
+    <h3>📋 LISTA DE PEDIDOS</h3>
+    <div class="lista-pedidos" id="lista">Nenhum pedido recebido ainda.</div>
+    <button class="btn-fechar" onclick="fecharPainel()">FECHAR</button>
 </div>
 
+<!-- RODAPÉ -->
 <footer>
-    <div class="rodape-info">
-        <h3>WEB RÁDIO ORDINÁRIA RUSSAS</h3>
-        <div class="editar-rodape">
-            <p><strong>PROGRAMAÇÃO:</strong> [Coloque aqui horários e nomes dos programas]</p>
-            <p><strong>PATROCINADORES:</strong> [Coloque aqui os parceiros]</p>
-            <p><strong>CONTATO:</strong> [Seu telefone ou e-mail]</p>
-        </div>
-        <p>Transmitindo a melhor música e informação para Russas e região!</p>
-    </div>
-    <div class="copyright">© 2026 Web Rádio Ordinária Russas - Todos os direitos reservados</div>
+    <div class="rodape-nome">WEB RÁDIO ORDINÁRIA RUSSAS</div>
+    <div class="rodape-frase">A melhor companhia 24h com você</div>
+    <div class="rodape-copy">© 2026 - Todos os direitos reservados</div>
 </footer>
 
 <script>
-let pedidosRecebidos = [];
+let pedidos = [];
 
-function enviarPedido() {
+function enviar() {
     let nome = document.getElementById('nomeOuvinte').value.trim();
-    let musica = document.getElementById('musicaPedido').value.trim();
+    let musica = document.getElementById('musicaEscolhida').value.trim();
 
     if (!nome || !musica) {
-        alert('⚠️ Preencha o nome e a música!');
+        alert('⚠️ Preencha os dois campos!');
         return;
     }
 
-    pedidosRecebidos.push({
+    pedidos.push({
         nome: nome,
         musica: musica,
         hora: new Date().toLocaleString('pt-BR')
     });
 
-    alert('✅ Pedido enviado com sucesso!');
+    alert('✅ Pedido enviado com sucesso! Obrigado.');
     document.getElementById('nomeOuvinte').value = '';
-    document.getElementById('musicaPedido').value = '';
+    document.getElementById('musicaEscolhida').value = '';
     atualizarLista();
 }
 
-function abrirAdmin() {
+function verPedidos() {
     document.getElementById('painel-admin').style.display = 'block';
     atualizarLista();
 }
 
-function fecharAdmin() {
+function fecharPainel() {
     document.getElementById('painel-admin').style.display = 'none';
 }
 
 function atualizarLista() {
-    let lista = document.getElementById('listaPedidos');
-    if (pedidosRecebidos.length === 0) {
+    let lista = document.getElementById('lista');
+    if (pedidos.length === 0) {
         lista.innerHTML = 'Nenhum pedido recebido ainda.';
         return;
     }
     lista.innerHTML = '';
-    for (let i = 0; i < pedidosRecebidos.length; i++) {
-        lista.innerHTML += <p style="margin:8px 0; padding:6px; border-bottom:1px solid #445588;">${i+1}. ${pedidosRecebidos[i].nome} → ${pedidosRecebidos[i].musica} <small>(${pedidosRecebidos[i].hora})</small></p>;
-    }
+    pedidos.forEach((p, i) => {
+        lista.innerHTML += <div class="item-pedido">${i+1}. ${p.nome} → ${p.musica} <small>(${p.hora})</small></div>;
+    });
 }
 </script>
 </body>
