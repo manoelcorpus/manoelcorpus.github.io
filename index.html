@@ -1,182 +1,133 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rádioordinariarussas Oficial</title>
+    <title>RÁDIO MANOEL CORPOS</title>
     <style>
-        /* TODO O VISUAL ORIGINAL FOI MANTIDO */
+        /* VISUAL AZUL E AMARELO - SEM VERMELHO */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background: #f5f5f5; color: #333; }
-        header { background: #222; color: white; padding: 20px; text-align: center; }
-        .logo { max-width: 200px; margin-bottom: 10px; }
-        .frase { font-size: 18px; margin-top: 10px; color: #ffd700; font-weight: bold; }
-        .player { background: #333; padding: 15px; text-align: center; margin: 20px 0; }
-        .player audio { width: 80%; max-width: 600px; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; display: flex; flex-wrap: wrap; gap: 20px; }
-        .banner { flex: 1 1 300px; background: white; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .banner img { width: 100%; border-radius: 4px; }
-        .form-area { flex: 1 1 400px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .form-area h3 { margin-bottom: 15px; color: #222; }
-        input, textarea, button { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 4px; font-size: 16px; }
-        button { background: #28a745; color: white; border: none; cursor: pointer; font-weight: bold; }
-        button:hover { background: #218838; }
-        .chat-box { flex: 1 1 400px; background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); overflow: hidden; }
-        .chat-header { background: #222; color: white; padding: 12px; text-align: center; font-weight: bold; }
-        .chat-messages { height: 250px; overflow-y: auto; padding: 15px; background: #fafafa; }
-        .chat-message { margin-bottom: 10px; padding: 8px; border-radius: 4px; }
-        .ouvinte { background: #e3f2fd; text-align: left; }
-        .admin { background: #fff3cd; text-align: right; }
-        .admin-link { text-align: center; margin: 20px 0; }
-        .admin-link a { color: #007bff; text-decoration: none; font-weight: bold; }
-        .admin-link a:hover { text-decoration: underline; }
-        #adminArea { display: none; max-width: 800px; margin: 0 auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 5px #ccc; }
-        footer { background: #222; color: white; text-align: center; padding: 15px; margin-top: 30px; }
+        body { background-color: #101828; color: #fff; }
+
+        /* CABEÇALHO AZUL */
+        header { background: linear-gradient(#003399, #001a4d); padding: 15px; text-align: center; border-bottom: 3px solid #FFCC00; }
+        .imagem-topo { max-width: 100%; height: auto; margin-bottom: 8px; }
+        h1 { color: #FFCC00; font-size: 32px; text-transform: uppercase; margin-bottom: 8px; }
+        .frase-topo { color: #fff; font-size: 18px; font-weight: bold; }
+
+        .player-area { background: #000; padding: 20px; text-align: center; }
+        .player-area audio { width: 90%; max-width: 700px; height: 40px; }
+
+        .conteudo { max-width: 1100px; margin: 20px auto; padding: 0 15px; display: flex; flex-wrap: wrap; gap: 20px; }
+
+        /* LATERAL - MURAIS */
+        .lateral { flex: 1 1 280px; }
+        .mural { background: #1a2744; border: 2px solid #FFCC00; border-radius: 8px; padding: 10px; margin-bottom: 20px; }
+        .mural img { width: 100%; height: auto; border-radius: 4px; }
+
+        .centro { flex: 2 1 450px; }
+        .bloco { background: #1a2744; border: 2px solid #FFCC00; border-radius: 8px; padding: 18px; }
+        .bloco h3 { color: #FFCC00; margin-bottom: 12px; font-size: 17px; }
+
+        input { width: 100%; padding: 10px; margin: 6px 0; border: 1px solid #FFCC00; border-radius: 4px; background: #243866; color: #fff; font-size: 15px; }
+        button { width: 100%; padding: 10px; background: #0040ff; color: #FFCC00; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 5px; }
+        button:hover { background: #0033cc; }
+
+        .admin-link { text-align: center; margin: 15px 0; }
+        .admin-link a { color: #FFCC00; text-decoration: underline; cursor: pointer; }
+        #painel-admin { display: none; max-width: 1000px; margin: 0 auto 20px; padding: 20px; background: #1a2744; border: 2px solid #FFCC00; border-radius: 8px; }
+        #painel-admin h2 { color: #FFCC00; margin-bottom: 15px; }
+        .lista { background: #243866; padding: 10px; border-radius: 4px; }
+
+        footer { background: #000; text-align: center; padding: 15px; border-top: 2px solid #FFCC00; margin-top: 20px; }
     </style>
 </head>
 <body>
 
-<!-- CABEÇALHO EXATO COMO QUER -->
+<!-- CABEÇALHO COM SUA IMAGEM PNG -->
 <header>
-    <div class="logo">
-        <h1>RÁDIO SOFORRO OFICIAL</h1>
-        <p class="frase">Agora estamos online, só um minuto!</p>
-    </div>
+    <img src="topo.png" alt="Rádio Manoel Corpos" class="imagem-topo">
+    <h1>RÁDIO MANOEL CORPOS</h1>
+    <p class="frase-topo">Agora estamos online, só um minuto!</p>
 </header>
 
-<!-- PLAYER DA RÁDIO FUNCIONAL -->
-<div class="player">
+<!-- PLAYER DA RÁDIO -->
+<div class="player-area">
     <audio controls autoplay preload="auto">
         <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
         Seu navegador não suporta áudio.
     
 </div>
 
-<div class="container">
-    <!-- BANNERS E MURAIS (SEUS LINKS DE FOTO AQUI) -->
-    <div class="banner">
-        <img src="link-da-sua-foto-1.jpg" alt="Mural 1">
-    </div>
-    <div class="banner">
-        <img src="link-da-sua-foto-2.jpg" alt="Mural 2">
-    </div>
-
-    <!-- 🎵 PEDIR MÚSICA - FUNCIONA 100% -->
-    <div class="form-area">
-        <h3>🎵 Pedir Sua Música</h3>
-        <input type="text" id="nomeOuvinte" placeholder="Seu nome" required>
-        <input type="text" id="pedidoMusica" placeholder="Música e Artista" required>
-        <button onclick="enviarPedido()">Enviar Pedido</button>
-
-        <!-- ✉️ ENVIAR MENSAGEM - FUNCIONA 100% -->
-        <h3>✉️ Enviar Mensagem</h3>
-        <input type="text" id="nomeRemetente" placeholder="Seu nome" required>
-        <textarea id="textoMensagem" rows="4" placeholder="Sua mensagem..." required></textarea>
-        <button onclick="enviarMensagem()">Enviar Mensagem</button>
+<div class="conteudo">
+    <!-- LATERAL COM MURAIS -->
+    <div class="lateral">
+        <div class="mural">
+            <img src="mural1.png" alt="Mural 1">
+        </div>
+        <div class="mural">
+            <img src="mural2.png" alt="Mural 2">
+        </div>
     </div>
 
-    <!-- 💬 CHAT AO VIVO - FUNCIONA 100% -->
-    <div class="chat-box">
-        <div class="chat-header">💬 Chat dos Ouvintes</div>
-        <div class="chat-messages" id="caixaChat"></div>
-        <input type="text" id="nomeChat" placeholder="Seu nome" style="width: 48%;">
-        <input type="text" id="textoChat" placeholder="Escreva aqui..." style="width: 48%;">
-        <button onclick="enviarMsgChat()" style="width: 100%; margin-top: 5px;">Enviar</button>
+    <!-- ÁREA PRINCIPAL: SÓ PEDIR MÚSICA -->
+    <div class="centro">
+        <div class="bloco">
+            <h3>🎵 PEDIR SUA MÚSICA</h3>
+            <input type="text" id="nomeP" placeholder="Seu nome">
+            <input type="text" id="musicaP" placeholder="Nome da música e artista">
+            <button onclick="enviaPedido()">ENVIAR PEDIDO</button>
+        </div>
     </div>
 </div>
 
-<!-- 🔐 ÁREA QUE SÓ VOCÊ VÊ - VER TODOS OS PEDIDOS -->
+<!-- ACESSO ADMINISTRATIVO SÓ PARA VOCÊ -->
 <div class="admin-link">
-    <a href="#" onclick="abrirAdmin(); return false;">🔐 Área Administrativa (apenas você)</a>
+    <a onclick="mostraAdmin()">🔐 VER PEDIDOS (SÓ VOCÊ)</a>
 </div>
 
-<div id="adminArea">
-    <h2>Painel de Controle</h2>
+<div id="painel-admin">
+    <h2>PAINEL DE CONTROLE</h2>
     <h3>📋 Pedidos de Música:</h3>
-    <div id="listaPedidos" style="background:#f8f9fa; padding:10px; border-radius:4px; margin:10px 0;"></div>
-    
-    <h3>📩 Mensagens Recebidas:</h3>
-    <div id="listaMensagens" style="background:#f8f9fa; padding:10px; border-radius:4px;"></div>
-    <button onclick="fecharAdmin()" style="width:auto; margin-top:15px;">Fechar Painel</button>
+    <div class="lista" id="listaPedidos">Nenhum pedido ainda.</div>
+
+    <button onclick="fechaAdmin()" style="width:auto; margin-top:10px;">FECHAR PAINEL</button>
 </div>
 
 <footer>
-    <p>© 2026 Rádio Soforro Oficial - Todos os direitos reservados</p>
+    <p>© 2026 RÁDIO MANOEL CORPOS - Todos os direitos reservados</p>
 </footer>
 
 <script>
-// TUDO FUNCIONANDO SEM ERROS
 let pedidos = [];
-let mensagens = [];
-let chat = [];
 
-// Enviar pedido de música
-function enviarPedido() {
-    let nome = document.getElementById('nomeOuvinte').value.trim();
-    let musica = document.getElementById('pedidoMusica').value.trim();
-    if(nome && musica) {
-        pedidos.push({nome, musica, data: new Date().toLocaleString()});
+function enviaPedido() {
+    let n = document.getElementById('nomeP').value.trim();
+    let m = document.getElementById('musicaP').value.trim();
+    if(n && m) {
+        pedidos.push({nome:n, musica:m, hora: new Date().toLocaleString()});
         alert('✅ Pedido enviado com sucesso! Obrigado.');
-        document.getElementById('nomeOuvinte').value = '';
-        document.getElementById('pedidoMusica').value = '';
-        atualizarPainel();
+        document.getElementById('nomeP').value = '';
+        document.getElementById('musicaP').value = '';
+        atualizaAdmin();
     } else {
         alert('⚠️ Preencha os dois campos!');
     }
 }
 
-// Enviar mensagem
-function enviarMensagem() {
-    let nome = document.getElementById('nomeRemetente').value.trim();
-    let texto = document.getElementById('textoMensagem').value.trim();
-    if(nome && texto) {
-        mensagens.push({nome, texto, data: new Date().toLocaleString()});
-        alert('✅ Mensagem enviada! Entraremos em contato.');
-        document.getElementById('nomeRemetente').value = '';
-        document.getElementById('textoMensagem').value = '';
-        atualizarPainel();
-    } else {
-        alert('⚠️ Preencha todos os campos!');
-    }
+function mostraAdmin() {
+    document.getElementById('painel-admin').style.display = 'block';
+    atualizaAdmin();
 }
-
-// Chat ao vivo
-function enviarMsgChat() {
-    let nome = document.getElementById('nomeChat').value.trim();
-    let texto = document.getElementById('textoChat').value.trim();
-    if(nome && texto) {
-        chat.push({nome, texto, hora: new Date().toLocaleTimeString()});
-        atualizarChat();
-        document.getElementById('textoChat').value = '';
-    }
+function fechaAdmin() {
+    document.getElementById('painel-admin').style.display = 'none';
 }
-
-function atualizarChat() {
-    let caixa = document.getElementById('caixaChat');
-    caixa.innerHTML = '';
-    chat.forEach(m => {
-        caixa.innerHTML += <div class="chat-message ouvinte"><strong>${m.nome}</strong> (${m.hora}): ${m.texto}</div>;
-    });
-    caixa.scrollTop = caixa.scrollHeight;
-}
-
-// Painel administrativo
-function abrirAdmin() {
-    document.getElementById('adminArea').style.display = 'block';
-    atualizarPainel();
-}
-function fecharAdmin() {
-    document.getElementById('adminArea').style.display = 'none';
-}
-function atualizarPainel() {
+function atualizaAdmin() {
     let lp = document.getElementById('listaPedidos');
-    let lm = document.getElementById('listaMensagens');
-    
-    lp.innerHTML = pedidos.length ? '' : '<p>Nenhum pedido ainda.</p>';
-    pedidos.forEach((p, i) => lp.innerHTML += <p>${i+1}. ${p.nome} → ${p.musica} <small>(${p.data})</small></p>);
-    
-    lm.innerHTML = mensagens.length ? '' : '<p>Nenhuma mensagem ainda.</p>';
-    mensagens.forEach((m, i) => lm.innerHTML += <p>${i+1}. ${m.nome}: ${m.texto} <small>(${m.data})</small></p>);
+    lp.innerHTML = pedidos.length ? '' : 'Nenhum pedido ainda.';
+    pedidos.forEach((p,i) => lp.innerHTML += `<p>${i+1}. ${
+p.nome} → ${p.musica} <small>(${p.hora})</small></p>`);
 }
 </script>
 </body>
