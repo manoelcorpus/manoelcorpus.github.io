@@ -1,18 +1,17 @@
-
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RÁDIO MANOEL CORPUS</title>
+    <title>RÁDIO MANOEL CORPOS</title>
     <style>
+        /* VISUAL AZUL E AMARELO - SEM VERMELHO */
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
         body { background-color: #101828; color: #fff; }
 
+        /* CABEÇALHO AZUL */
         header { background: linear-gradient(#003399, #001a4d); padding: 15px; text-align: center; border-bottom: 3px solid #FFCC00; }
-        .imagem-topo { max-width: 900px; width: 100%; height: auto; margin-bottom: 8px; border-radius: 4px; }
+        .imagem-topo { max-width: 100%; height: auto; margin-bottom: 8px; }
         h1 { color: #FFCC00; font-size: 32px; text-transform: uppercase; margin-bottom: 8px; }
         .frase-topo { color: #fff; font-size: 18px; font-weight: bold; }
 
@@ -21,6 +20,7 @@
 
         .conteudo { max-width: 1100px; margin: 20px auto; padding: 0 15px; display: flex; flex-wrap: wrap; gap: 20px; }
 
+        /* LATERAL - MURAIS */
         .lateral { flex: 1 1 280px; }
         .mural { background: #1a2744; border: 2px solid #FFCC00; border-radius: 8px; padding: 10px; margin-bottom: 20px; }
         .mural img { width: 100%; height: auto; border-radius: 4px; }
@@ -44,13 +44,14 @@
 </head>
 <body>
 
+<!-- CABEÇALHO COM SUA IMAGEM PNG -->
 <header>
-    <!-- IMAGEM DO TOPO JÁ COLOCADA -->
-    <img src="https://i.imgur.com/8ZbKzLq.png" alt="Microfone e Mesa de Som" class="imagem-topo">
+    <img src="topo.png" alt="Rádio Manoel Corpos" class="imagem-topo">
     <h1>RÁDIO MANOEL CORPOS</h1>
     <p class="frase-topo">Agora estamos online, só um minuto!</p>
 </header>
 
+<!-- PLAYER DA RÁDIO -->
 <div class="player-area">
     <audio controls autoplay preload="auto">
         <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
@@ -59,17 +60,17 @@
 </div>
 
 <div class="conteudo">
+    <!-- LATERAL COM MURAIS -->
     <div class="lateral">
         <div class="mural">
-            <!-- IMAGEM 1 LATERAL JÁ COLOCADA -->
-            <img src="https://i.imgur.com/9XyWpR8.png" alt="Cantando com Microfone">
+            <img src="mural1.png" alt="Mural 1">
         </div>
         <div class="mural">
-            <!-- IMAGEM 2 LATERAL JÁ COLOCADA -->
-            <img src="https://i.imgur.com/7DcFbA2.png" alt="Lendo a Bíblia">
+            <img src="mural2.png" alt="Mural 2">
         </div>
     </div>
 
+    <!-- ÁREA PRINCIPAL: SÓ PEDIR MÚSICA -->
     <div class="centro">
         <div class="bloco">
             <h3>🎵 PEDIR SUA MÚSICA</h3>
@@ -80,6 +81,7 @@
     </div>
 </div>
 
+<!-- ACESSO ADMINISTRATIVO SÓ PARA VOCÊ -->
 <div class="admin-link">
     <a onclick="mostraAdmin()">🔐 VER PEDIDOS (SÓ VOCÊ)</a>
 </div>
@@ -93,7 +95,7 @@
 </div>
 
 <footer>
-    <p>© 2026 RÁDIO MANOEL CORPOS - Todos os direitos reservados</p>
+    <p>© 2026 RÁDIO MANOEL CORPUS - Todos os direitos reservados</p>
 </footer>
 
 <script>
