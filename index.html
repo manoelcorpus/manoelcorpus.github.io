@@ -1,20 +1,132 @@
-index.html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RÁDIO MANOEL CORPOS</title>
+    <style>
+        /* VISUAL AZUL E AMARELO - SEM VERMELHO */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background-color: #101828; color: #fff; }
 
-css/
-style.css
+        /* CABEÇALHO AZUL */
+        header { background: linear-gradient(#003399, #001a4d); padding: 15px; text-align: center; border-bottom: 3px solid #FFCC00; }
+        .imagem-topo { max-width: 100%; height: auto; margin-bottom: 8px; }
+        h1 { color: #FFCC00; font-size: 32px; text-transform: uppercase; margin-bottom: 8px; }
+        .frase-topo { color: #fff; font-size: 18px; font-weight: bold; }
 
-js/
-script.js
-admin.js
+        .player-area { background: #000; padding: 20px; text-align: center; }
+        .player-area audio { width: 90%; max-width: 700px; height: 40px; }
 
-img/
+        .conteudo { max-width: 1100px; margin: 20px auto; padding: 0 15px; display: flex; flex-wrap: wrap; gap: 20px; }
 
-banner/
+        /* LATERAL - MURAIS */
+        .lateral { flex: 1 1 280px; }
+        .mural { background: #1a2744; border: 2px solid #FFCC00; border-radius: 8px; padding: 10px; margin-bottom: 20px; }
+        .mural img { width: 100%; height: auto; border-radius: 4px; }
 
-noticias/
+        .centro { flex: 2 1 450px; }
+        .bloco { background: #1a2744; border: 2px solid #FFCC00; border-radius: 8px; padding: 18px; }
+        .bloco h3 { color: #FFCC00; margin-bottom: 12px; font-size: 17px; }
 
-firebase.js
+        input { width: 100%; padding: 10px; margin: 6px 0; border: 1px solid #FFCC00; border-radius: 4px; background: #243866; color: #fff; font-size: 15px; }
+        button { width: 100%; padding: 10px; background: #0040ff; color: #FFCC00; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; margin-top: 5px; }
+        button:hover { background: #0033cc; }
 
-admin.html
+        .admin-link { text-align: center; margin: 15px 0; }
+        .admin-link a { color: #FFCC00; text-decoration: underline; cursor: pointer; }
+        #painel-admin { display: none; max-width: 1000px; margin: 0 auto 20px; padding: 20px; background: #1a2744; border: 2px solid #FFCC00; border-radius: 8px; }
+        #painel-admin h2 { color: #FFCC00; margin-bottom: 15px; }
+        .lista { background: #243866; padding: 10px; border-radius: 4px; }
 
-README.md
+        footer { background: #000; text-align: center; padding: 15px; border-top: 2px solid #FFCC00; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<!-- CABEÇALHO COM NOME CORRETO E IMAGEM -->
+<header>
+    <img src="topo.png" alt="Rádio Manoel Corpos" class="imagem-topo">
+    <h1>RÁDIO MANOEL CORPOS</h1>
+    <p class="frase-topo">Agora estamos online, só um minuto!</p>
+</header>
+
+<!-- PLAYER DA RÁDIO -->
+<div class="player-area">
+    <audio controls autoplay preload="auto">
+        <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
+        Seu navegador não suporta áudio.
+    
+</div>
+
+<div class="conteudo">
+    <!-- LATERAL COM MURAIS -->
+    <div class="lateral">
+        <div class="mural">
+            <img src="mural1.png" alt="Mural 1">
+        </div>
+        <div class="mural">
+            <img src="mural2.png" alt="Mural 2">
+        </div>
+    </div>
+
+    <!-- ÁREA PRINCIPAL: PEDIR MÚSICA -->
+    <div class="centro">
+        <div class="bloco">
+            <h3>🎵 PEDIR SUA MÚSICA</h3>
+            <input type="text" id="nomeP" placeholder="Seu nome">
+            <input type="text" id="musicaP" placeholder="Nome da música e artista">
+            <button onclick="enviaPedido()">ENVIAR PEDIDO</button>
+        </div>
+    </div>
+</div>
+
+<!-- ACESSO ADMINISTRATIVO -->
+<div class="admin-link">
+    <a onclick="mostraAdmin()">🔐 VER PEDIDOS (SÓ VOCÊ)</a>
+</div>
+
+<div id="painel-admin">
+    <h2>PAINEL DE CONTROLE</h2>
+    <h3>📋 Pedidos de Música:</h3>
+    <div class="lista" id="listaPedidos">Nenhum pedido ainda.</div>
+
+    <button onclick="fechaAdmin()" style="width:auto; margin-top:10px;">FECHAR PAINEL</button>
+</div>
+
+<footer>
+    <p>© 2026 RÁDIO MANOEL CORPOS - Todos os direitos reservados</p>
+</footer>
+
+<script>
+let pedidos = [];
+
+function enviaPedido() {
+    let n = document.getElementById('nomeP').value.trim();
+    let m = document.getElementById('musicaP').value.trim();
+    if(n && m) {
+        pedidos.push({nome:n, musica:m, hora: new Date().toLocaleString()});
+        alert('✅ Pedido enviado com sucesso! Obrigado.');
+        document.getElementById('nomeP').value = '';
+        document.getElementById('musicaP').value = '';
+        atualizaAdmin();
+    } else {
+        alert('⚠️ Preencha os dois campos!');
+    }
+}
+
+function mostraAdmin() {
+    document.getElementById('painel-admin').style.display = 'block';
+    atualizaAdmin();
+}
+function fechaAdmin() {
+    document.getElementById('painel-admin').style.display = 'none';
+}
+function atualizaAdmin() {
+    let lp = document.getElementById('listaPedidos');
+    lp.innerHTML = pedidos.length ? '' : 'Nenhum pedido ainda.';
+    pedidos.forEach((p,i) => lp.innerHTML += <p>${i+1}. ${p.nome} → ${p.musica} <small>(${p.hora})</small></p>);
+}
+</script>
+</body>
+</html>
