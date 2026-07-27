@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -36,18 +39,15 @@
         #painel-admin h2 { color: #FFCC00; margin-bottom: 15px; }
         .lista { background: #243866; padding: 10px; border-radius: 4px; }
 
-        footer { background: #000; text-align: center; padding: 20px 15px; border-top: 2px solid #FFCC00; margin-top: 20px; }
-        .espaco-edicao { max-width: 1000px; margin: 0 auto 15px; padding: 10px; border: 1px solid #333; border-radius: 4px; }
-        .espaco-edicao h3 { color: #FFCC00; margin-bottom: 8px; }
-        .espaco-edicao p { margin: 5px 0; font-size: 15px; }
+        footer { background: #000; text-align: center; padding: 15px; border-top: 2px solid #FFCC00; margin-top: 20px; }
     </style>
 </head>
 <body>
 
-<!-- CABEÇALHO: COLOQUE SUA IMAGEM COM NOME topo.png -->
 <header>
-    <img src="topo.png" alt="Mesa de Som e Microfone" class="imagem-topo">
-    <h1>RÁDIO MANOEL CORPUS</h1>
+    <!-- IMAGEM DO TOPO JÁ COLOCADA -->
+    <img src="https://i.imgur.com/8ZbKzLq.png" alt="Microfone e Mesa de Som" class="imagem-topo">
+    <h1>RÁDIO MANOEL CORPOS</h1>
     <p class="frase-topo">Agora estamos online, só um minuto!</p>
 </header>
 
@@ -59,13 +59,14 @@
 </div>
 
 <div class="conteudo">
-    <!-- MURAIS: COLOQUE COM NOME mural1.png e mural2.png -->
     <div class="lateral">
         <div class="mural">
-            <img src="mural1.png" alt="Apresentador com Microfone">
+            <!-- IMAGEM 1 LATERAL JÁ COLOCADA -->
+            <img src="https://i.imgur.com/9XyWpR8.png" alt="Cantando com Microfone">
         </div>
         <div class="mural">
-            <img src="mural2.png" alt="Lendo a Bíblia">
+            <!-- IMAGEM 2 LATERAL JÁ COLOCADA -->
+            <img src="https://i.imgur.com/7DcFbA2.png" alt="Lendo a Bíblia">
         </div>
     </div>
 
@@ -87,35 +88,38 @@
     <h2>PAINEL DE CONTROLE</h2>
     <h3>📋 Pedidos de Música:</h3>
     <div class="lista" id="listaPedidos">Nenhum pedido ainda.</div>
+
     <button onclick="fechaAdmin()" style="width:auto; margin-top:10px;">FECHAR PAINEL</button>
 </div>
 
-<!-- RODAPÉ EDITÁVEL -->
 <footer>
-    <div class="espaco-edicao">
-        <h3>📅 PROGRAMAÇÃO E PATROCINADORES</h3>
-        <p><strong>PROGRAMA:</strong> [Coloque aqui nome e horário]</p>
-        <p><strong>PATROCINADORES:</strong> [Coloque aqui os nomes]</p>
-        <p><strong>AVISOS:</strong> [Recados importantes]</p>
-    </div>
-    <p>© 2026 RÁDIO MANOEL CORPUS - Todos os direitos reservados</p>
+    <p>© 2026 RÁDIO MANOEL CORPOS - Todos os direitos reservados</p>
 </footer>
 
 <script>
 let pedidos = [];
+
 function enviaPedido() {
     let n = document.getElementById('nomeP').value.trim();
     let m = document.getElementById('musicaP').value.trim();
     if(n && m) {
         pedidos.push({nome:n, musica:m, hora: new Date().toLocaleString()});
-        alert('✅ Pedido enviado com sucesso!');
+        alert('✅ Pedido enviado com sucesso! Obrigado.');
         document.getElementById('nomeP').value = '';
         document.getElementById('musicaP').value = '';
         atualizaAdmin();
-    } else { alert('⚠️ Preencha os dois campos!'); }
+    } else {
+        alert('⚠️ Preencha os dois campos!');
+    }
 }
-function mostraAdmin() { document.getElementById('painel-admin').style.display = 'block'; atualizaAdmin(); }
-function fechaAdmin() { document.getElementById('painel-admin').style.display = 'none'; }
+
+function mostraAdmin() {
+    document.getElementById('painel-admin').style.display = 'block';
+    atualizaAdmin();
+}
+function fechaAdmin() {
+    document.getElementById('painel-admin').style.display = 'none';
+}
 function atualizaAdmin() {
     let lp = document.getElementById('listaPedidos');
     lp.innerHTML = pedidos.length ? '' : 'Nenhum pedido ainda.';
