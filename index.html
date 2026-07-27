@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Rádio Ordinária Russas</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
         body { background: #0f172a; color: #fff; }
 
         header { background: linear-gradient(135deg, #003399, #001a4d); padding: 20px 15px; text-align: center; border-bottom: 3px solid #ffcc00; }
         .logo-img { max-width: 850px; width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; }
-        h1 { color: #ffcc00; font-size: 36px; text-transform: uppercase; letter-spacing: 1px; }
+        h1 { color: #ffcc00; font-size: 36px; text-transform: uppercase; }
         .slogan { color: #e0e0e0; font-size: 18px; margin-top: 5px; }
 
         .player-container { background: #000; padding: 25px 15px; text-align: center; border-bottom: 2px solid #ffcc00; }
-        .player-container audio { width: 95%; max-width: 750px; height: 45px; border-radius: 4px; }
         .status-live { color: #ff3333; font-weight: bold; margin-bottom: 10px; font-size: 16px; }
+        .player-container audio { width: 95%; max-width: 750px; height: 45px; }
 
         .conteudo { max-width: 1200px; margin: 25px auto; padding: 0 15px; display: flex; flex-wrap: wrap; gap: 25px; }
 
@@ -28,13 +28,13 @@
         .bloco-pedido { background: #1e294b; border: 2px solid #ffcc00; border-radius: 10px; padding: 25px; }
         .bloco-pedido h2 { color: #ffcc00; margin-bottom: 15px; font-size: 22px; text-align: center; }
         .campo { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ffcc00; border-radius: 6px; background: #2a3a66; color: #fff; font-size: 15px; }
-        .btn-pedir { width: 100%; padding: 14px; background: #0040ff; color: #ffcc00; border: none; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; transition: 0.3s; }
-        .btn-pedir:hover { background: #0033cc; transform: scale(1.02); }
+        .btn-pedir { width: 100%; padding: 14px; background: #0040ff; color: #ffcc00; border: none; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; margin-top: 10px; }
+        .btn-pedir:hover { background: #0033cc; }
 
         .acesso-admin { text-align: center; margin: 20px 0; }
-        .acesso-admin a { color: #ffcc00; text-decoration: underline; cursor: pointer; font-weight: bold; font-size: 16px; }
+        .acesso-admin a { color: #ffcc00; text-decoration: underline; cursor: pointer; font-weight: bold; }
         #painel-admin { display: none; max-width: 1100px; margin: 0 auto 25px; padding: 20px; background: #1e294b; border: 2px solid #ffcc00; border-radius: 10px; }
-        #painel-admin h3 { color: #ffcc00; margin-bottom: 15px; font-size: 20px; }
+        #painel-admin h3 { color: #ffcc00; margin-bottom: 15px; }
         .lista-pedidos { background: #2a3a66; padding: 12px; border-radius: 6px; min-height: 40px; }
 
         footer { background: #000; padding: 25px 15px; border-top: 3px solid #ffcc00; margin-top: 30px; text-align: center; }
@@ -110,11 +110,11 @@
 let pedidosRecebidos = [];
 
 function enviarPedido() {
-    const nome = document.getElementById('nomeOuvinte').value.trim();
-    const musica = document.getElementById('musicaPedido').value.trim();
+    let nome = document.getElementById('nomeOuvinte').value.trim();
+    let musica = document.getElementById('musicaPedido').value.trim();
 
-    if(!nome || !musica) {
-        alert('⚠️ Preencha os dois campos! Nome e Música.');
+    if (!nome || !musica) {
+        alert('⚠️ Preencha o nome e a música!');
         return;
     }
 
@@ -124,7 +124,7 @@ function enviarPedido() {
         hora: new Date().toLocaleString('pt-BR')
     });
 
-    alert('✅ Pedido enviado com sucesso! Obrigado.');
+    alert('✅ Pedido enviado com sucesso!');
     document.getElementById('nomeOuvinte').value = '';
     document.getElementById('musicaPedido').value = '';
     atualizarLista();
@@ -140,15 +140,15 @@ function fecharAdmin() {
 }
 
 function atualizarLista() {
-    const lista = document.getElementById('listaPedidos');
-    if(pedidosRecebidos.length === 0) {
+    let lista = document.getElementById('listaPedidos');
+    if (pedidosRecebidos.length === 0) {
         lista.innerHTML = 'Nenhum pedido recebido ainda.';
         return;
     }
     lista.innerHTML = '';
-    pedidosRecebidos.forEach((item, indice) => {
-        lista.innerHTML += <p style="margin:8px 0; padding:6px; border-bottom:1px solid #445588;">${indice+1}. ${item.nome} → ${item.musica} <small>(${item.hora})</small></p>;
-    });
+    for (let i = 0; i < pedidosRecebidos.length; i++) {
+        lista.innerHTML += <p style="margin:8px 0; padding:6px; border-bottom:1px solid #445588;">${i+1}. ${pedidosRecebidos[i].nome} → ${pedidosRecebidos[i].musica} <small>(${pedidosRecebidos[i].hora})</small></p>;
+    }
 }
 </script>
 </body>
