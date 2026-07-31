@@ -1,71 +1,170 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <!-- CABEÇALHO PRONTO PARA APARECER AGORA -->
-<div style="width:100%; max-width:900px; margin:0 auto; overflow:hidden; border-radius:0 0 12px 12px; box-shadow:0 4px 15px rgba(0,0,0,0.3);">
-  <img 
-    src="https://manoelcorpus.github.io/cabecalho-radio.jpg" 
-    alt="Web Rádio Ordinária Russas"
-    style="width:100%; height:auto; display:block; max-height:280px; object-fit:cover;"
-  >
-</div>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Rádio Ordinária Russas</title>
+    <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background: linear-gradient(135deg, #0a2427 0%, #154047 100%); color: #fff; text-align: center; padding: 15px; }
-        
-        .cabecalho { background: linear-gradient(90deg, #003b5c, #0077b6); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 3px solid #ffc107; }
-        .cabecalho h1 { font-size: 28px; color: #ffc107; margin-bottom: 8px; }
-        .cabecalho p { font-size: 18px; font-weight: bold; }
+        body { background: #f5f5f5; color: #333; line-height: 1.5; }
 
-        .player { background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; margin-bottom: 25px; border: 2px solid #ffc107; }
-        .player h2 { color: #ffc107; margin-bottom: 15px; font-size: 22px; }
-        audio { width: 100%; max-width: 450px; }
+        /* BARRA SUPERIOR */
+        .barra-topo { background: #6a0dad; color: white; padding: 8px 15px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+        .player-mini { display: flex; align-items: center; gap: 8px; }
+        .icones-sociais { display: flex; gap: 10px; font-size: 18px; }
 
-        .mural { margin: 30px auto; max-width: 420px; }
-        .mural h2 { color: #ffc107; margin-bottom: 15px; font-size: 22px; }
-        .anuncio { width: 100%; border-radius: 10px; overflow: hidden; box-shadow: 0 0 15px rgba(255,193,7,0.3); }
-        .anuncio img { width: 100%; height: auto; display: block; }
+        /* CABEÇALHO COM LOGOS */
+        .cabecalho-logos { background: #1a1a1a; padding: 15px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; border-bottom: 3px solid #ff0033; }
+        .logo-radio { max-width: 220px; height: auto; }
+        .logo-parceiros { max-width: 300px; height: auto; }
 
-        .botao-whats { display: inline-block; background: #25d366; color: #fff; padding: 15px 25px; border-radius: 50px; text-decoration: none; font-size: 19px; font-weight: bold; margin: 20px 0; transition: 0.3s; }
-        .botao-whats:hover { background: #1da851; transform: scale(1.05); }
+        /* MENU PRINCIPAL */
+        .menu-principal { background: #ff0033; }
+        .menu-principal ul { list-style: none; display: flex; flex-wrap: wrap; }
+        .menu-principal li a { display: block; padding: 12px 15px; color: white; text-decoration: none; font-weight: bold; border-right: 1px solid rgba(255,255,255,0.2); }
+        .menu-principal li a:hover { background: #cc0029; }
 
-        .rodape { margin-top: 40px; padding: 20px; border-top: 2px solid #ffc107; font-size: 16px; color: #ddd; }
+        /* LAYOUT COLUNAS */
+        .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; display: grid; grid-template-columns: 3fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
+
+        /* BLOCOS PADRÃO */
+        .bloco { background: white; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .titulo-bloco { background: #ff0033; color: white; padding: 10px 15px; font-weight: bold; font-size: 17px; }
+        .conteudo-bloco { padding: 15px; }
+
+        /* CARROSSEL BANNER */
+        .carrossel { position: relative; overflow: hidden; }
+        .carrossel img { width: 100%; height: auto; display: none; }
+        .carrossel img.ativo { display: block; }
+
+        /* PLAYER PRINCIPAL */
+        .player-principal audio { width: 100%; margin: 10px 0; }
+
+        /* BOTÃO WHATSAPP */
+        .botao-whats { display: block; background: #25d366; color: white; text-align: center; padding: 12px; text-decoration: none; font-weight: bold; border-radius: 4px; margin-top: 10px; }
+        .botao-whats:hover { background: #1da851; }
+
+        /* RODAPÉ */
+        footer { background: #333; color: white; text-align: center; padding: 20px; margin-top: 30px; }
     </style>
 </head>
 <body>
 
-    <div class="cabecalho">
-        <h1>📻 Web Rádio Ordinária Russas</h1>
-        <p>📞 (88) 99281-1188</p>
-    </div>
-
-    <div class="player">
-        <h2>🎧 Tocando Agora</h2>
-        <audio controls autoplay preload="auto">
+<!-- 🔝 BARRA SUPERIOR - ADMINISTRÁVEL -->
+<div class="barra-topo">
+    <div class="player-mini">
+        <span>🎧 Tocando Agora</span>
+        <audio controls preload="none">
             <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
-            Seu navegador não suporta áudio.
         
     </div>
-
-    <div class="mural">
-        <h2><div class="mural">
-    <h2>📢 Mural de Anúncios</h2>
-    <div class="anuncio">
-        <img src="LINK DA FOTO AQUI" alt="...">
+    <div class="icones-sociais">
+        <span>📘</span> <span>📷</span> <span>📺</span> <span>💬</span>
     </div>
-</div></h2>
-        <div class="https://github.com/manoelcorpus/manoelcorpus.github.io/raw/main/cartaz-forrozâo.jpg">
-            <img src="trabalhado pra melhorar o site">
+</div>
+
+<!-- 🖼️ CABEÇALHO LOGOS - SÓ TROCAR LINK -->
+<div class="cabecalho-logos">
+    <img src="COLOQUE_LINK_LOGO_PRINCIPAL.png" alt="Web Rádio Ordinária Russas" class="logo-radio">
+    <img src="COLOQUE_LINK_LOGOS_PARCEIROS.png" alt="Parceiros" class="logo-parceiros">
+</div>
+
+<!-- 📑 MENU -->
+<nav class="menu-principal">
+    <ul>
+        <li><a href="#inicio">INÍCIO</a></li>
+        <li><a href="#radio">A RÁDIO</a></li>
+        <li><a href="#programacao">PROGRAMAÇÃO</a></li>
+        <li><a href="#equipe">EQUIPE</a></li>
+        <li><a href="#mural">MURAL</a></li>
+        <li><a href="#pedidos">PEDIR MÚSICA</a></li>
+        <li><a href="#contato">CONTATO</a></li>
+    </ul>
+</nav>
+
+<!-- 📦 CONTEÚDO GERAL -->
+<div class="container">
+    <!-- COLUNA ESQUERDA PRINCIPAL -->
+    <div class="coluna-principal">
+
+        <!-- CARROSSEL BANNERS - ADICIONE QUANTOS QUISER -->
+        <div class="bloco carrossel">
+            <img src="COLOQUE_LINK_BANNER1.jpg" alt="Programa Forrozão" class="ativo">
+            <img src="COLOQUE_LINK_BANNER2.jpg" alt="Horário de Atendimento">
+            <img src="COLOQUE_LINK_BANNER3.jpg" alt="Novidades">
         </div>
+
+        <!-- PLAYER PRINCIPAL -->
+        <div class="bloco player-principal">
+            <div class="titulo-bloco">🎧 PLAYER PRINCIPAL</div>
+            <div class="conteudo-bloco">
+                <p>Ouça 24h com você!</p>
+                <audio controls autoplay preload="auto">
+                    <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
+                    Seu navegador não suporta áudio.
+                
+            </div>
+        </div>
+
+        <!-- MURAL DE ANÚNCIOS -->
+        <div class="bloco" id="mural">
+            <div class="titulo-bloco">📢 MURAL DE ANÚNCIOS</div>
+            <div class="conteudo-bloco">
+                <img src="COLOQUE_LINK_ANUNCIO1.jpg" alt="Anúncio 1" style="width:100%; margin-bottom:10px;">
+                <img src="COLOQUE_LINK_ANUNCIO2.jpg" alt="Anúncio 2" style="width:100%;">
+            </div>
+        </div>
+
     </div>
 
-    <a href="https://wa.me/5588992811188?text=Olá!%20Quero%20pedir%20uma%20música!" class="botao-whats" target="_blank">
-        🎵 PEÇA SUA MÚSICA AQUI
-    </a>
+    <!-- COLUNA LATERAL -->
+    <div class="coluna-lateral">
 
-    <div class="rodape">
-        <p>📍 Ordinária Russas | A melhor companhia 24h com você</p>
-        <p>Programa Forrozão: Todos os dias das 14:30 às 16:30 com DJ Filho Manoel</p>
+        <div class="bloco">
+            <div class="titulo-bloco">🔴 AGORA NA RÁDIO</div>
+            <div class="conteudo-bloco">
+                <p>Forrozão com  Filho Manoel</p>
+                <p>⏰ 14:30 às 16:30</p>
+            </div>
+        </div>
+
+        <div class="bloco" id="pedidos">
+            <div class="titulo-bloco">🎵 PEDIR MÚSICA</div>
+            <div class="conteudo-bloco">
+                <p>Clique abaixo e envie seu pedido:</p>
+                <a href="https://wa.me/5588992811188?text=Olá! Quero pedir a música:" class="botao-whats" target="_blank">📱 PEÇA AQUI PELO WHATSAPP</a>
+            </div>
+        </div>
+
+        <div class="bloco">
+            <div class="titulo-bloco">📞 CONTATO</div>
+            <div class="conteudo-bloco">
+                <p>📞 (88) 99281-1188</p>
+                <p>📍 Russas - CE</p>
+                <p>📧 contatopavaomisteriosorussas@gmail.com</p>
+            </div>
+        </div>
+
     </div>
+</div>
+
+<!-- RODAPÉ -->
+<footer>
+    <p>📍 Ordinária Russas | A Melhor Companhia 24h com Você</p>
+    <p>© Todos os direitos reservados - Web Rádio Ordinária Russas</p>
+</footer>
+
+<!-- FUNCIONALIDADE CARROSSEL AUTOMÁTICO -->
+<script>
+let indice = 0;
+const imgs = document.querySelectorAll('.carrossel img');
+setInterval(() => {
+    imgs[indice].classList.remove('ativo');
+    indice = (indice + 1) % imgs.length;
+    imgs[indice].classList.add('ativo');
+}, 5000);
+</script>
 
 </body>
 </html>
