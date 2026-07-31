@@ -1,81 +1,9 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Web Rádio Ordinária Russas</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, Arial, sans-serif; }
-        body { background: linear-gradient(180deg, #050c26 0%, #0f173a 100%); color: #fff; min-height: 100vh; }
+Crie uma página completa de Web Rádio Ordinária Russas, visual moderno e profissional, cores azul forte e amarelo ouro, com layout responsivo que funciona bem em celular e computador.
 
-        /* CABEÇALHO COM LOGO */
-        header { background: linear-gradient(135deg, #003399, #001a4d); padding: 25px 15px; text-align: center; border-bottom: 4px solid #ffcc00; box-shadow: 0 4px 12px rgba(0,0,0,0.5); }
-        .logo-container { display: inline-block; background: rgba(0,0,0,0.3); padding: 15px 25px; border-radius: 12px; border: 2px solid #ffcc00; }
-        .logo-nome { font-size: 38px; font-weight: bold; color: #ffcc00; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-        .logo-fone { font-size: 18px; color: #fff; font-weight: 500; }
-        .logo-fone i { color: #ffcc00; margin-right: 5px; }
+No topo: logo com nome "Web Rádio Ordinária Russas" e telefone (88) 99281-1188.
+Abaixo: player de áudio funcional com botão grande de play/pause, volume e indicador "Tocando Agora".
+Depois: área de Mural de Anúncios com o cartaz do programa: título grande FORROZÃO, com DJ Filho Manoel, horário 14:30 às 16:30, fundo com elementos de forró e estúdio, nítido e bem visível.
+Abaixo do mural: botão grande chamativo azul e amarelo "🎵 PEÇA SUA MÚSICA AQUI", que leva direto para o WhatsApp número 5588992811188.
+Rodapé: texto "📍 Ordinária Russas | A melhor companhia 24h com você".
 
-        /* PLAYER ESTILIZADO */
-        .player-area { background: #000; padding: 30px 15px; text-align: center; border-bottom: 2px solid #ffcc00; }
-        .status-live { color: #ff3333; font-weight: bold; font-size: 18px; margin-bottom: 12px; animation: piscar 1.5s infinite; }
-        @keyframes piscar { 0% {opacity:1;} 50% {opacity:0.5;} 100% {opacity:1;} }
-        .player-area audio { width: 95%; max-width: 800px; height: 50px; border-radius: 8px; }
-
-        /* CONTEÚDO PRINCIPAL */
-        .conteudo { max-width: 900px; margin: 40px auto; padding: 0 15px; text-align: center; }
-
-        /* BOTÃO WHATSAPP */
-        .bloco-pedido { background: linear-gradient(145deg, #1a2b5a, #0f1a40); border: 3px solid #ffcc00; border-radius: 15px; padding: 35px 25px; box-shadow: 0 8px 20px rgba(0,0,0,0.4); }
-        .bloco-pedido h2 { color: #ffcc00; font-size: 26px; margin-bottom: 10px; }
-        .bloco-pedido p { color: #e0e0e0; font-size: 16px; margin-bottom: 25px; }
-        .btn-whatsapp { display: inline-flex; align-items: center; gap: 12px; background: #25d366; color: #fff; padding: 16px 32px; border-radius: 50px; font-size: 18px; font-weight: bold; text-decoration: none; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(37,211,102,0.4); }
-        .btn-whatsapp:hover { transform: translateY(-3px); box-shadow: 0 6px 20px rgba(37,211,102,0.6); background: #1fb85a; }
-        .btn-whatsapp img { width: 28px; height: 28px; }
-
-        /* RODAPÉ */
-        footer { background: #000; padding: 30px 15px; border-top: 4px solid #ffcc00; margin-top: 50px; text-align: center; }
-        .rodape-nome { font-size: 22px; font-weight: bold; color: #ffcc00; margin-bottom: 8px; }
-        .rodape-frase { font-size: 17px; color: #ccc; margin-bottom: 10px; }
-        .rodape-copy { font-size: 14px; color: #666; margin-top: 10px; padding-top: 10px; border-top: 1px solid #222; }
-    </style>
-</head>
-<body>
-
-<!-- CABEÇALHO COM LOGO -->
-<header>
-    <div class="logo-container">
-        <div class="logo-nome">WEB RÁDIO ORDINÁRIA RUSSAS</div>
-        <div class="logo-fone">📞 (88) 99281-1188</div>
-    </div>
-</header>
-
-<!-- PLAYER DA RÁDIO -->
-<div class="player-area">
-    <p class="status-live">🔴 AO VIVO AGORA</p>
-    <audio controls autoplay preload="auto">
-        <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
-        Seu navegador não suporta áudio.
-    
-</div>
-
-<div class="conteudo">
-    <div class="bloco-pedido">
-        <h2>🎵 PEÇA SUA MÚSICA</h2>
-        <p>Clique no botão abaixo e envie sua solicitação diretamente pelo WhatsApp!</p>
-        <a href="https://wa.me/5588992811188?text=Olá! Quero pedir a música: [Nome da Música] - [Artista]" target="_blank" class="btn-whatsapp">
-            <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp">
-            PEDIR MÚSICA AGORA
-        </a>
-    </div>
-</div>
-
-<!-- RODAPÉ -->
-<footer>
-    <div class="rodape-nome">WEB RÁDIO ORDINÁRIA RUSSAS</div>
-    <div class="rodape-frase">A melhor companhia, 24h com você</div>
-    <div class="rodape-copy">© 2026 - Todos os direitos reservados</div>
-</footer>
-
-</body>
-</html>
-
+Deixe tudo organizado, bonito, fácil de ler, e estruturado para que eu possa trocar apenas a imagem do mural quando quiser, sem alterar o resto do site.
