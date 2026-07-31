@@ -1,9 +1,62 @@
-Crie uma página completa de Web Rádio Ordinária Russas, visual moderno e profissional, cores azul forte e amarelo ouro, com layout responsivo que funciona bem em celular e computador.
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Rádio Ordinária Russas</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background: linear-gradient(135deg, #0a2427 0%, #154047 100%); color: #fff; text-align: center; padding: 15px; }
+        
+        .cabecalho { background: linear-gradient(90deg, #003b5c, #0077b6); padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 3px solid #ffc107; }
+        .cabecalho h1 { font-size: 28px; color: #ffc107; margin-bottom: 8px; }
+        .cabecalho p { font-size: 18px; font-weight: bold; }
 
-No topo: logo com nome "Web Rádio Ordinária Russas" e telefone (88) 99281-1188.
-Abaixo: player de áudio funcional com botão grande de play/pause, volume e indicador "Tocando Agora".
-Depois: área de Mural de Anúncios com o cartaz do programa: título grande FORROZÃO, com DJ Filho Manoel, horário 14:30 às 16:30, fundo com elementos de forró e estúdio, nítido e bem visível.
-Abaixo do mural: botão grande chamativo azul e amarelo "🎵 PEÇA SUA MÚSICA AQUI", que leva direto para o WhatsApp número 5588992811188.
-Rodapé: texto "📍 Ordinária Russas | A melhor companhia 24h com você".
+        .player { background: rgba(255,255,255,0.1); padding: 25px; border-radius: 10px; margin-bottom: 25px; border: 2px solid #ffc107; }
+        .player h2 { color: #ffc107; margin-bottom: 15px; font-size: 22px; }
+        audio { width: 100%; max-width: 450px; }
 
-Deixe tudo organizado, bonito, fácil de ler, e estruturado para que eu possa trocar apenas a imagem do mural quando quiser, sem alterar o resto do site.
+        .mural { margin: 30px auto; max-width: 420px; }
+        .mural h2 { color: #ffc107; margin-bottom: 15px; font-size: 22px; }
+        .anuncio { width: 100%; border-radius: 10px; overflow: hidden; box-shadow: 0 0 15px rgba(255,193,7,0.3); }
+        .anuncio img { width: 100%; height: auto; display: block; }
+
+        .botao-whats { display: inline-block; background: #25d366; color: #fff; padding: 15px 25px; border-radius: 50px; text-decoration: none; font-size: 19px; font-weight: bold; margin: 20px 0; transition: 0.3s; }
+        .botao-whats:hover { background: #1da851; transform: scale(1.05); }
+
+        .rodape { margin-top: 40px; padding: 20px; border-top: 2px solid #ffc107; font-size: 16px; color: #ddd; }
+    </style>
+</head>
+<body>
+
+    <div class="cabecalho">
+        <h1>📻 Web Rádio Ordinária Russas</h1>
+        <p>📞 (88) 99281-1188</p>
+    </div>
+
+    <div class="player">
+        <h2>🎧 Tocando Agora</h2>
+        <audio controls autoplay preload="auto">
+            <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
+            Seu navegador não suporta áudio.
+        
+    </div>
+
+    <div class="mural">
+        <h2>📢 Mural de Anúncios</h2>
+        <div class="anuncio">
+            <img src="COLOQUE_AQUI_LINK_DO_SEU_CARTAZ_FORROZAO.png" alt="Programa Forrozão com DJ Filho Manoel">
+        </div>
+    </div>
+
+    <a href="https://wa.me/5588992811188?text=Olá!%20Quero%20pedir%20uma%20música!" class="botao-whats" target="_blank">
+        🎵 PEÇA SUA MÚSICA AQUI
+    </a>
+
+    <div class="rodape">
+        <p>📍 Ordinária Russas | A melhor companhia 24h com você</p>
+        <p>Programa Forrozão: Todos os dias das 14:30 às 16:30 com DJ Filho Manoel</p>
+    </div>
+
+</body>
+</html>
