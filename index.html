@@ -8,36 +8,28 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
         body { background: #f0f0f0; color: #333; }
 
-        /* BARRA SUPERIOR */
-        .barra-player-topo {
-            background: linear-gradient(90deg, #6a0dad, #4b0082);
-            padding: 8px 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 10px;
+        /* FAIXA PONTILHADA NO TOPO */
+        .topo-pontilhado {
+            background: #000;
+            background-image: radial-gradient(#ffffff 20%, transparent 20%);
+            background-position: 0 0, 5px 5px;
+            background-size: 10px 10px;
+            height: 20px;
         }
-        .controles-player { display: flex; align-items: center; gap: 10px; color: white; }
-        .icones-superiores { display: flex; gap: 12px; color: white; font-size: 18px; cursor: pointer; }
 
-        /* FAIXA DE LOGOS */
-        .faixa-logos {
-            background: #2b2b2b;
-            background-image: radial-gradient(#c99a2a 15%, transparent 16%), radial-gradient(#c99a2a 15%, transparent 16%);
-            background-position: 0 0, 8px 8px;
-            background-size: 16px 16px;
-            padding: 20px 15px;
+        /* PLAYER NO TOPO */
+        .player-cabecalho {
+            background: #003366;
+            color: white;
+            padding: 12px 15px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
             gap: 15px;
+            flex-wrap: wrap;
         }
-        .logo-esquerda { max-width: 200px; height: auto; }
-        .logo-direita { max-width: 350px; height: auto; }
+        .player-cabecalho audio { flex: 1; min-width: 250px; }
 
-        /* MENU PRINCIPAL FUNCIONAL */
+        /* MENU PRINCIPAL */
         .menu-principal { background: #003366; border-bottom: 2px solid #ffc107; position: sticky; top:0; z-index:99; }
         .menu-principal ul { list-style: none; display: flex; flex-wrap: wrap; }
         .menu-principal li a {
@@ -53,7 +45,7 @@
         }
         .menu-principal li a:hover, .menu-principal li a.ativo { background: #002244; color: #ffc107; }
 
-        /* LAYOUT EXATO DO MODELO */
+        /* LAYOUT GERAL */
         .conteudo-geral {
             max-width: 1200px;
             margin: 15px auto;
@@ -64,11 +56,10 @@
         }
         @media (max-width: 768px) { .conteudo-geral { grid-template-columns: 1fr; } }
 
-        /* PÁGINAS QUE APARECEM E DESAPARECEM */
         .pagina { display: none; }
         .pagina.visivel { display: block; }
 
-        /* CAIXAS PADRÃO */
+        /* CAIXAS E TÍTULOS */
         .caixa { background: white; margin-bottom: 15px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         .titulo-caixa {
             background: #003366;
@@ -77,22 +68,20 @@
             font-weight: bold;
             font-size: 15px;
             border-bottom: 2px solid #ffc107;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
         }
         .conteudo-caixa { padding: 12px; }
 
         /* BANNERS E IMAGENS */
         .banner-grande { width: 100%; height: auto; display: block; }
+        .banner-padrao { background: #ff8800; color: white; text-align: center; padding: 25px; font-size: 28px; font-weight: bold; margin-bottom: 15px; }
         .anuncio { width: 100%; height: auto; margin-bottom: 8px; display: block; }
 
         /* WEB TV */
-        .web-tv { background: black; color: white; text-align: center; padding: 40px 20px; min-height: 250px; }
-        .container-video { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-top:10px; }
+        .web-tv { background: #000; min-height: 300px; }
+        .container-video { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; }
         .container-video iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-        /* ENQUETE FUNCIONAL */
+        /* ENQUETE */
         .enquete-opcao { margin: 8px 0; font-size: 15px; cursor: pointer; padding:4px; border-radius:3px; }
         .enquete-opcao:hover { background:#f0f7ff; }
         .barra-voto { height:10px; background:#e0e0e0; border-radius:5px; margin:5px 0 10px 0; overflow:hidden; }
@@ -114,9 +103,6 @@
         .area-admin { margin-top:10px; padding:10px; background:rgba(0,51,102,0.05); border-radius:3px; font-size:13px; display:none; }
         .area-admin.visivel { display:block; }
 
-        /* PLAYER */
-        audio { width:100%; margin-top:8px; }
-
         /* RODAPÉ */
         footer {
             background: #003366;
@@ -130,27 +116,19 @@
 </head>
 <body>
 
-<!-- BARRA SUPERIOR COM PLAYER FUNCIONAL -->
-<div class="barra-player-topo">
-    <div class="controles-player">
-        <span>🎧 Tocando Agora</span>
-        <audio controls preload="none">
-            <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
-            Seu navegador não suporta áudio.
-        
-    </div>
-    <div class="icones-superiores">
-        <span>🔗</span> <span>💬</span> <span>⚠️</span> <span>🤖</span>
-    </div>
+<!-- FAIXA PONTILHADA -->
+<div class="topo-pontilhado"></div>
+
+<!-- PLAYER FUNCIONAL -->
+<div class="player-cabecalho">
+    <span>🎧 Tocando Agora:</span>
+    <audio controls autoplay preload="auto">
+        <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
+        Seu navegador não suporta áudio.
+    
 </div>
 
-<!-- FAIXA COM LOGOS -->
-<div class="faixa-logos">
-    <img src="COLOQUE_LINK_LOGO_RADIO_AQUI.png" alt="Web Rádio Ordinária Russas" class="logo-esquerda">
-    <img src="COLOQUE_LINK_LOGO_PARCEIRO_AQUI.png" alt="Parceiros" class="logo-direita">
-</div>
-
-<!-- MENU TODOS CLICÁVEIS -->
+<!-- MENU -->
 <nav class="menu-principal">
     <ul>
         <li><a pagina="inicio" class="botao-menu ativo">INÍCIO</a></li>
@@ -168,22 +146,29 @@
     </ul>
 </nav>
 
-<!-- CONTEÚDO GERAL -->
+<!-- CONTEÚDO -->
 <div class="conteudo-geral">
-    <!-- COLUNA PRINCIPAL -->
     <div class="coluna-esquerda">
-
         <!-- PÁGINA INÍCIO -->
         <div class="pagina visivel" id="inicio">
+            <!-- BANNER APLICATIVO COM FOTO EXEMPLO -->
             <div class="caixa">
-                <img src="COLOQUE_LINK_BANNER_APLICATIVO.jpg" alt="Baixe nosso aplicativo" class="banner-grande">
+                <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Baixe nosso aplicativo" class="banner-grande">
             </div>
-            <div style="background: #ff8800; color: white; text-align: center; padding: 25px; font-size: 28px; font-weight: bold; margin-bottom: 15px;">PROMOÇÃO</div>
+
+            <!-- FAIXA PROMOÇÃO -->
+            <div class="banner-padrao">PROMOÇÃO</div>
+
+            <!-- WEB TV -->
             <div class="caixa">
                 <div class="titulo-caixa">📺 WEB TV</div>
-                <div class="conteudo-caixa">
+                <div class="conteudo-caixa web-tv">
                     <div class="container-video">
-                        <iframe src="COLOQUE_LINK_YOUTUBE_AQUI" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                        <iframe 
+                            src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
+                            allowfullscreen 
+                            allow="autoplay; encrypted-media; picture-in-picture"
+                        ></iframe>
                     </div>
                 </div>
             </div>
@@ -192,7 +177,7 @@
         <!-- DEMAIS PÁGINAS -->
         <div class="pagina" id="radio"><div class="caixa"><div class="titulo-caixa">📻 A RÁDIO</div><div class="conteudo-caixa"><p>Web Rádio Ordinária Russas, sua melhor companhia 24h por dia!</p></div></div></div>
         <div class="pagina" id="programacao"><div class="caixa"><div class="titulo-caixa">📅 PROGRAMAÇÃO</div><div class="conteudo-caixa"><p>14:30 às 16:30 - Forrozão com DJ Filho Manoel</p></div></div></div>
-        <div class="pagina" id="equipe"><div class="caixa"><div class="titulo-caixa">👥 NOSSA EQUIPE</div><div class="conteudo-caixa"><p>Coloque aqui nomes e fotos da equipe</p></div></div></div>
+        <div class="pagina" id="equipe"><div class="caixa"><div class="titulo-caixa">👥 NOSSA EQUIPE</div><div class="conteudo-caixa"><p>Coloque nomes e fotos da equipe aqui</p></div></div></div>
         <div class="pagina" id="noticias"><div class="caixa"><div class="titulo-caixa">📰 NOTÍCIAS</div><div class="conteudo-caixa"><p>Área para suas notícias</p></div></div></div>
         <div class="pagina" id="fotos"><div class="caixa"><div class="titulo-caixa">🖼️ GALERIA DE FOTOS</div><div class="conteudo-caixa"><p>Área para suas fotos</p></div></div></div>
         <div class="pagina" id="tv"><div class="caixa"><div class="titulo-caixa">🎬 VÍDEOS</div><div class="conteudo-caixa"><p>Área para seus vídeos</p></div></div></div>
@@ -201,7 +186,7 @@
         <div class="pagina" id="pedidos"><div class="caixa"><div class="titulo-caixa">🎵 PEDIR MÚSICA</div><div class="conteudo-caixa"><a href="https://wa.me/5588992811188?text=Olá! Quero pedir:" style="background:#25d366; color:white; padding:12px; display:block; text-align:center; text-decoration:none; font-weight:bold; border-radius:3px;">📱 PEÇA PELO WHATSAPP</a></div></div></div>
         <div class="pagina" id="contato"><div class="caixa"><div class="titulo-caixa">📞 CONTATO</div><div class="conteudo-caixa"><p>📞 (88) 99281-1188 | 📍 Russas - CE</p></div></div></div>
 
-        <!-- PÁGINA ADMIN PARA VOCÊ VER OS VOTOS -->
+        <!-- ÁREA ADMIN -->
         <div class="pagina" id="admin">
             <div class="caixa">
                 <div class="titulo-caixa">🔒 ÁREA DO ADMINISTRADOR</div>
@@ -212,7 +197,6 @@
                     
                     <div class="area-admin" id="painelAdmin">
                         <p><strong>Total de votos até agora: <span id="totalVotos">0</span></strong></p>
-                        <div id="listaVotos"></div>
                         <hr style="margin:10px 0;">
                         <button onclick="zerarVotos()" class="botao-enquete" style="background:#b30000;">Zerar Votos</button>
                     </div>
@@ -252,9 +236,17 @@
             </div>
         </div>
 
-        <div class="caixa"><div class="titulo-caixa">📢 PUBLICIDADES</div><div class="conteudo-caixa"><img src="COLOQUE_LINK_ANUNCIO1.jpg" class="anuncio"><img src="COLOQUE_LINK_ANUNCIO2.jpg" class="anuncio"></div></div>
-        <div class="caixa"><div class="titulo-caixa">🎵 AS MAIS PEDIDAS</div><div class="conteudo-caixa"><p>1 - Não Deixo Não | Mano Walterer</p></div></div>
-        <div class="caixa"><div class="titulo-caixa">📈 ESTATÍSTICAS</div><div class="conteudo-caixa"><p>Hoje: 1 | Semana:17 | Mês:133 | Total:671</p></div></div>
+        <!-- PUBLICIDADES COM FOTOS EXEMPLO -->
+        <div class="caixa">
+            <div class="titulo-caixa">📢 PUBLICIDADES</div>
+            <div class="conteudo-caixa">
+                <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Anuncie Aqui" class="anuncio">
+                <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Apoie a Rádio" class="anuncio">
+            </div>
+        </div>
+
+        <div class="caixa"><div class="titulo-caixa">🎵 AS MAIS PEDIDAS</div><div class="conteudo-caixa"><p>1 - Não Deixo Não | Mano Walter</p></div></div></div>
+        <div class="caixa"><div class="titulo-caixa">📈 ESTATÍSTICAS</div><div class="conteudo-caixa"><p>Hoje: 1 | Semana:17 | Mês:133 | Total:671</p></div></div></div>
     </div>
 </div>
 
@@ -263,9 +255,8 @@
     <p>© Todos os direitos reservados - Web Rádio Ordinária Russas</p>
 </footer>
 
-<!-- SCRIPT DE TODAS AS FUNÇÕES -->
+<!-- SCRIPT -->
 <script>
-// SENHA PARA VOCÊ ACESSAR: pode alterar aqui quando quiser
 const SENHA_ADMIN = "russas2026";
 let votos = JSON.parse(localStorage.getItem('votosRádio')) || {sim:0, nao:0, melhorar:0, excelente:0};
 
@@ -281,21 +272,17 @@ document.querySelectorAll('.botao-menu').forEach(botao => {
     })
 })
 
-// FUNÇÃO DE VOTAR
+// ENQUETE
 function votar(opcao) {
     votos[opcao]++;
     salvarVotos();
-    alert('Obrigado por votar! Clique em Ver Resultados para conferir.');
+    alert('Obrigado por votar!');
     atualizarBarras();
 }
-
-// MOSTRAR RESULTADOS PARA TODOS
 function mostrarResultado() {
     document.getElementById('resultadoEnquete').classList.add('visivel');
     atualizarBarras();
 }
-
-// ATUALIZAR BARRAS E NÚMEROS
 function atualizarBarras() {
     const total = votos.sim + votos.nao + votos.melhorar + votos.excelente;
     document.getElementById('qtdSim').innerText = votos.sim;
@@ -303,7 +290,6 @@ function atualizarBarras() {
     document.getElementById('qtdMelhorar').innerText = votos.melhorar;
     document.getElementById('qtdExcelente').innerText = votos.excelente;
     document.getElementById('totalVotos').innerText = total || 0;
-
     if(total > 0) {
         document.getElementById('barraSim').style.width = ${(votos.sim/total)*100}%;
         document.getElementById('barraNao').style.width = ${(votos.nao/total)*100}%;
@@ -311,8 +297,6 @@ function atualizarBarras() {
         document.getElementById('barraExcelente').style.width = ${(votos.excelente/total)*100}%;
     }
 }
-
-// ACESSO ADMINISTRADOR
 function verAdmin() {
     const senha = document.getElementById('senhaAdmin').value;
     if(senha === SENHA_ADMIN) {
@@ -322,7 +306,6 @@ function verAdmin() {
         alert('Senha incorreta!');
     }
 }
-
 function zerarVotos() {
     if(confirm('Tem certeza que quer apagar todos os votos?')) {
         votos = {sim:0, nao:0, melhorar:0, excelente:0};
@@ -331,12 +314,9 @@ function zerarVotos() {
         alert('Votos zerados!');
     }
 }
-
 function salvarVotos() {
     localStorage.setItem('votosRádio', JSON.stringify(votos));
 }
-
-// CARREGAR DADOS AO ABRIR
 atualizarBarras();
 </script>
 
