@@ -17,7 +17,7 @@
             height: 15px;
         }
 
-        /* 🔊 PLAYER AGORA BEM MENOR */
+        /* PLAYER PEQUENO */
         .player-cabecalho {
             background: #003366;
             color: white;
@@ -28,10 +28,7 @@
             flex-wrap: wrap;
         }
         .player-cabecalho span { font-size: 13px; }
-        .player-cabecalho audio { 
-            width: 220px; 
-            height: 28px;
-        }
+        .player-cabecalho audio { width: 220px; height: 28px; }
 
         /* MENU PRINCIPAL */
         .menu-principal { background: #003366; border-bottom: 2px solid #ffc107; position: sticky; top:0; z-index:99; }
@@ -59,7 +56,6 @@
             gap: 15px;
         }
         @media (max-width: 768px) { .conteudo-geral { grid-template-columns: 1fr; } }
-
         .pagina { display: none; }
         .pagina.visivel { display: block; }
 
@@ -78,14 +74,55 @@
         /* BANNERS E IMAGENS */
         .banner-grande { width: 100%; height: auto; display: block; }
         .banner-padrao { background: #ff8800; color: white; text-align: center; padding: 25px; font-size: 28px; font-weight: bold; margin-bottom: 15px; }
-        .anuncio { width: 100%; height: auto; margin-bottom: 8px; display: block; }
+
+        /* CARROSSEL DE PUBLICIDADES */
+        .carrossel { position: relative; overflow: hidden; width: 100%; }
+        .slide { width: 100%; display: none; }
+        .slide.ativo { display: block; }
+        .slide img { width: 100%; height: auto; }
+        .controles-carrossel {
+            text-align: center;
+            margin-top: 8px;
+        }
+        .controles-carrossel span {
+            cursor: pointer;
+            margin: 0 5px;
+            color: #003366;
+            font-weight: bold;
+        }
 
         /* WEB TV */
         .web-tv { background: #000; min-height: 300px; }
         .container-video { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; }
         .container-video iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-        /* ENQUETE */
+        /* MAIS PEDIDAS E PEDIDOS */
+        .lista-pedidos { margin: 8px 0; }
+        .lista-pedidos a {
+            display: block;
+            padding: 6px;
+            margin: 4px 0;
+            background: #f0f7ff;
+            color: #003366;
+            text-decoration: none;
+            border-radius: 3px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+        .lista-pedidos a:hover { background: #003366; color: white; }
+        .botao-pedir {
+            background: #25d366;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            display: block;
+            margin-top: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 3px;
+        }
+
+        /* ENQUETE FUNCIONAL */
         .enquete-opcao { margin: 8px 0; font-size: 15px; cursor: pointer; padding:4px; border-radius:3px; }
         .enquete-opcao:hover { background:#f0f7ff; }
         .barra-voto { height:10px; background:#e0e0e0; border-radius:5px; margin:5px 0 10px 0; overflow:hidden; }
@@ -102,8 +139,7 @@
             transition:0.2s;
         }
         .botao-enquete:hover { background: #002244; color: #ffc107; }
-        .resultado { margin-top:12px; padding-top:10px; border-top:1px solid #eee; display:none; }
-        .resultado.visivel { display:block; }
+        .resultado { margin-top:12px; padding-top:10px; border-top:1px solid #eee; display:block !important; }
         .area-admin { margin-top:10px; padding:10px; background:rgba(0,51,102,0.05); border-radius:3px; font-size:13px; display:none; }
         .area-admin.visivel { display:block; }
 
@@ -153,29 +189,21 @@
 <!-- CONTEÚDO -->
 <div class="conteudo-geral">
     <div class="coluna-esquerda">
-        <!-- PÁGINA INÍCIO -->
         <div class="pagina visivel" id="inicio">
             <div class="caixa">
                 <img src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Baixe nosso aplicativo" class="banner-grande">
             </div>
-
             <div class="banner-padrao">PROMOÇÃO</div>
-
             <div class="caixa">
                 <div class="titulo-caixa">📺 WEB TV</div>
                 <div class="conteudo-caixa web-tv">
                     <div class="container-video">
-                        <iframe 
-                            src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                            allowfullscreen 
-                            allow="autoplay; encrypted-media; picture-in-picture"
-                        ></iframe>
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture"></iframe>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- DEMAIS PÁGINAS -->
         <div class="pagina" id="radio"><div class="caixa"><div class="titulo-caixa">📻 A RÁDIO</div><div class="conteudo-caixa"><p>Web Rádio Ordinária Russas, sua melhor companhia 24h por dia!</p></div></div></div>
         <div class="pagina" id="programacao"><div class="caixa"><div class="titulo-caixa">📅 PROGRAMAÇÃO</div><div class="conteudo-caixa"><p>14:30 às 16:30 - Forrozão com DJ Filho Manoel</p></div></div></div>
         <div class="pagina" id="equipe"><div class="caixa"><div class="titulo-caixa">👥 NOSSA EQUIPE</div><div class="conteudo-caixa"><p>Coloque nomes e fotos da equipe aqui</p></div></div></div>
@@ -184,7 +212,25 @@
         <div class="pagina" id="tv"><div class="caixa"><div class="titulo-caixa">🎬 VÍDEOS</div><div class="conteudo-caixa"><p>Área para seus vídeos</p></div></div></div>
         <div class="pagina" id="agenda"><div class="caixa"><div class="titulo-caixa">📅 AGENDA</div><div class="conteudo-caixa"><p>Área para sua agenda</p></div></div></div>
         <div class="pagina" id="mural"><div class="caixa"><div class="titulo-caixa">📢 MURAL</div><div class="conteudo-caixa"><p>Área para seus anúncios e avisos</p></div></div></div>
-        <div class="pagina" id="pedidos"><div class="caixa"><div class="titulo-caixa">🎵 PEDIR MÚSICA</div><div class="conteudo-caixa"><a href="https://wa.me/5588992811188?text=Olá! Quero pedir:" style="background:#25d366; color:white; padding:12px; display:block; text-align:center; text-decoration:none; font-weight:bold; border-radius:3px;">📱 PEÇA PELO WHATSAPP</a></div></div></div>
+        
+        <!-- PÁGINA PEDIDOS COM MAIS OPÇÕES -->
+        <div class="pagina" id="pedidos">
+            <div class="caixa">
+                <div class="titulo-caixa">🎵 PEDIR MÚSICA</div>
+                <div class="conteudo-caixa">
+                    <p style="margin-bottom:8px;">Escolha uma das opções:</p>
+                    <div class="lista-pedidos">
+                        <a href="https://wa.me/5588992811188?text=Olá! Quero pedir: Não Deixo Não - Mano Walter" target="_blank">🎵 Não Deixo Não - Mano Walter</a>
+                        <a href="https://wa.me/5588992811188?text=Olá! Quero pedir: Xote das Meninas - Luiz Gonzaga" target="_blank">🎵 Xote das Meninas - Luiz Gonzaga</a>
+                        <a href="https://wa.me/5588992811188?text=Olá! Quero pedir: Forró das Antigas - Calcinha Preta" target="_blank">🎵 Forró das Antigas - Calcinha Preta</a>
+                        <a href="https://wa.me/5588992811188?text=Olá! Quero pedir: Baile de Vaqueiro - Tarcísio do Acordeom" target="_blank">🎵 Baile de Vaqueiro - Tarcísio do Acordeom</a>
+                        <a href="https://wa.me/5588992811188?text=Olá! Quero pedir outra música:" target="_blank">🎶 Pedir outra música</a>
+                    </div>
+                    <a href="https://wa.me/5588992811188" class="botao-pedir" target="_blank">📱 Abrir WhatsApp Direto</a>
+                </div>
+            </div>
+        </div>
+
         <div class="pagina" id="contato"><div class="caixa"><div class="titulo-caixa">📞 CONTATO</div><div class="conteudo-caixa"><p>📞 (88) 99281-1188 | 📍 Russas - CE</p></div></div></div>
 
         <!-- ÁREA ADMIN -->
@@ -195,7 +241,6 @@
                     <p>Digite a senha para ver os resultados da votação:</p>
                     <input type="password" id="senhaAdmin" placeholder="Senha" style="padding:7px; margin:8px 0; width:100%; max-width:250px;">
                     <button onclick="verAdmin()" class="botao-enquete">Acessar</button>
-                    
                     <div class="area-admin" id="painelAdmin">
                         <p><strong>Total de votos até agora: <span id="totalVotos">0</span></strong></p>
                         <hr style="margin:10px 0;">
@@ -216,6 +261,7 @@
             </div>
         </div>
 
+        <!-- ENQUETE COM RESULTADO SEMPRE VISÍVEL -->
         <div class="caixa">
             <div class="titulo-caixa">📊 ENQUETE</div>
             <div class="conteudo-caixa">
@@ -224,7 +270,6 @@
                 <div class="enquete-opcao" onclick="votar('nao')"><input type="radio" name="voto"> Não</div>
                 <div class="enquete-opcao" onclick="votar('melhorar')"><input type="radio" name="voto"> Pode Melhorar</div>
                 <div class="enquete-opcao" onclick="votar('excelente')"><input type="radio" name="voto"> Excelente</div>
-
                 <button class="botao-enquete" onclick="mostrarResultado()">Ver Resultados</button>
 
                 <div class="resultado" id="resultadoEnquete">
@@ -237,16 +282,36 @@
             </div>
         </div>
 
-        <!-- PUBLICIDADES COM FOTOS EXEMPLO -->
+        <!-- CARROSSEL DE PUBLICIDADES -->
         <div class="caixa">
             <div class="titulo-caixa">📢 PUBLICIDADES</div>
             <div class="conteudo-caixa">
-                <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Anuncie Aqui" class="anuncio">
-                <img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Apoie a Rádio" class="anuncio">
+                <div class="carrossel">
+                    <div class="slide ativo"><img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Anúncio 1"></div>
+                    <div class="slide"><img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Anúncio 2"></div>
+                    <div class="slide"><img src="https://images.unsplash.com/photo-1572044162444-ad60f128bdea?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Anúncio 3"></div>
+                </div>
+                <div class="controles-carrossel">
+                    <span onclick="mudarSlide(-1)">◀️</span>
+                    <span onclick="mudarSlide(1)">▶️</span>
+                </div>
             </div>
         </div>
 
-        <div class="caixa"><div class="titulo-caixa">🎵 AS MAIS PEDIDAS</div><div class="conteudo-caixa"><p>1 - Não Deixo Não | Mano Walter</p></div></div></div>
+        <!-- MAIS PEDIDAS COM VÁRIAS OPÇÕES -->
+        <div class="caixa">
+            <div class="titulo-caixa">🎵 AS MAIS PEDIDAS</div>
+            <div class="conteudo-caixa">
+                <div class="lista-pedidos">
+                    <a href="https://wa.me/5588992811188?text=Quero pedir essa: Não Deixo Não - Mano Walter" target="_blank">1. Não Deixo Não - Mano Walter</a>
+                    <a href="https://wa.me/5588992811188?text=Quero pedir essa: Xote das Meninas" target="_blank">2. Xote das Meninas - Luiz Gonzaga</a>
+                    <a href="https://wa.me/5588992811188?text=Quero pedir essa: Forró das Antigas" target="_blank">3. Forró das Antigas - Calcinha Preta</a>
+                    <a href="https://wa.me/5588992811188?text=Quero pedir essa: Baile de Vaqueiro" target="_blank">4. Baile de Vaqueiro - Tarcísio do Acordeom</a>
+                    <a href="https://wa.me/5588992811188?text=Quero pedir essa: Meu Xodó" target="_blank">5. Meu Xodó - Santanna o Cantador</a>
+                </div>
+            </div>
+        </div>
+
         <div class="caixa"><div class="titulo-caixa">📈 ESTATÍSTICAS</div><div class="conteudo-caixa"><p>Hoje: 1 | Semana:17 | Mês:133 | Total:671</p></div></div></div>
     </div>
 </div>
@@ -273,11 +338,11 @@ document.querySelectorAll('.botao-menu').forEach(botao => {
     })
 })
 
-// ENQUETE
+// ENQUETE COM RESULTADO SEMPRE APARECENDO
 function votar(opcao) {
     votos[opcao]++;
     salvarVotos();
-    alert('Obrigado por votar!');
+    alert('Obrigado por votar! Resultado já atualizado abaixo 👇');
     atualizarBarras();
 }
 function mostrarResultado() {
@@ -318,6 +383,20 @@ function zerarVotos() {
 function salvarVotos() {
     localStorage.setItem('votosRádio', JSON.stringify(votos));
 }
+
+// CARROSSEL AUTOMÁTICO
+let indiceAtual = 0;
+const slides = document.querySelectorAll('.slide');
+function mudarSlide(direcao) {
+    slides[indiceAtual].classList.remove('ativo');
+    indiceAtual += direcao;
+    if(indiceAtual >= slides.length) indiceAtual = 0;
+    if(indiceAtual < 0) indiceAtual = slides.length -1;
+    slides[indiceAtual].classList.add('ativo');
+}
+setInterval(() => mudarSlide(1), 4000);
+
+// CARREGAR DADOS AO ABRIR
 atualizarBarras();
 </script>
 
