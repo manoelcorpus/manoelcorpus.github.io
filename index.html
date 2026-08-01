@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -7,250 +5,339 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Rádio Ordinária Russas</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background: #f5f5f5; color: #333; line-height: 1.5; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+        body { background: #f0f0f0; color: #333; }
 
         /* BARRA SUPERIOR */
-        .barra-topo { background: #6a0dad; color: white; padding: 8px 15px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
-        .player-mini { display: flex; align-items: center; gap: 8px; }
-        .icones-sociais { display: flex; gap: 10px; font-size: 18px; }
-        .icones-sociais span { cursor: pointer; }
+        .barra-player-topo {
+            background: linear-gradient(90deg, #6a0dad, #4b0082);
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .controles-player { display: flex; align-items: center; gap: 10px; color: white; }
+        .icones-superiores { display: flex; gap: 12px; color: white; font-size: 18px; cursor: pointer; }
 
-        /* CABEÇALHO COM LOGOS */
-        .cabecalho-logos { background: #1a1a1a; padding: 15px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 15px; border-bottom: 3px solid #ff0033; }
-        .logo-radio { max-width: 220px; height: auto; }
-        .logo-parceiros { max-width: 300px; height: auto; }
+        /* FAIXA DE LOGOS */
+        .faixa-logos {
+            background: #2b2b2b;
+            background-image: radial-gradient(#c99a2a 15%, transparent 16%), radial-gradient(#c99a2a 15%, transparent 16%);
+            background-position: 0 0, 8px 8px;
+            background-size: 16px 16px;
+            padding: 20px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .logo-esquerda { max-width: 200px; height: auto; }
+        .logo-direita { max-width: 350px; height: auto; }
 
-        /* MENU PRINCIPAL - BOTÕES FUNCIONAIS */
-        .menu-principal { background: #ff0033; position: sticky; top: 0; z-index: 99; }
+        /* MENU PRINCIPAL FUNCIONAL */
+        .menu-principal { background: #003366; border-bottom: 2px solid #ffc107; position: sticky; top:0; z-index:99; }
         .menu-principal ul { list-style: none; display: flex; flex-wrap: wrap; }
-        .menu-principal li a { display: block; padding: 12px 15px; color: white; text-decoration: none; font-weight: bold; border-right: 1px solid rgba(255,255,255,0.2); transition: 0.2s; }
-        .menu-principal li a:hover, .menu-principal li a.ativo { background: #cc0029; }
+        .menu-principal li a {
+            display: block;
+            padding: 12px 14px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 15px;
+            border-right: 1px solid rgba(255,255,255,0.15);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .menu-principal li a:hover, .menu-principal li a.ativo { background: #002244; color: #ffc107; }
 
-        /* LAYOUT COLUNAS */
-        .container { max-width: 1200px; margin: 20px auto; padding: 0 15px; display: grid; grid-template-columns: 3fr 1fr; gap: 20px; }
-        @media (max-width: 768px) { .container { grid-template-columns: 1fr; } }
+        /* LAYOUT EXATO DO MODELO */
+        .conteudo-geral {
+            max-width: 1200px;
+            margin: 15px auto;
+            padding: 0 10px;
+            display: grid;
+            grid-template-columns: 7fr 3fr;
+            gap: 15px;
+        }
+        @media (max-width: 768px) { .conteudo-geral { grid-template-columns: 1fr; } }
 
-        /* ÁREAS DAS PÁGINAS */
+        /* PÁGINAS QUE APARECEM E DESAPARECEM */
         .pagina { display: none; }
         .pagina.visivel { display: block; }
 
-        /* BLOCOS PADRÃO */
-        .bloco { background: white; border-radius: 4px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        .titulo-bloco { background: #ff0033; color: white; padding: 10px 15px; font-weight: bold; font-size: 17px; }
-        .conteudo-bloco { padding: 15px; }
+        /* CAIXAS PADRÃO */
+        .caixa { background: white; margin-bottom: 15px; border-radius: 2px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .titulo-caixa {
+            background: #003366;
+            color: #ffc107;
+            padding: 8px 12px;
+            font-weight: bold;
+            font-size: 15px;
+            border-bottom: 2px solid #ffc107;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .conteudo-caixa { padding: 12px; }
 
-        /* CARROSSEL BANNER */
-        .carrossel { position: relative; overflow: hidden; }
-        .carrossel img { width: 100%; height: auto; display: none; }
-        .carrossel img.ativo { display: block; }
+        /* BANNERS E IMAGENS */
+        .banner-grande { width: 100%; height: auto; display: block; }
+        .anuncio { width: 100%; height: auto; margin-bottom: 8px; display: block; }
 
-        /* PLAYER PRINCIPAL */
-        .player-principal audio { width: 100%; margin: 10px 0; }
+        /* WEB TV */
+        .web-tv { background: black; color: white; text-align: center; padding: 40px 20px; min-height: 250px; }
+        .container-video { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-top:10px; }
+        .container-video iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
 
-        /* ÁREA TV / YOUTUBE */
-        .tv-container { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 4px; margin: 10px 0; }
-        .tv-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+        /* ENQUETE FUNCIONAL */
+        .enquete-opcao { margin: 8px 0; font-size: 15px; cursor: pointer; padding:4px; border-radius:3px; }
+        .enquete-opcao:hover { background:#f0f7ff; }
+        .barra-voto { height:10px; background:#e0e0e0; border-radius:5px; margin:5px 0 10px 0; overflow:hidden; }
+        .preenchimento { height:100%; background:#003366; width:0%; transition:0.5s; }
+        .botao-enquete {
+            background: #003366;
+            color: white;
+            border: none;
+            padding: 7px 12px;
+            margin: 5px 8px 0 0;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius:3px;
+            transition:0.2s;
+        }
+        .botao-enquete:hover { background: #002244; color: #ffc107; }
+        .resultado { margin-top:12px; padding-top:10px; border-top:1px solid #eee; display:none; }
+        .resultado.visivel { display:block; }
+        .area-admin { margin-top:10px; padding:10px; background:rgba(0,51,102,0.05); border-radius:3px; font-size:13px; display:none; }
+        .area-admin.visivel { display:block; }
 
-        /* BOTÃO WHATSAPP */
-        .botao-whats { display: block; background: #25d366; color: white; text-align: center; padding: 12px; text-decoration: none; font-weight: bold; border-radius: 4px; margin-top: 10px; transition: 0.2s; }
-        .botao-whats:hover { background: #1da851; }
+        /* PLAYER */
+        audio { width:100%; margin-top:8px; }
 
         /* RODAPÉ */
-        footer { background: #333; color: white; text-align: center; padding: 20px; margin-top: 30px; }
+        footer {
+            background: #003366;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+            border-top: 2px solid #ffc107;
+        }
     </style>
 </head>
 <body>
 
-<!-- 🔝 BARRA SUPERIOR -->
-<div class="barra-topo">
-    <div class="player-mini">
+<!-- BARRA SUPERIOR COM PLAYER FUNCIONAL -->
+<div class="barra-player-topo">
+    <div class="controles-player">
         <span>🎧 Tocando Agora</span>
         <audio controls preload="none">
             <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
             Seu navegador não suporta áudio.
         
     </div>
-    <div class="icones-sociais">
-        <span>📘</span> <span>📷</span> <span>📺</span> <span>💬</span>
+    <div class="icones-superiores">
+        <span>🔗</span> <span>💬</span> <span>⚠️</span> <span>🤖</span>
     </div>
 </div>
 
-<!-- 🖼️ CABEÇALHO -->
-<div class="cabecalho-logos">
-    <img src="COLOQUE_LINK_LOGO_PRINCIPAL.png" alt="Web Rádio Ordinária Russas" class="logo-radio">
-    <img src="COLOQUE_LINK_LOGOS_PARCEIROS.png" alt="Parceiros" class="logo-parceiros">
+<!-- FAIXA COM LOGOS -->
+<div class="faixa-logos">
+    <img src="COLOQUE_LINK_LOGO_RADIO_AQUI.png" alt="Web Rádio Ordinária Russas" class="logo-esquerda">
+    <img src="COLOQUE_LINK_LOGO_PARCEIRO_AQUI.png" alt="Parceiros" class="logo-direita">
 </div>
 
-<!-- 📑 MENU COM TODOS OS BOTÕES FUNCIONAIS -->
+<!-- MENU TODOS CLICÁVEIS -->
 <nav class="menu-principal">
     <ul>
-        <li><a href="#inicio" class="botao-menu ativo" pagina="inicio">INÍCIO</a></li>
-        <li><a href="#radio" class="botao-menu" pagina="radio">A RÁDIO</a></li>
-        <li><a href="#programacao" class="botao-menu" pagina="programacao">PROGRAMAÇÃO</a></li>
-        <li><a href="#equipe" class="botao-menu" pagina="equipe">EQUIPE</a></li>
-        <li><a href="#mural" class="botao-menu" pagina="mural">MURAL</a></li>
-        <li><a href="#pedidos" class="botao-menu" pagina="pedidos">PEDIR MÚSICA</a></li>
-        <li><a href="#contato" class="botao-menu" pagina="contato">CONTATO</a></li>
-        <li><a href="#tv" class="botao-menu" pagina="tv">📺 TV</a></li>
+        <li><a pagina="inicio" class="botao-menu ativo">INÍCIO</a></li>
+        <li><a pagina="radio" class="botao-menu">A RÁDIO</a></li>
+        <li><a pagina="programacao" class="botao-menu">PROGRAMAÇÃO</a></li>
+        <li><a pagina="equipe" class="botao-menu">EQUIPE</a></li>
+        <li><a pagina="noticias" class="botao-menu">NOTÍCIAS</a></li>
+        <li><a pagina="fotos" class="botao-menu">FOTOS</a></li>
+        <li><a pagina="tv" class="botao-menu">VÍDEOS</a></li>
+        <li><a pagina="agenda" class="botao-menu">AGENDA</a></li>
+        <li><a pagina="mural" class="botao-menu">MURAL</a></li>
+        <li><a pagina="pedidos" class="botao-menu">PEDIDOS</a></li>
+        <li><a pagina="contato" class="botao-menu">CONTATO</a></li>
+        <li><a pagina="admin" class="botao-menu">🔒 ADMIN</a></li>
     </ul>
 </nav>
 
-<!-- 📦 CONTEÚDO GERAL -->
-<div class="container">
+<!-- CONTEÚDO GERAL -->
+<div class="conteudo-geral">
     <!-- COLUNA PRINCIPAL -->
-    <div class="coluna-principal">
+    <div class="coluna-esquerda">
 
         <!-- PÁGINA INÍCIO -->
         <div class="pagina visivel" id="inicio">
-            <div class="bloco carrossel">
-                <img src="COLOQUE_LINK_BANNER1.jpg" alt="Programa Forrozão" class="ativo">
-                <img src="COLOQUE_LINK_BANNER2.jpg" alt="Horário de Atendimento">
-                <img src="COLOQUE_LINK_BANNER3.jpg" alt="Novidades">
+            <div class="caixa">
+                <img src="COLOQUE_LINK_BANNER_APLICATIVO.jpg" alt="Baixe nosso aplicativo" class="banner-grande">
             </div>
-
-            <div class="bloco player-principal">
-                <div class="titulo-bloco">🎧 PLAYER PRINCIPAL</div>
-                <div class="conteudo-bloco">
-                    <p>Ouça 24h com Você!</p>
-                    <audio controls autoplay preload="auto">
-                        <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
-                        Seu navegador não suporta áudio.
-                    
-                </div>
-            </div>
-        </div>
-
-        <!-- PÁGINA A RÁDIO -->
-        <div class="pagina" id="radio">
-            <div class="bloco">
-                <div class="titulo-bloco">📻 A RÁDIO</div>
-                <div class="conteudo-bloco">
-                    <p>Web Rádio Ordinária Russas, sua melhor companhia 24 horas por dia!</p>
-                    <p style="margin-top:10px;">Edite aqui com sua história, missão e valores quando quiser.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- PÁGINA PROGRAMAÇÃO -->
-        <div class="pagina" id="programacao">
-            <div class="bloco">
-                <div class="titulo-bloco">📅 PROGRAMAÇÃO</div>
-                <div class="conteudo-bloco">
-                    <p>🎵 14:30 às 16:30 - Forrozão com DJ Filho Manoel</p>
-                    <p style="margin-top:10px;">Adicione novos horários e programas aqui quando precisar!</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- PÁGINA EQUIPE -->
-        <div class="pagina" id="equipe">
-            <div class="bloco">
-                <div class="titulo-bloco">👥 NOSSA EQUIPE</div>
-                <div class="conteudo-bloco">
-                    <p>🎧 DJ Filho Manoel - Apresentador</p>
-                    <p style="margin-top:10px;">Coloque nomes, fotos e funções de todos aqui!</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- PÁGINA MURAL -->
-        <div class="pagina" id="mural">
-            <div class="bloco">
-                <div class="titulo-bloco">📢 MURAL DE ANÚNCIOS</div>
-                <div class="conteudo-bloco">
-                    <img src="COLOQUE_LINK_ANUNCIO1.jpg" alt="Anúncio 1" style="width:100%; margin-bottom:10px;">
-                    <img src="COLOQUE_LINK_ANUNCIO2.jpg" alt="Anúncio 2" style="width:100%;">
-                    <p style="margin-top:10px;">Troque ou adicione anúncios só alterando os links das imagens!</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- PÁGINA PEDIR MÚSICA -->
-        <div class="pagina" id="pedidos">
-            <div class="bloco">
-                <div class="titulo-bloco">🎵 PEDIR SUA MÚSICA</div>
-                <div class="conteudo-bloco">
-                    <p>Clique no botão abaixo para enviar seu pedido diretamente:</p>
-                    <a href="https://wa.me/5588992811188?text=Olá! Quero pedir a música:" class="botao-whats" target="_blank">📱 PEÇA AQUI PELO WHATSAPP</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- PÁGINA CONTATO -->
-        <div class="pagina" id="contato">
-            <div class="bloco">
-                <div class="titulo-bloco">📞 CONTATO</div>
-                <div class="conteudo-bloco">
-                    <p>📞 Telefone/WhatsApp: (88) 99281-1188</p>
-                    <p>📍 Local: Russas - Ceará</p>
-                    <p>📧 E-mail: contato@ordinariarussas.com.br</p>
-                    <p style="margin-top:10px;">Altere esses dados sempre que precisar!</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- 🆕 PÁGINA TV / YOUTUBE -->
-        <div class="pagina" id="tv">
-            <div class="bloco">
-                <div class="titulo-bloco">📺 TV ORDINÁRIA RUSSAS</div>
-                <div class="conteudo-bloco">
-                    <p>Acompanhe nossa transmissão ao vivo e vídeos aqui:</p>
-                    <div class="tv-container">
-                        <iframe src="COLOQUE_AQUI_LINK_DO_SEU_YOUTUBE" allowfullscreen allow="autoplay; encrypted-media; picture-in-picture;"></iframe>
+            <div style="background: #ff8800; color: white; text-align: center; padding: 25px; font-size: 28px; font-weight: bold; margin-bottom: 15px;">PROMOÇÃO</div>
+            <div class="caixa">
+                <div class="titulo-caixa">📺 WEB TV</div>
+                <div class="conteudo-caixa">
+                    <div class="container-video">
+                        <iframe src="COLOQUE_LINK_YOUTUBE_AQUI" allowfullscreen allow="autoplay; encrypted-media"></iframe>
                     </div>
-                    <p style="margin-top:10px; font-size:14px; color:#666;">Para alterar: troque só o link dentro do espaço acima!</p>
                 </div>
             </div>
         </div>
 
+        <!-- DEMAIS PÁGINAS -->
+        <div class="pagina" id="radio"><div class="caixa"><div class="titulo-caixa">📻 A RÁDIO</div><div class="conteudo-caixa"><p>Web Rádio Ordinária Russas, sua melhor companhia 24h por dia!</p></div></div></div>
+        <div class="pagina" id="programacao"><div class="caixa"><div class="titulo-caixa">📅 PROGRAMAÇÃO</div><div class="conteudo-caixa"><p>14:30 às 16:30 - Forrozão com DJ Filho Manoel</p></div></div></div>
+        <div class="pagina" id="equipe"><div class="caixa"><div class="titulo-caixa">👥 NOSSA EQUIPE</div><div class="conteudo-caixa"><p>Coloque aqui nomes e fotos da equipe</p></div></div></div>
+        <div class="pagina" id="noticias"><div class="caixa"><div class="titulo-caixa">📰 NOTÍCIAS</div><div class="conteudo-caixa"><p>Área para suas notícias</p></div></div></div>
+        <div class="pagina" id="fotos"><div class="caixa"><div class="titulo-caixa">🖼️ GALERIA DE FOTOS</div><div class="conteudo-caixa"><p>Área para suas fotos</p></div></div></div>
+        <div class="pagina" id="tv"><div class="caixa"><div class="titulo-caixa">🎬 VÍDEOS</div><div class="conteudo-caixa"><p>Área para seus vídeos</p></div></div></div>
+        <div class="pagina" id="agenda"><div class="caixa"><div class="titulo-caixa">📅 AGENDA</div><div class="conteudo-caixa"><p>Área para sua agenda</p></div></div></div>
+        <div class="pagina" id="mural"><div class="caixa"><div class="titulo-caixa">📢 MURAL</div><div class="conteudo-caixa"><p>Área para seus anúncios e avisos</p></div></div></div>
+        <div class="pagina" id="pedidos"><div class="caixa"><div class="titulo-caixa">🎵 PEDIR MÚSICA</div><div class="conteudo-caixa"><a href="https://wa.me/5588992811188?text=Olá! Quero pedir:" style="background:#25d366; color:white; padding:12px; display:block; text-align:center; text-decoration:none; font-weight:bold; border-radius:3px;">📱 PEÇA PELO WHATSAPP</a></div></div></div>
+        <div class="pagina" id="contato"><div class="caixa"><div class="titulo-caixa">📞 CONTATO</div><div class="conteudo-caixa"><p>📞 (88) 99281-1188 | 📍 Russas - CE</p></div></div></div>
+
+        <!-- PÁGINA ADMIN PARA VOCÊ VER OS VOTOS -->
+        <div class="pagina" id="admin">
+            <div class="caixa">
+                <div class="titulo-caixa">🔒 ÁREA DO ADMINISTRADOR</div>
+                <div class="conteudo-caixa">
+                    <p>Digite a senha para ver os resultados da votação:</p>
+                    <input type="password" id="senhaAdmin" placeholder="Senha" style="padding:7px; margin:8px 0; width:100%; max-width:250px;">
+                    <button onclick="verAdmin()" class="botao-enquete">Acessar</button>
+                    
+                    <div class="area-admin" id="painelAdmin">
+                        <p><strong>Total de votos até agora: <span id="totalVotos">0</span></strong></p>
+                        <div id="listaVotos"></div>
+                        <hr style="margin:10px 0;">
+                        <button onclick="zerarVotos()" class="botao-enquete" style="background:#b30000;">Zerar Votos</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- COLUNA LATERAL -->
-    <div class="coluna-lateral">
-        <div class="bloco">
-            <div class="titulo-bloco">🔴 AGORA NA RÁDIO</div>
-            <div class="conteudo-bloco">
+    <div class="coluna-direita">
+        <div class="caixa">
+            <div class="titulo-caixa">🔴 AGORA NA RÁDIO</div>
+            <div class="conteudo-caixa">
                 <p>Forrozão com DJ Filho Manoel</p>
-                <p>⏰ 14:30 às 16:30</p>
+                <p style="font-size:13px; margin-top:5px;">14:30 às 16:30</p>
             </div>
         </div>
+
+        <div class="caixa">
+            <div class="titulo-caixa">📊 ENQUETE</div>
+            <div class="conteudo-caixa">
+                <p>Gostou do site?</p>
+                <div class="enquete-opcao" onclick="votar('sim')"><input type="radio" name="voto"> Sim</div>
+                <div class="enquete-opcao" onclick="votar('nao')"><input type="radio" name="voto"> Não</div>
+                <div class="enquete-opcao" onclick="votar('melhorar')"><input type="radio" name="voto"> Pode Melhorar</div>
+                <div class="enquete-opcao" onclick="votar('excelente')"><input type="radio" name="voto"> Excelente</div>
+
+                <button class="botao-enquete" onclick="mostrarResultado()">Ver Resultados</button>
+
+                <div class="resultado" id="resultadoEnquete">
+                    <p style="font-weight:bold;">Resultado Parcial:</p>
+                    <p>Sim: <span id="qtdSim">0</span> votos</p><div class="barra-voto"><div class="preenchimento" id="barraSim"></div></div>
+                    <p>Não: <span id="qtdNao">0</span> votos</p><div class="barra-voto"><div class="preenchimento" id="barraNao"></div></div>
+                    <p>Pode Melhorar: <span id="qtdMelhorar">0</span> votos</p><div class="barra-voto"><div class="preenchimento" id="barraMelhorar"></div></div>
+                    <p>Excelente: <span id="qtdExcelente">0</span> votos</p><div class="barra-voto"><div class="preenchimento" id="barraExcelente"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="caixa"><div class="titulo-caixa">📢 PUBLICIDADES</div><div class="conteudo-caixa"><img src="COLOQUE_LINK_ANUNCIO1.jpg" class="anuncio"><img src="COLOQUE_LINK_ANUNCIO2.jpg" class="anuncio"></div></div>
+        <div class="caixa"><div class="titulo-caixa">🎵 AS MAIS PEDIDAS</div><div class="conteudo-caixa"><p>1 - Não Deixo Não | Mano Walterer</p></div></div>
+        <div class="caixa"><div class="titulo-caixa">📈 ESTATÍSTICAS</div><div class="conteudo-caixa"><p>Hoje: 1 | Semana:17 | Mês:133 | Total:671</p></div></div>
     </div>
 </div>
 
-<!-- RODAPÉ -->
 <footer>
     <p>📍 Ordinária Russas | A Melhor Companhia 24h com Você</p>
     <p>© Todos os direitos reservados - Web Rádio Ordinária Russas</p>
 </footer>
 
-<!-- FUNCIONALIDADE DOS BOTÕES E CARROSSEL -->
+<!-- SCRIPT DE TODAS AS FUNÇÕES -->
 <script>
-// Alternar entre as páginas
+// SENHA PARA VOCÊ ACESSAR: pode alterar aqui quando quiser
+const SENHA_ADMIN = "russas2026";
+let votos = JSON.parse(localStorage.getItem('votosRádio')) || {sim:0, nao:0, melhorar:0, excelente:0};
+
+// MENU FUNCIONAL
 document.querySelectorAll('.botao-menu').forEach(botao => {
-    botao.addEventListener('click', function(e) {
+    botao.addEventListener('click', e => {
         e.preventDefault();
-        
-        // Tirar destaque de todos os botões
         document.querySelectorAll('.botao-menu').forEach(b => b.classList.remove('ativo'));
-        // Esconder todas as páginas
         document.querySelectorAll('.pagina').forEach(p => p.classList.remove('visivel'));
-
-        // Ativar botão e página clicada
-        this.classList.add('ativo');
-        document.getElementById(this.getAttribute('pagina')).classList.add('visivel');
+        botao.classList.add('ativo');
+        document.getElementById(botao.getAttribute('pagina')).classList.add('visivel');
         window.scrollTo(0,0);
-    });
-});
+    })
+})
 
-// Carrossel automático
-let indice = 0;
-const imgs = document.querySelectorAll('.carrossel img');
-setInterval(() => {
-    imgs[indice].classList.remove('ativo');
-    indice = (indice + 1) % imgs.length;
-    imgs[indice].classList.add('ativo');
-}, 5000);
+// FUNÇÃO DE VOTAR
+function votar(opcao) {
+    votos[opcao]++;
+    salvarVotos();
+    alert('Obrigado por votar! Clique em Ver Resultados para conferir.');
+    atualizarBarras();
+}
+
+// MOSTRAR RESULTADOS PARA TODOS
+function mostrarResultado() {
+    document.getElementById('resultadoEnquete').classList.add('visivel');
+    atualizarBarras();
+}
+
+// ATUALIZAR BARRAS E NÚMEROS
+function atualizarBarras() {
+    const total = votos.sim + votos.nao + votos.melhorar + votos.excelente;
+    document.getElementById('qtdSim').innerText = votos.sim;
+    document.getElementById('qtdNao').innerText = votos.nao;
+    document.getElementById('qtdMelhorar').innerText = votos.melhorar;
+    document.getElementById('qtdExcelente').innerText = votos.excelente;
+    document.getElementById('totalVotos').innerText = total || 0;
+
+    if(total > 0) {
+        document.getElementById('barraSim').style.width = ${(votos.sim/total)*100}%;
+        document.getElementById('barraNao').style.width = ${(votos.nao/total)*100}%;
+        document.getElementById('barraMelhorar').style.width = ${(votos.melhorar/total)*100}%;
+        document.getElementById('barraExcelente').style.width = ${(votos.excelente/total)*100}%;
+    }
+}
+
+// ACESSO ADMINISTRADOR
+function verAdmin() {
+    const senha = document.getElementById('senhaAdmin').value;
+    if(senha === SENHA_ADMIN) {
+        document.getElementById('painelAdmin').classList.add('visivel');
+        atualizarBarras();
+    } else {
+        alert('Senha incorreta!');
+    }
+}
+
+function zerarVotos() {
+    if(confirm('Tem certeza que quer apagar todos os votos?')) {
+        votos = {sim:0, nao:0, melhorar:0, excelente:0};
+        salvarVotos();
+        atualizarBarras();
+        alert('Votos zerados!');
+    }
+}
+
+function salvarVotos() {
+    localStorage.setItem('votosRádio', JSON.stringify(votos));
+}
+
+// CARREGAR DADOS AO ABRIR
+atualizarBarras();
 </script>
 
 </body>
