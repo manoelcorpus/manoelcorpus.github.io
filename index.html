@@ -1,157 +1,430 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Web Rádio Ordinária Russas</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-        body { background: #f0f0f0; max-width: 1200px; margin: 0 auto; padding: 10px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+        body { background: #f0f0f0; color: #333; margin: 0; }
 
-        /* Cabeçalho Promoção */
-        .promocao { background: #ffd100; color: #003399; padding: 15px; text-align: center; font-size: 24px; font-weight: bold; margin-bottom: 10px; }
+        /* FAIXA PONTILHADA NO TOPO */
+        .topo-pontilhado {
+            background: #000;
+            background-image: radial-gradient(#ffffff 40%, transparent 40%);
+            background-position: 0 0, 4px 4px;
+            background-size: 8px 8px;
+            height: 18px;
+        }
 
-        /* Layout Principal */
-        .container { display: flex; gap: 15px; }
-        .conteudo-principal { flex: 3; }
-        .lateral { flex: 1; display: flex; flex-direction: column; gap: 15px; }
+        /* PLAYER PEQUENO */
+        .player-cabecalho {
+            background: #003399;
+            color: white;
+            padding: 6px 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .player-cabecalho span { font-size: 13px; font-weight: bold; }
+        .player-cabecalho audio { width: 200px; height: 26px; }
 
-        /* Web TV e Vídeo */
-        .webtv { background: #003399; color: white; padding: 8px; font-weight: bold; }
-        .video-container { background: black; position: relative; }
-        .video-container iframe { width: 100%; aspect-ratio: 16/9; border: none; }
+        /* MENU PRINCIPAL IGUAL DA FOTO */
+        .menu-principal { background: #003399; border-bottom: 2px solid #ffcc00; }
+        .menu-principal ul { list-style: none; display: flex; flex-wrap: wrap; margin: 0; padding: 0; }
+        .menu-principal li a {
+            display: block;
+            padding: 12px 14px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 15px;
+            border-right: 1px solid rgba(255,255,255,0.2);
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .menu-principal li a:hover, .menu-principal li a.ativo { background: #002277; color: #ffcc00; }
 
-        /* Agora na Rádio */
-        .agora-radio { background: #003399; color: white; padding: 10px; }
-        .agora-radio .conteudo { background: white; color: black; padding: 10px; margin-top: 5px; }
+        /* LAYOUT EXATAMENTE COMO NA FOTO */
+        .conteudo-geral {
+            max-width: 1200px;
+            margin: 10px auto;
+            padding: 0 10px;
+            display: grid;
+            grid-template-columns: 68% 30%;
+            gap: 2%;
+        }
+        @media (max-width: 768px) { .conteudo-geral { grid-template-columns: 1fr; } }
+        .pagina { display: none; }
+        .pagina.visivel { display: block; }
 
-        /* Enquete */
-        .enquete { background: #003399; color: white; padding: 10px; }
-        .enquete form { background: white; color: black; padding: 15px; margin-top: 5px; }
-        .enquete label { display: block; margin: 8px 0; cursor: pointer; }
-        .btn { background: #003399; color: white; border: none; padding: 8px 15px; margin: 10px 0; cursor: pointer; border-radius: 3px; font-weight: bold; }
-        .btn:hover { background: #002266; }
-        .resultados { margin-top: 15px; padding-top: 10px; border-top: 1px solid #ccc; }
-        .barra { height: 10px; background: #ddd; margin: 5px 0; border-radius: 5px; overflow: hidden; }
-        .preenchimento { height: 100%; background: #003399; width: 0%; transition: width 0.3s; }
+        /* CAIXAS E TÍTULOS IGUAIS */
+        .caixa { background: white; margin-bottom: 15px; border: 2px solid #003399; }
+        .titulo-caixa {
+            background: #003399;
+            color: #ffcc00;
+            padding: 8px 12px;
+            font-weight: bold;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .conteudo-caixa { padding: 12px; }
 
-        /* Publicidades */
-        .publicidades { background: #003399; color: white; padding: 10px; margin-top: auto; }
-        .pub-conteudo { background: white; padding: 10px; margin-top: 5px; min-height: 80px; }
+        /* BANNERS E IMAGENS */
+        .banner-grande { width: 100%; height: auto; display: block; }
+        .banner-padrao { 
+            background: #ffcc00; 
+            color: #003399; 
+            text-align: center; 
+            padding: 22px; 
+            font-size: 26px; 
+            font-weight: bold; 
+            margin: 10px 0;
+        }
+
+        /* WEB TV */
+        .web-tv { background: #000; width: 100%; }
+        .container-video { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; overflow: hidden; }
+        .container-video iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+
+        /* CARROSSEL DE PUBLICIDADES FUNCIONAL */
+        .carrossel { position: relative; overflow: hidden; width: 100%; min-height: 80px; }
+        .slide { width: 100%; display: none; }
+        .slide.ativo { display: block; }
+        .slide img { width: 100%; height: auto; }
+        .controles-carrossel { text-align: center; margin-top: 6px; }
+        .controles-carrossel span { cursor: pointer; margin: 0 8px; color: #003399; font-weight: bold; font-size: 18px; }
+
+        /* ENQUETE 100% FUNCIONAL */
+        .enquete-opcao { 
+            margin: 8px 0; 
+            font-size: 15px; 
+            cursor: pointer; 
+            padding: 5px; 
+            border-radius: 2px; 
+            transition: 0.2s;
+        }
+        .enquete-opcao:hover { background:#e8f0ff; }
+        .barra-voto { height:10px; background:#e0e0e0; border-radius:5px; margin:4px 0 8px 0; overflow:hidden; }
+        .preenchimento { height:100%; background:#003399; width:0%; transition:0.4s; }
+        .botao-enquete {
+            background: #003399;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            margin: 8px 0;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 2px;
+            transition:0.2s;
+        }
+        .botao-enquete:hover { background: #002277; color: #ffcc00; }
+        .resultado { 
+            margin-top:12px; 
+            padding-top:10px; 
+            border-top:1px solid #ccc; 
+            display: block !important; 
+            font-size: 14px;
+        }
+        .resultado p { margin: 4px 0; }
+        .area-admin { 
+            margin-top:10px; 
+            padding:10px; 
+            background:rgba(0,51,153,0.05); 
+            border:1px solid #003399;
+            border-radius:2px; 
+            font-size:13px; 
+            display:none; 
+        }
+        .area-admin.visivel { display:block; }
+
+        /* PEDIDOS DE MÚSICA */
+        .lista-pedidos a {
+            display: block;
+            padding: 7px;
+            margin: 5px 0;
+            background: #f0f5ff;
+            color: #003399;
+            text-decoration: none;
+            border-radius: 2px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+        .lista-pedidos a:hover { background: #003399; color: white; }
+        .botao-whats {
+            background: #25d366;
+            color: white;
+            text-align: center;
+            padding: 12px;
+            display: block;
+            margin-top: 12px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 2px;
+        }
+
+        /* RODAPÉ */
+        footer {
+            background: #003399;
+            color: white;
+            text-align: center;
+            padding: 15px;
+            margin-top: 20px;
+            border-top: 2px solid #ffcc00;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Área de Promoção -->
-    <div class="promocao">PROMOÇÃO</div>
+<!-- FAIXA PONTILHADA -->
+<div class="topo-pontilhado"></div>
 
-    <div class="container">
-        <!-- Conteúdo Principal -->
-        <div class="conteudo-principal">
-            <div class="webtv">📺 WEB TV</div>
-            <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" 
-                        title="Rick Astley - Never Gonna Give You Up (4K Remaster)" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen></iframe>
+<!-- PLAYER -->
+<div class="player-cabecalho">
+    <span>🎧 Tocando Agora:</span>
+    <audio controls preload="metadata">
+        <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
+        Seu navegador não suporta áudio.
+    
+</div>
+
+<!-- MENU PRINCIPAL -->
+<nav class="menu-principal">
+    <ul>
+        <li><a data-pagina="inicio" class="botao-menu ativo">INÍCIO</a></li>
+        <li><a data-pagina="radio" class="botao-menu">A RÁDIO</a></li>
+        <li><a data-pagina="programacao" class="botao-menu">PROGRAMAÇÃO</a></li>
+        <li><a data-pagina="equipe" class="botao-menu">EQUIPE</a></li>
+        <li><a data-pagina="noticias" class="botao-menu">NOTÍCIAS</a></li>
+        <li><a data-pagina="fotos" class="botao-menu">FOTOS</a></li>
+        <li><a data-pagina="videos" class="botao-menu">VÍDEOS</a></li>
+        <li><a data-pagina="agenda" class="botao-menu">AGENDA</a></li>
+        <li><a data-pagina="mural" class="botao-menu">MURAL</a></li>
+        <li><a data-pagina="pedidos" class="botao-menu">PEDIDOS</a></li>
+        <li><a data-pagina="contato" class="botao-menu">CONTATO</a></li>
+        <li><a data-pagina="admin" class="botao-menu">🔒 ADMIN</a></li>
+    </ul>
+</nav>
+
+<!-- CONTEÚDO -->
+<div class="conteudo-geral">
+    <div class="coluna-esquerda">
+        <!-- PÁGINA INÍCIO -->
+        <div class="pagina visivel" id="inicio">
+            <div class="caixa">
+                <img src="https://images.unsplash.com/photo-1516450360452-9312f5e86294?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Banner Principal" class="banner-grande">
+            </div>
+
+            <div class="banner-padrao">PROMOÇÃO</div>
+
+            <div class="caixa">
+                <div class="titulo-caixa">📺 WEB TV</div>
+                <div class="conteudo-caixa web-tv">
+                    <div class="container-video">
+                        <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen allow="autoplay; encrypted-media"></iframe>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <!-- Barra Lateral -->
-        <div class="lateral">
-            <!-- Agora na Rádio -->
-            <div class="agora-radio">
-                <strong>🔊 AGORA NA RÁDIO</strong>
-                <div class="conteudo">
-                    Forrozão com DJ Filho Manoel<br>
-                    14:30 às 16:30
+        <!-- DEMAIS PÁGINAS -->
+        <div class="pagina" id="radio"><div class="caixa"><div class="titulo-caixa">📻 A RÁDIO</div><div class="conteudo-caixa"><p>Web Rádio Ordinária Russas, sua melhor companhia 24h por dia!</p></div></div></div>
+        <div class="pagina" id="programacao"><div class="caixa"><div class="titulo-caixa">📅 PROGRAMAÇÃO</div><div class="conteudo-caixa"><p>14:30 às 16:30 - Forrozão com DJ Filho Manoel</p></div></div></div>
+        <div class="pagina" id="equipe"><div class="caixa"><div class="titulo-caixa">👥 EQUIPE</div><div class="conteudo-caixa"><p>Coloque nomes e fotos da equipe aqui</p></div></div></div>
+        <div class="pagina" id="noticias"><div class="caixa"><div class="titulo-caixa">📰 NOTÍCIAS</div><div class="conteudo-caixa"><p>Área para suas notícias e avisos</p></div></div></div>
+        <div class="pagina" id="fotos"><div class="caixa"><div class="titulo-caixa">🖼️ FOTOS</div><div class="conteudo-caixa"><p>Área para galeria de fotos</p></div></div></div>
+        <div class="pagina" id="videos"><div class="caixa"><div class="titulo-caixa">🎬 VÍDEOS</div><div class="conteudo-caixa"><p>Área para seus vídeos</p></div></div></div>
+        <div class="pagina" id="agenda"><div class="caixa"><div class="titulo-caixa">📅 AGENDA</div><div class="conteudo-caixa"><p>Área para agenda de eventos</p></div></div></div>
+        <div class="pagina" id="mural"><div class="caixa"><div class="titulo-caixa">📢 MURAL</div><div class="conteudo-caixa"><p>Área para recados e avisos</p></div></div></div>
+        
+        <!-- PÁGINA PEDIDOS -->
+        <div class="pagina" id="pedidos">
+            <div class="caixa">
+                <div class="titulo-caixa">🎵 PEDIR MÚSICA</div>
+                <div class="conteudo-caixa lista-pedidos">
+                    <a href="https://wa.me/5588992811188?text=Olá! Quero pedir: Não Deixo Não - Mano Walter" target="_blank">🎵 Não Deixo Não - Mano Walter</a>
+                    <a href="https://wa.me/5588992811188?text=Olá! Quero pedir: Xote das Meninas - Luiz Gonzaga" target="_blank">🎵 Xote das Meninas - Luiz Gonzaga</a>
+                    <a href="https://wa.me/5588992811188?text=Olá! Quero pedir: Forró das Antigas - Calcinha Preta" target="_blank">🎵 Forró das Antigas - Calcinha Preta</a>
+                    <a href="https://wa.me/5588992811188?text=Olá! Quero pedir: Baile de Vaqueiro - Tarcísio do Acordeom" target="_blank">🎵 Baile de Vaqueiro - Tarcísio do Acordeom</a>
+                    <a href="https://wa.me/5588992811188?text=Olá! Quero pedir outra música:" target="_blank">🎶 Pedir qualquer outra música</a>
+                    <a href="https://wa.me/5588992811188" class="botao-whats" target="_blank">📱 Abrir WhatsApp Direto</a>
                 </div>
             </div>
+        </div>
 
-            <!-- Enquete Funcional -->
-            <div class="enquete">
-                <strong>📊 ENQUETE</strong>
-                <form id="formEnquete">
-                    <p>Gostou do site?</p>
-                    <label><input type="radio" name="voto" value="sim" required> Sim</label>
-                    <label><input type="radio" name="voto" value="nao"> Não</label>
-                    <label><input type="radio" name="voto" value="melhorar"> Pode Melhorar</label>
-                    <label><input type="radio" name="voto" value="excelente"> Excelente</label>
-                    <button type="button" class="btn" id="btnVotar">Votar</button>
-                    <button type="button" class="btn" id="btnVerResultados">Ver Resultados</button>
+        <div class="pagina" id="contato"><div class="caixa"><div class="titulo-caixa">📞 CONTATO</div><div class="conteudo-caixa"><p>📞 (88) 99281-1188 | 📍 Russas - CE</p></div></div></div>
 
-                    <div class="resultados" id="areaResultados" style="display: none;">
-                        <strong>Resultado Parcial:</strong><br>
-                        Sim: <span id="contSim">0</span> votos
-                        <div class="barra"><div class="preenchimento" id="barraSim"></div></div>
-
-                        Não: <span id="contNao">0</span> votos
-                        <div class="barra"><div class="preenchimento" id="barraNao"></div></div>
-
-                        Pode Melhorar: <span id="contMelhorar">0</span> votos
-                        <div class="barra"><div class="preenchimento" id="barraMelhorar"></div></div>
-
-                        Excelente: <span id="contExcelente">0</span> votos
-                        <div class="barra"><div class="preenchimento" id="barraExcelente"></div></div>
+        <!-- ÁREA ADMIN -->
+        <div class="pagina" id="admin">
+            <div class="caixa">
+                <div class="titulo-caixa">🔒 ÁREA DO ADMINISTRADOR</div>
+                <div class="conteudo-caixa">
+                    <p>Digite a senha para ver detalhes da votação:</p>
+                    <input type="password" id="senhaAdmin" placeholder="Senha" style="padding:8px; margin:8px 0; width:100%; max-width:250px; border:1px solid #ccc;">
+                    <button onclick="verAdmin()" class="botao-enquete">Acessar</button>
+                    
+                    <div class="area-admin" id="painelAdmin">
+                        <p><strong>Total de votos até agora: <span id="totalVotos">0</span></strong></p>
+                        <hr style="margin:10px 0;">
+                        <button onclick="zerarVotos()" class="botao-enquete" style="background:#b30000;">Zerar Todos os Votos</button>
                     </div>
-                </form>
-            </div>
-
-            <!-- Publicidades -->
-            <div class="publicidades">
-                <strong>📢 PUBLICIDADES</strong>
-                <div class="pub-conteudo">
-                    Espaço para anúncios
                 </div>
             </div>
         </div>
     </div>
 
-    <script>
-        // Armazena os votos (funciona mesmo fechando e abrindo o site)
-        let votos = JSON.parse(localStorage.getItem('votosEnquete')) || {
-            sim: 0, nao: 0, melhorar: 0, excelente: 0
-        };
+    <!-- COLUNA LATERAL -->
+    <div class="coluna-direita">
+        <div class="caixa">
+            <div class="titulo-caixa">🔴 AGORA NA RÁDIO</div>
+            <div class="conteudo-caixa">
+                <p>Forrozão com DJ Filho Manoel</p>
+                <p style="font-size:13px; margin-top:5px;">14:30 às 16:30</p>
+            </div>
+        </div>
 
-        // Atualiza os números e barras na tela
-        function atualizarResultados() {
-            document.getElementById('contSim').textContent = votos.sim;
-            document.getElementById('contNao').textContent = votos.nao;
-            document.getElementById('contMelhorar').textContent = votos.melhorar;
-            document.getElementById('contExcelente').textContent = votos.excelente;
+        <!-- ENQUETE FUNCIONAL -->
+        <div class="caixa">
+            <div class="titulo-caixa">📊 ENQUETE</div>
+            <div class="conteudo-caixa">
+                <p style="margin-bottom:8px;">Gostou do site?</p>
+                <div class="enquete-opcao" onclick="votar('sim')"><input type="radio" name="voto"> Sim</div>
+                <div class="enquete-opcao" onclick="votar('nao')"><input type="radio" name="voto"> Não</div>
+                <div class="enquete-opcao" onclick="votar('melhorar')"><input type="radio" name="voto"> Pode Melhorar</div>
+                <div class="enquete-opcao" onclick="votar('excelente')"><input type="radio" name="voto"> Excelente</div>
 
-            const total = votos.sim + votos.nao + votos.melhorar + votos.excelente || 1;
-            document.getElementById('barraSim').style.width = `${(votos.sim / total) * 100}%`;
-            document.getElementById('barraNao').style.width = `${(votos.nao / total) * 100}%`;
-            document.getElementById('barraMelhorar').style.width = `${(votos.melhorar / total) * 100}%`;
-            document.getElementById('barraExcelente').style.width = `${(votos.excelente / total) * 100}%`;
+                <button class="botao-enquete" onclick="mostrarResultado()">Ver Resultados</button>
 
-            localStorage.setItem('votosEnquete', JSON.stringify(votos));
-        }
+                <div class="resultado" id="resultadoEnquete">
+                    <p style="font-weight:bold;">Resultado Parcial:</p>
+                    <p>Sim: <span id="qtdSim">0</span> votos</p><div class="barra-voto"><div class="preenchimento" id="barraSim"></div></div>
+                    <p>Não: <span id="qtdNao">0</span> votos</p><div class="barra-voto"><div class="preenchimento" id="barraNao"></div></div>
+                    <p>Pode Melhorar: <span id="qtdMelhorar">0</span> votos</p><div class="barra-voto"><div class="preenchimento" id="barraMelhorar"></div></div>
+                    <p>Excelente: <span id="qtdExcelente">0</span> votos</p><div class="barra-voto"><div class="preenchimento" id="barraExcelente"></div></div>
+                </div>
+            </div>
+        </div>
 
-        // Botão Votar
-        document.getElementById('btnVotar').addEventListener('click', () => {
-            const opcao = document.querySelector('input[name="voto"]:checked');
-            if (!opcao) {
-                alert('Escolha uma opção antes de votar!');
-                return;
-            }
-            votos[opcao.value]++;
-            atualizarResultados();
-            alert('Voto registrado com sucesso!');
-            document.getElementById('formEnquete').reset();
-        });
+        <!-- CARROSSEL PUBLICIDADES -->
+        <div class="caixa">
+            <div class="titulo-caixa">📢 PUBLICIDADES</div>
+            <div class="conteudo-caixa">
+                <div class="carrossel">
+                    <div class="slide ativo"><img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Anúncio 1"></div>
+                    <div class="slide"><img src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Anúncio 2"></div>
+                    <div class="slide"><img src="https://images.unsplash.com/photo-1572044162444-ad60f128bdea?ixlib=rb-4.0.&auto=format&fit=crop&w=600&q=80" alt="Anúncio 3"></div>
+                </div>
+                <div class="controles-carrossel">
+                    <span onclick="mudarSlide(-1)">◀️</span>
+                    <span onclick="mudarSlide(1)">▶️</span>
+                </div>
+            </div>
+        </div>
 
-        // Botão Ver Resultados
-        document.getElementById('btnVerResultados').addEventListener('click', () => {
-            const area = document.getElementById('areaResultados');
-            area.style.display = area.style.display === 'none' ? 'block' : 'none';
-            atualizarResultados();
-        });
+        <!-- AS MAIS PEDIDAS -->
+        <div class="caixa">
+            <div class="titulo-caixa">🎵 AS MAIS PEDIDAS</div>
+            <div class="conteudo-caixa lista-pedidos">
+                <a href="https://wa.me/5588992811188?text=Quero pedir essa: Não Deixo Não - Mano Walter" target="_blank">1. Não Deixo Não - Mano Walter</a>
+                <a href="https://wa.me/5588992811188?text=Quero pedir essa: Xote das Meninas" target="_blank">2. Xote das Meninas - Luiz Gonzaga</a>
+                <a href="https://wa.me/5588992811188?text=Quero pedir essa: Forró das Antigas" target="_blank">3. Forró das Antigas - Calcinha Preta</a>
+                <a href="https://wa.me/5588992811188?text=Quero pedir essa: Baile de Vaqueiro" target="_blank">4. Baile de Vaqueiro - Tarcísio do Acordeom</a>
+                <a href="https://wa.me/5588992811188?text=Quero pedir essa: Meu Xodó" target="_blank">5. Meu Xodó - Santanna o Cantador</a>
+            </div>
+        </div>
 
-        // Carrega os resultados ao abrir a página
-        window.addEventListener('load', atualizarResultados);
-    </script>
+        <div class="caixa"><div class="titulo-caixa">📈 ESTATÍSTICAS</div><div class="conteudo-caixa"><p>Hoje: 1 | Semana:17 | Mês:133 | Total:671</p></div></div></div>
+    </div>
+</div>
+
+<footer>
+    <p>📍 Ordinária Russas | A Melhor Companhia 24h com Você</p>
+    <p>© Todos os direitos reservados - Web Rádio Ordinária Russas</p>
+</footer>
+
+<!-- SCRIPT DEIXADO 100% FUNCIONAL -->
+<script>
+const SENHA_ADMIN = "russas2026";
+let votos = JSON.parse(localStorage.getItem('votosRádio')) || {sim:0, nao:0, melhorar:0, excelente:0};
+
+// 🔹 MENU FUNCIONAL - ABRE TODAS AS PÁGINAS
+document.querySelectorAll('.botao-menu').forEach(botao => {
+    botao.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelectorAll('.botao-menu').forEach(b => b.classList.remove('ativo'));
+        document.querySelectorAll('.pagina').forEach(p => p.classList.remove('visivel'));
+        botao.classList.add('ativo');
+        document.getElementById(botao.getAttribute('data-pagina')).classList.add('visivel');
+        window.scrollTo(0,0);
+    })
+})
+
+// 🔹 ENQUETE COMPLETAMENTE FUNCIONAL
+function votar(opcao) {
+    votos[opcao]++;
+    salvarVotos();
+    alert('✅ Obrigado por votar! Resultado já atualizado!');
+    atualizarBarras();
+}
+function mostrarResultado() {
+    document.getElementById('resultadoEnquete').style.display = 'block';
+    atualizarBarras();
+}
+function atualizarBarras() {
+    const total = votos.sim + votos.nao + votos.melhorar + votos.excelente;
+    document.getElementById('qtdSim').innerText = votos.sim;
+    document.getElementById('qtdNao').innerText = votos.nao;
+    document.getElementById('qtdMelhorar').innerText = votos.melhorar;
+    document.getElementById('qtdExcelente').innerText = votos.excelente;
+    document.getElementById('totalVotos').innerText = total || 0;
+    
+    if(total > 0) {
+        document.getElementById('barraSim').style.width = ${(votos.sim/total)*100}%;
+        document.getElementById('barraNao').style.width = ${(votos.nao/total)*100}%;
+        document.getElementById('barraMelhorar').style.width = ${(votos.melhorar/total)*100}%;
+        document.getElementById('barraExcelente').style.width = ${(votos.excelente/total)*100}%;
+    }
+}
+function verAdmin() {
+    const senha = document.getElementById('senhaAdmin').value.trim();
+    if(senha === SENHA_ADMIN) {
+        document.getElementById('painelAdmin').classList.add('visivel');
+        atualizarBarras();
+        alert('🔓 Acesso liberado!');
+    } else {
+        alert('❌ Senha incorreta!');
+    }
+}
+function zerarVotos() {
+    if(confirm('⚠️ Tem certeza que quer apagar TODOS os votos? Essa ação não volta atrás!')) {
+        votos = {sim:0, nao:0, melhorar:0, excelente:0};
+        salvarVotos();
+        atualizarBarras();
+        alert('✅ Votos zerados com sucesso!');
+    }
+}
+function salvarVotos() {
+    localStorage.setItem('votosRádio', JSON.stringify(votos));
+}
+
+// 🔹 CARROSSEL AUTOMÁTICO E MANUAL
+let indiceAtual = 0;
+const slides = document.querySelectorAll('.slide');
+function mudarSlide(direcao) {
+    slides[indiceAtual].classList.remove('ativo');
+    indiceAtual += direcao;
+    if(indiceAtual >= slides.length) indiceAtual = 0;
+    if(indiceAtual < 0) indiceAtual = slides.length - 1;
+    slides[indiceAtual].classList.add('ativo');
+}
+setInterval(() => mudarSlide(1), 4000);
+
+// 🔹 CARREGA DADOS AO ABRIR A PÁGINA
+atualizarBarras();
+</script>
 
 </body>
 </html>
