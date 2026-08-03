@@ -3,6 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>Web Rádio Ordinária Russas</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.0/css/all.min.css">
     <style>
@@ -93,37 +96,32 @@
 </head>
 <body>
 
-<!-- ########################################################### -->
-<!-- #################### EDITE AQUI SEUS DADOS ################ -->
+<!-- DADOS FIXOS, NÃO MUDAM MAIS SOZINHOS -->
 <script>
-const PADRAO = {
+const SENHA_CORRETA = "russas2026";
+const DADOS_FIXOS = {
     nomeRadio: "WEB RÁDIO ORDINÁRIA RUSSAS",
     linkPlayer: "https://stream.zeno.fm/tnzj3smf3abvv",
-    whatsapp: "5588992811188",
-    senhaAdmin: "russas2026" // NÃO VAI DAR ERRO MAIS!
+    whatsapp: "5588992811188"
 };
 </script>
-<!-- ##################### FIM DAS CONFIGURAÇÕES ############## -->
-<!-- ########################################################### -->
-
 
 <!-- TELA LOGIN -->
 <div id="pagLogin" class="tela-login">
     <div class="caixa-login">
         <h2>Acesso Administrativo</h2>
-        <form id="formLogin">
-            <div class="campo">
-                <label>Usuário</label>
-                <input type="text" value="admin" readonly>
-            </div>
-            <div class="campo">
-                <label>Senha</label>
-                <input type="password" id="inpSenha" required placeholder="Digite: russas2026">
-            </div>
-            <button type="submit" class="botao botao-laranja">Entrar</button>
-            <a href="#" onclick="abrirSite();return false;" class="botao" style="margin-top:10px; background:#666;">Ver Site Público</a>
-            <div id="avisoMsg" class="aviso erro"></div>
-        </form>
+        <div class="campo">
+            <label>Usuário</label>
+            <input type="text" value="admin" readonly>
+        </div>
+        <div class="campo">
+            <label>Senha</label>
+            <input type="password" id="inpSenha" placeholder="Digite: russas2026">
+        </div>
+        <button class="botao botao-laranja" onclick="verificarLogin()">Entrar</button>
+        <br>
+        <button class="botao" style="margin-top:10px; background:#666;" onclick="abrirSite()">Ver Site Público</button>
+        <div id="avisoMsg" class="aviso erro"></div>
     </div>
 </div>
 
@@ -131,7 +129,7 @@ const PADRAO = {
 <div id="pagSite" class="oculto">
     <header class="barra-topo">
         <div class="container conteudo-topo">
-            <div class="nome-radio" id="nomeTopo">WEB RÁDIO ORDINÁRIA RUSSAS</div>
+            <div class="nome-radio">WEB RÁDIO ORDINÁRIA RUSSAS</div>
             <div class="area-player">
                 <button class="btn-tocar" id="btnPlay"><i class="fa-solid fa-play"></i></button>
                 <audio id="playerRadio" preload="metadata">
@@ -170,11 +168,11 @@ const PADRAO = {
         <div class="coluna-esquerda">
             <div class="bloco-web-tv">
                 <h3><i class="fa-solid fa-tv"></i> WEB TV</h3>
-                <div class="area-video" id="espacoVideo">Adicione o vídeo no painel administrativo</div>
+                <div class="area-video">Adicione o vídeo no painel</div>
             </div>
 
             <h3 class="titulo-bloco">GALERIA DE FOTOS <button class="botao botao-laranja" style="padding:4px 8px; font-size:13px;">VER TODAS</button></h3>
-            <div class="grade-galeria" id="gradeFotos">
+            <div class="grade-galeria">
                 <div class="item-galeria">Foto 1</div>
                 <div class="item-galeria">Foto 2</div>
                 <div class="item-galeria">Foto 3</div>
@@ -182,7 +180,7 @@ const PADRAO = {
             </div>
 
             <h3 class="titulo-bloco">ÚLTIMAS NOTÍCIAS</h3>
-            <div class="lista-noticias" id="listaNoticias">
+            <div class="lista-noticias">
                 <div class="item-noticia">
                     <div class="img-noticia"></div>
                     <div>
@@ -197,7 +195,7 @@ const PADRAO = {
         <div class="coluna-direita grade-coluna-direita">
             <div class="card" style="padding:15px;">
                 <h3 class="titulo-bloco">PROGRAMAÇÃO DO DIA</h3>
-                <div class="grade-programacao" id="listaProg">
+                <div class="grade-programacao">
                     <div class="item-prog"><span>05:00</span><span>Manhã Feliz</span></div>
                     <div class="item-prog"><span>08:00</span><span>Jornal da Terra</span></div>
                     <div class="item-prog"><span>12:00</span><span>Show da Tarde</span></div>
@@ -214,7 +212,7 @@ const PADRAO = {
             <div class="card" style="padding:15px; text-align:center;">
                 <i class="fa-brands fa-whatsapp" style="font-size:28px; color:#25d366;"></i>
                 <p style="font-weight:700; font-size:18px; margin:8px 0;">(88) 9 9281-1188</p>
-                <a href="#" id="linkPedido" class="botao botao-laranja">PEDIR MÚSICA</a>
+                <a href="https://wa.me/5588992811188?text=Olá! Quero pedir uma música" class="botao botao-laranja" target="_blank">PEDIR MÚSICA</a>
             </div>
         </div>
     </div>
@@ -232,72 +230,63 @@ const PADRAO = {
     <aside class="menu-admin">
         <div class="cabecalho">Painel de Controle</div>
         <ul>
-            <li class="item-admin ativo" onclick="mostrarPaginaAdmin('geral')"><i class="fa-solid fa-gear"></i> <span>Configurações Gerais</span></li>
-            <li class="item-admin" onclick="mostrarPaginaAdmin('player')"><i class="fa-solid fa-circle-play"></i> <span>Player da Rádio</span></li>
-            <li class="item-admin" onclick="mostrarPaginaAdmin('galeria')"><i class="fa-solid fa-images"></i> <span>Galeria / Web TV</span></li>
-            <li class="item-admin" onclick="mostrarPaginaAdmin('sair')"><i class="fa-solid fa-right-from-bracket"></i> <span>Sair</span></li>
+            <li class="item-admin ativo"><i class="fa-solid fa-gear"></i> <span>Configurações</span></li>
+            <li class="item-admin"><i class="fa-solid fa-circle-play"></i> <span>Player</span></li>
+            <li class="item-admin"><i class="fa-solid fa-images"></i> <span>Galeria</span></li>
+            <li class="item-admin" onclick="sair()"><i class="fa-solid fa-right-from-bracket"></i> <span>Sair</span></li>
         </ul>
     </aside>
-    <main class="conteudo-admin" id="conteudoAdmin"></main>
+    <main class="conteudo-admin">
+        <h2>Bem-vindo ao Painel</h2>
+        <p>Para alterar fotos e conteúdos, basta trocar os links no código ou usar o jeito fácil que te ensinei!</p>
+        <div class="card" style="padding:20px; margin-top:20px;">
+            <p style="font-weight:bold;">Senha atual: russas2026</p>
+            <p style="margin-top:10px;">Para mudar, altere diretamente na parte superior do código.</p>
+        </div>
+    </main>
 </div>
 
-
 <script>
-// GARANTE SENHA FIXA, SEM ERRO DE JEITO NENHUM
-let dadosSalvos;
-try {
-    const salvo = localStorage.getItem('dadosRádio');
-    dadosSalvos = salvo ? JSON.parse(salvo) : PADRAO;
-    if(!dadosSalvos.senhaAdmin) dadosSalvos.senhaAdmin = PADRAO.senhaAdmin;
-} catch {
-    dadosSalvos = PADRAO;
-}
-let logado = localStorage.getItem('logadoRadio') === 'sim';
+// FUNÇÕES SIMPLES, SEM MAIS COMPLICAÇÕES
+document.getElementById('anoAtual').textContent = new Date().getFullYear();
 let tocando = false;
 
-function abrirLogin() { 
-    document.getElementById('pagSite').classList.add('oculto'); 
-    document.getElementById('pagAdmin').classList.add('oculto'); 
-    document.getElementById('pagLogin').classList.remove('oculto'); 
+function abrirLogin() {
+    document.getElementById('pagSite').classList.add('oculto');
+    document.getElementById('pagAdmin').classList.add('oculto');
+    document.getElementById('pagLogin').classList.remove('oculto');
     document.getElementById('avisoMsg').style.display = 'none';
 }
-function abrirSite() { 
-    document.getElementById('pagLogin').classList.add('oculto'); 
-    document.getElementById('pagAdmin').classList.add('oculto'); 
-    document.getElementById('pagSite').classList.remove('oculto'); 
-    carregarSite(); 
-}
-function abrirAdmin() { 
-    document.getElementById('pagLogin').classList.add('oculto'); 
-    document.getElementById('pagSite').classList.add('oculto'); 
-    document.getElementById('pagAdmin').classList.remove('oculto'); 
-    mostrarPaginaAdmin('geral'); 
+
+function abrirSite() {
+    document.getElementById('pagLogin').classList.add('oculto');
+    document.getElementById('pagAdmin').classList.add('oculto');
+    document.getElementById('pagSite').classList.remove('oculto');
 }
 
-// LOGIN 100% FUNCIONAL
-document.getElementById('formLogin').addEventListener('submit', e => {
-    e.preventDefault();
-    const senhaDigitada = document.getElementById('inpSenha').value.trim();
+function verificarLogin() {
+    const senha = document.getElementById('inpSenha').value.trim();
     const aviso = document.getElementById('avisoMsg');
     
-    if(senhaDigitada === dadosSalvos.senhaAdmin){
-        localStorage.setItem('logadoRadio', 'sim');
-        logado = true;
-        abrirAdmin();
+    if(senha === SENHA_CORRETA) {
+        document.getElementById('pagLogin').classList.add('oculto');
+        document.getElementById('pagAdmin').classList.remove('oculto');
     } else {
-        aviso.textContent = ❌ Senha incorreta! Use: ${dadosSalvos.senhaAdmin};
+        aviso.textContent = "❌ Senha errada! Use: russas2026";
         aviso.style.display = 'block';
     }
-});
+}
 
-if(logado) abrirAdmin();
-else abrirSite();
+function sair() {
+    abrirLogin();
+    document.getElementById('inpSenha').value = '';
+}
 
-// PLAYER
+// PLAYER FUNCIONAL
 document.getElementById('btnPlay').addEventListener('click', () => {
     const audio = document.getElementById('playerRadio');
     if(!tocando){
-        audio.play().catch(() => alert('Clique novamente para iniciar a rádio!'));
+        audio.play().catch(e => alert('Clique novamente para ouvir!'));
         document.getElementById('btnPlay').innerHTML = <i class="fa-solid fa-pause"></i>;
     } else {
         audio.pause();
@@ -305,96 +294,14 @@ document.getElementById('btnPlay').addEventListener('click', () => {
     }
     tocando = !tocando;
 });
+
 document.getElementById('ctrlVolume').addEventListener('input', e => {
     document.getElementById('playerRadio').volume = e.target.value / 100;
 });
 
-function carregarSite(){
-    document.getElementById('nomeTopo').textContent = dadosSalvos.nomeRadio;
-    document.getElementById('playerRadio').src = dadosSalvos.linkPlayer;
-    document.getElementById('linkPedido').href = https://wa.me/${dadosSalvos.whatsapp}?text=Olá! Quero pedir uma música;
-    document.getElementById('anoAtual').textContent = new Date().getFullYear();
-    
-    if(dadosSalvos.videoTv) {
-        document.getElementById('espacoVideo').innerHTML = <iframe src="${dadosSalvos.videoTv}" style="width:100%; height:100%; border:none;" allowfullscreen></iframe>;
-    }
-    if(dadosSalvos.fotosGaleria && dadosSalvos.fotosGaleria.length > 0) {
-        document.getElementById('gradeFotos').innerHTML = dadosSalvos.fotosGaleria.map(foto => 
-            <div class="item-galeria" style="background-image:url('${foto}');"></div>
-        ).join('');
-    }
-}
-
-function mostrarPaginaAdmin(pag){
-    document.querySelectorAll('.item-admin').forEach(i => i.classList.remove('ativo'));
-    event.target.closest('.item-admin').classList.add('ativo');
-    const conteudo = document.getElementById('conteudoAdmin');
-    
-    if(pag === 'geral'){
-        conteudo.innerHTML = `
-            <h2>Configurações Gerais</h2>
-            <div class="card" style="padding:20px; margin-top:15px;">
-                <div class="campo"><label>Nome da Rádio</label><input type="text" id="edtNome" value="${dadosSalvos.nomeRadio}"></div>
-                <div class="campo"><label>WhatsApp (apenas números com DDD)</label><input type="text" id="edtWpp" value="${dadosSalvos.whatsapp}"></div>
-                <div class="campo"><label>Senha de Administrador</label><input type="text" id="edtNovaSenha" value="${dadosSalvos.senhaAdmin}"></div>
-                <button class="botao botao-laranja" onclick="salvarGeral()">Salvar Alterações</button>
-            </div>
-        `;
-    } else if(pag === 'player'){
-        conteudo.innerHTML = `
-            <h2>Configurações do Player</h2>
-            <div class="card" style="padding:20px; margin-top:15px;">
-                <div class="campo"><label>Link do Stream Zeno</label><input type="text" id="edtLink" value="${dadosSalvos.linkPlayer}"></div>
-                <button class="botao botao-laranja" onclick="salvarPlayer()">Atualizar Player</button>
-            </div>
-        `;
-    } else if(pag === 'galeria'){
-        conteudo.innerHTML = `
-            <h2>Galeria e Web TV</h2>
-            <div class="card" style="padding:20px; margin-top:15px;">
-                <div class="campo"><label>Link do Vídeo YouTube</label><input type="text" id="edtVideo" value="${dadosSalvos.videoTv || ''}"></div>
-                <div class="campo"><label>Link da Imagem</label><input type="text" id="edtFoto"></div>
-                <button class="botao" onclick="adicionarFoto()">Adicionar Foto</button>
-                <button class="botao botao-laranja" onclick="salvarVideo()" style="margin-top:8px;">Salvar Vídeo</button>
-            </div>
-        `;
-    } else if(pag === 'sair'){
-        localStorage.removeItem('logadoRadio');
-        logado = false;
-        abrirLogin();
-    }
-}
-
-window.salvarGeral = () => {
-    dadosSalvos.nomeRadio = document.getElementById('edtNome').value.trim();
-    dadosSalvos.whatsapp = document.getElementById('edtWpp').value.trim();
-    dadosSalvos.senhaAdmin = document.getElementById('edtNovaSenha').value.trim();
-    localStorage.setItem('dadosRádio', JSON.stringify(dadosSalvos));
-    alert('✅ Dados salvos com sucesso!');
-    carregarSite();
-}
-window.salvarPlayer = () => {
-    dadosSalvos.linkPlayer = document.getElementById('edtLink').value.trim();
-    localStorage.setItem('dadosRádio', JSON.stringify(dadosSalvos));
-    alert('✅ Player atualizado!');
-    carregarSite();
-}
-window.salvarVideo = () => {
-    let link = document.getElementById('edtVideo').value.trim();
-    if(link.includes('watch?v=')) link = link.replace('watch?v=', 'embed/');
-    dadosSalvos.videoTv = link;
-    localStorage.setItem('dadosRádio', JSON.stringify(dadosSalvos));
-    alert('✅ Vídeo salvo!');
-    carregarSite();
-}
-window.adicionarFoto = () => {
-    const linkFoto = document.getElementById('edtFoto').value.trim();
-    if(!linkFoto) return alert('Digite o link da imagem!');
-    if(!dadosSalvos.fotosGaleria) dadosSalvos.fotosGaleria = [];
-    dadosSalvos.fotosGaleria.push(linkFoto);
-    localStorage.setItem('dadosRádio', JSON.stringify(dadosSalvos));
-    alert('✅ Foto adicionada!');
-    carregarSite();
+// CARREGA O SITE PÚBLICO DIRETO PARA QUEM ACESSA
+if(!window.location.hash.includes('admin')) {
+    setTimeout(abrirSite, 500);
 }
 </script>
 
