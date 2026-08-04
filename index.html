@@ -1,115 +1,368 @@
-# 🚀 Especificação de Interface e Sistema - Web Radio & Portal Russas Ordinária
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Administrativo - Web Rádio Ordinária Russas</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primaria: '#2D32FF',
+                        destaque: '#FF9900',
+                        escuro: '#0F172A'
+                    },
+                    fontFamily: {
+                        sans: ['Arial', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-100 text-gray-800 min-h-screen">
 
-> **Projeto:** Plataforma Web & Painel Administrativo para Web Rádio e Portal de Notícias  
-> **Slogan:** "A Rádio da Nossa Gente!"  
-> **Cidade Base:** Russas - CE  
+<!-- 🔐 CONFIGURAÇÕES - ALTERE AQUI SE PRECISAR -->
+<script>
+const CONFIG = {
+    senhaAdmin: "russas2026",
+    chaveArmazenamento: "radio_admin_logado",
+    nomeRadio: "Web Rádio Ordinária Russas",
+    linkStream: "https://stream.zeno.fm/tnzj3smf3abvv",
+    whatsapp: "5588992811188"
+};
+</script>
 
----
+<!-- 🛠️ FUNÇÕES -->
+<script>
+function verificarAcesso() {
+    return localStorage.getItem(CONFIG.chaveArmazenamento) === "sim";
+}
+function logar() {
+    localStorage.setItem(CONFIG.chaveArmazenamento, "sim");
+    carregarPagina();
+}
+function sair() {
+    localStorage.removeItem(CONFIG.chaveArmazenamento);
+    carregarPagina();
+}
+function carregarDados() {
+    return JSON.parse(localStorage.getItem("dadosPainel")) || {
+        programacao: [], noticias: [], galeria: [], avisos: []
+    };
+}
+function salvarDados(dados) {
+    localStorage.setItem("dadosPainel", JSON.stringify(dados));
+    carregarPagina();
+    alert("✅ Salvo com sucesso!");
+}
+</script>
 
-## 🎨 1. Guia de Estilo & Identidade Visual
+<!-- 📄 SISTEMA COMPLETO -->
+<div id="conteudo"></div>
+<script>
+function carregarPagina() {
+    const container = document.getElementById("conteudo");
+    
+    if (!verificarAcesso()) {
+        container.innerHTML = `
+        <div class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-primaria to-escuro">
+            <div class="bg-white p-8 rounded-xl w-full max-w-md shadow-2xl">
+                <div class="text-center mb-6">
+                    <i class="fa fa-lock text-5xl text-destaque mb-2"></i>
+                    <h2 class="text-2xl font-bold">Acesso Administrativo</h2>
+                    <p class="text-gray-500 text-sm mt-1">${CONFIG.nomeRadio}</p>
+                </div>
+                <form onsubmit="event.preventDefault(); if(document.getElementById('senha').value === CONFIG.senhaAdmin){logar()}else{alert('❌ Senha incorreta!')}">
+                    <div class="mb-4">
+                        <label class="block font-semibold mb-1">Senha</label>
+                        <input type="password" id="senha" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="Digite sua senha" required>
+                    </div>
+                    <button type="submit" class="w-full bg-destaque text-black font-bold p-3 rounded-lg hover:bg-[#ff8000] transition">Entrar</button>
+                    <a href="/" class="block text-center mt-3 text-sm text-gray-600 hover:text-primaria">← Voltar ao site</a>
+                </form>
+            </div>
+        </div>`;
+        return;
+    }
 
-| Elemento | Especificação / Cor | Código Hex | Aplicação |
-| :--- | :--- | :--- | :--- |
-| **Fundo Principal** | Dark Mode (Azul Noturno) | `#0B0F19` | Fundo geral da aplicação |
-| **Fundo Secundário** | Grafite Escuro | `#121824` | Cards, modais e containers |
-| **Destaque Principal** | Amarelo Ouro | `#FFC700` | Botões de ação, badges e chamadas |
-| **Destaque Secundário**| Azul Vibrante | `#0066FF` | Categoria Noticias e botões secundários |
-| **Tag Eventos** | Verde Neon | `#39FF14` | Badges de eventos e status Ao Vivo |
-| **Tag Vídeos** | Roxo / Violeta | `#8A2BE2` | Badges de vídeos e botões de play |
-| **Tipografia** | Sans-serif (Inter/Poppins) | - | Textos limpos e títulos em caixa alta |
+    const dados = carregarDados();
+    container.innerHTML = `
+    <div class="min-h-screen flex flex-col">
+        <!-- Cabeçalho -->
+        <header class="bg-escuro text-white p-4 flex items-center justify-between">
+            <h1 class="text-xl font-bold">🎛️ Painel Administrativo</h1>
+            <div class="flex gap-4">
+                <a href="/" target="_blank" class="text-sm hover:text-destaque transition"><i class="fa fa-external-link"></i> Ver Site</a>
+                <button onclick="sair()" class="text-sm hover:text-red-400 transition"><i class="fa fa-sign-out"></i> Sair</button>
+            </div>
+        </header>
 
----
+        <div class="flex flex-col md:flex-row flex-1">
+            <!-- Menu Lateral -->
+            <nav class="bg-gray-800 text-white p-3 md:w-52 flex md:flex-col gap-2 overflow-x-auto">
+                <button onclick="mostrarAba('programacao')" class="aba-btn p-3 rounded text-left hover:bg-gray-700 transition" data-aba="programacao"><i class="fa fa-calendar mr-2"></i>Programação</button>
+                <button onclick="mostrarAba('noticias')" class="aba-btn p-3 rounded text-left hover:bg-gray-700 transition" data-aba="noticias"><i class="fa fa-newspaper-o mr-2"></i>Notícias</button>
+                <button onclick="mostrarAba('galeria')" class="aba-btn p-3 rounded text-left hover:bg-gray-700 transition" data-aba="galeria"><i class="fa fa-picture-o mr-2"></i>Galeria/Mural</button>
+                <button onclick="mostrarAba('avisos')" class="aba-btn p-3 rounded text-left hover:bg-gray-700 transition" data-aba="avisos"><i class="fa fa-bullhorn mr-2"></i>Avisos</button>
+                <button onclick="mostrarAba('config')" class="aba-btn p-3 rounded text-left hover:bg-gray-700 transition" data-aba="config"><i class="fa fa-cog mr-2"></i>Configurações</button>
+            </nav>
 
-## 🖥️ 2. Estrutura do Frontend (Portal do Usuário)
+            <!-- Conteúdo Principal -->
+            <main class="flex-1 p-5">
+                <!-- Programação -->
+                <div id="programacao" class="conteudo-aba">
+                    <div class="flex items-center justify-between mb-5">
+                        <h2 class="text-2xl font-bold">📅 Programação da Rádio</h2>
+                        <button onclick="formNovo('programacao')" class="bg-destaque text-black px-4 py-2 rounded-lg font-semibold hover:bg-[#ff8000] transition"><i class="fa fa-plus mr-1"></i> Novo</button>
+                    </div>
+                    <div id="form-programacao" class="hidden bg-white p-4 rounded-lg mb-4 border space-y-3">
+                        <input type="text" id="prog-horario" placeholder="Horário: ex 08:00" class="w-full p-2 border rounded">
+                        <input type="text" id="prog-nome" placeholder="Nome do Programa" class="w-full p-2 border rounded">
+                        <input type="text" id="prog-desc" placeholder="Descrição" class="w-full p-2 border rounded">
+                        <select id="prog-dia" class="w-full p-2 border rounded">
+                            <option>Segunda</option><option>Terça</option><option>Quarta</option><option>Quinta</option>
+                            <option>Sexta</option><option>Sábado</option><option>Domingo</option><option>Diário</option>
+                        </select>
+                        <div class="flex gap-2">
+                            <button onclick="salvarItem('programacao')" class="bg-green-600 text-white px-4 py-2 rounded">Salvar</button>
+                            <button onclick="fecharForm()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        ${dados.programacao.length === 0 ? '<p class="text-gray-500">Nenhum programa cadastrado.</p>' : ''}
+                        ${dados.programacao.map((item, i) => `
+                        <div class="bg-white p-3 rounded-lg border flex justify-between items-center">
+                            <div><strong>${item.horario}</strong> — ${item.nome}</div>
+                            <div class="flex gap-1">
+                                <button onclick="editarItem('programacao',${i})" class="bg-blue-500 text-white p-2 rounded"><i class="fa fa-pencil"></i></button>
+                                <button onclick="excluirItem('programacao',${i})" class="bg-red-500 text-white p-2 rounded"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </div>`).join('')}
+                    </div>
+                </div>
 
-### 2.1. Topo & Header Superior
-* **Barra de Informações (Top Bar):**
-  * Status de transmissão no ar.
-  * Título da faixa atual: `Louvor e Adoração - Ministério Sarando a Terra Ferida`.
-  * Redes Sociais: Facebook, Instagram, YouTube.
-  * Contato direto via WhatsApp: `(88) 9 9999-9999`.
-* **Menu do Header:**
-  * **Logo:** *Russas Ordinária - A Rádio da Nossa Gente!*
-  * **Links de Navegação:** `Início` | `Notícias` | `Fotos` | `Vídeos` | `Programação` | `Locutores` | `Eventos` | `Contato`
-  * **Ferramentas:** Ícone de Busca + Botão `PEDIR MÚSICA 🎵`
+                <!-- Notícias -->
+                <div id="noticias" class="conteudo-aba hidden">
+                    <div class="flex items-center justify-between mb-5">
+                        <h2 class="text-2xl font-bold">📰 Notícias</h2>
+                        <button onclick="formNovo('noticias')" class="bg-destaque text-black px-4 py-2 rounded-lg font-semibold hover:bg-[#ff8000] transition"><i class="fa fa-plus mr-1"></i> Nova</button>
+                    </div>
+                    <div id="form-noticias" class="hidden bg-white p-4 rounded-lg mb-4 border space-y-3">
+                        <input type="text" id="not-titulo" placeholder="Título da notícia" class="w-full p-2 border rounded">
+                        <textarea id="not-texto" placeholder="Conteúdo" rows="3" class="w-full p-2 border rounded"></textarea>
+                        <input type="text" id="not-imagem" placeholder="Link da imagem" class="w-full p-2 border rounded">
+                        <div class="flex gap-2">
+                            <button onclick="salvarItem('noticias')" class="bg-green-600 text-white px-4 py-2 rounded">Salvar</button>
+                            <button onclick="fecharForm()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        ${dados.noticias.length === 0 ? '<p class="text-gray-500">Nenhuma notícia cadastrada.</p>' : ''}
+                        ${dados.noticias.map((item, i) => `
+                        <div class="bg-white p-3 rounded-lg border flex justify-between items-center">
+                            <div class="max-w-[75%]"><strong>${item.titulo}</strong><p class="text-sm text-gray-600 truncate">${item.texto}</p></div>
+                            <div class="flex gap-1">
+                                <button onclick="editarItem('noticias',${i})" class="bg-blue-500 text-white p-2 rounded"><i class="fa fa-pencil"></i></button>
+                                <button onclick="excluirItem('noticias',${i})" class="bg-red-500 text-white p-2 rounded"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </div>`).join('')}
+                    </div>
+                </div>
 
-### 2.2. Banner Principal & Player Ao Vivo
-* **Lado Esquerdo (Hero Section):**
-  * Imagem de fundo da cidade de Russas-CE com overlay escuro.
-  * Título: `SEJA BEM-VINDO À RUSSAS ORDINÁRIA`.
-  * Grid de Recursos:
-    * `24H` - No Ar
-    * `PROGRAMAÇÃO` - Variada
-    * `MÚSICA` - De Qualidade
-    * `INFORMAÇÃO` - Com Responsabilidade
-  * Botão Call to Action: `OUVIR AGORA ▶`
-* **Lado Direito (Widget Rádio Ao Vivo):**
-  * Badge piscante: `● AO VIVO`.
-  * Animação de equalizador de áudio e logo central.
-  * Informações de reprodução em tempo real.
-  * Controles de player (Play/Pause, Barra de Volume).
-  * Contador de audiência: `👥 320 ouvintes online`.
+                <!-- Galeria/Mural -->
+                <div id="galeria" class="conteudo-aba hidden">
+                    <div class="flex items-center justify-between mb-5">
+                        <h2 class="text-2xl font-bold">🖼️ Fotos e Mural de Anúncios</h2>
+                        <button onclick="formNovo('galeria')" class="bg-destaque text-black px-4 py-2 rounded-lg font-semibold hover:bg-[#ff8000] transition"><i class="fa fa-plus mr-1"></i> Adicionar</button>
+                    </div>
+                    <div id="form-galeria" class="hidden bg-white p-4 rounded-lg mb-4 border space-y-3">
+                        <input type="text" id="gal-link" placeholder="Link direto da imagem" class="w-full p-2 border rounded">
+                        <input type="text" id="gal-legenda" placeholder="Legenda / Texto do anúncio" class="w-full p-2 border rounded">
+                        <div class="flex gap-2">
+                            <button onclick="salvarItem('galeria')" class="bg-green-600 text-white px-4 py-2 rounded">Salvar</button>
+                            <button onclick="fecharForm()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        ${dados.galeria.length === 0 ? '<p class="col-span-full text-gray-500">Nenhuma foto adicionada.</p>' : ''}
+                        ${dados.galeria.map((item, i) => `
+                        <div class="bg-white rounded-lg border overflow-hidden">
+                            <img src="${item.link}" alt="${item.legenda}" class="w-full h-32 object-cover">
+                            <div class="p-2 flex justify-between items-center">
+                                <span class="text-sm truncate">${item.legenda}</span>
+                                <div class="flex gap-1">
+                                    <button onclick="editarItem('galeria',${i})" class="bg-blue-500 text-white p-1.5 rounded text-xs"><i class="fa fa-pencil"></i></button>
+                                    <button onclick="excluirItem('galeria',${i})" class="bg-red-500 text-white p-1.5 rounded text-xs"><i class="fa fa-trash"></i></button>
+                                </div>
+                            </div>
+                        </div>`).join('')}
+                    </div>
+                </div>
 
-### 2.3. Seções de Conteúdo & Anúncios
-* **Grid de Destaques (Cards):**
-  * **Notícias:** `Russas se prepara para o maior evento gospel da região` *(03 de Maio, 2024)*
-  * **Notícias:** `Novas obras transformam bairros de Russas` *(03 de Maio, 2024)*
-  * **Eventos:** `Grande Vigília de Louvor e Adoração em Russas` *(10 de Maio, 2024)*
-  * **Vídeos:** `Confira os melhores momentos do nosso aniversário` *(02 de Maio, 2024)*
-* **Espaço Publicitário (Banner Comercial):**
-  * Chamada: `ANUNCIE AQUI - SUA MARCA EM DESTAQUE`
-  * Botão: `SAIBA MAIS`
-* **Filtro de Notícias:** Categorias por `TODAS`, `CIDADE`, `POLÍTICA`, `GOSPEL`, `EVENTOS`.
-* **Widget de Programação:**
-  * Exibição do programa atual e do próximo locutor.
-  * Exemplo: `06:00 - 08:00` | `Café com Fé` *(Pr. João Silva)*.
+                <!-- Avisos -->
+                <div id="avisos" class="conteudo-aba hidden">
+                    <div class="flex items-center justify-between mb-5">
+                        <h2 class="text-2xl font-bold">📢 Avisos e Mensagens</h2>
+                        <button onclick="formNovo('avisos')" class="bg-destaque text-black px-4 py-2 rounded-lg font-semibold hover:bg-[#ff8000] transition"><i class="fa fa-plus mr-1"></i> Novo</button>
+                    </div>
+                    <div id="form-avisos" class="hidden bg-white p-4 rounded-lg mb-4 border space-y-3">
+                        <textarea id="aviso-texto" placeholder="Texto do aviso" rows="2" class="w-full p-2 border rounded"></textarea>
+                        <div class="flex gap-2">
+                            <button onclick="salvarItem('avisos')" class="bg-green-600 text-white px-4 py-2 rounded">Salvar</button>
+                            <button onclick="fecharForm()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
+                        </div>
+                    </div>
+                    <div class="space-y-2">
+                        ${dados.avisos.length === 0 ? '<p class="text-gray-500">Nenhum aviso cadastrado.</p>' : ''}
+                        ${dados.avisos.map((item, i) => `
+                        <div class="bg-yellow-50 p-3 rounded-lg border border-yellow-200 flex justify-between items-center">
+                            <span>${item.texto}</span>
+                            <div class="flex gap-1">
+                                <button onclick="editarItem('avisos',${i})" class="bg-blue-500 text-white p-2 rounded"><i class="fa fa-pencil"></i></button>
+                                <button onclick="excluirItem('avisos',${i})" class="bg-red-500 text-white p-2 rounded"><i class="fa fa-trash"></i></button>
+                            </div>
+                        </div>`).join('')}
+                    </div>
+                </div>
 
----
+                <!-- Configurações -->
+                <div id="config" class="conteudo-aba hidden">
+                    <div class="max-w-xl space-y-5">
+                        <h2 class="text-2xl font-bold">⚙️ Informações e Dicas</h2>
+                        <div class="bg-white p-4 rounded-lg border space-y-2 text-sm">
+                            <p><strong>Nome:</strong> ${CONFIG.nomeRadio}</p>
+                            <p><strong>Senha:</strong> ${CONFIG.senhaAdmin}</p>
+                            <p><strong>Stream:</strong> ${CONFIG.linkStream}</p>
+                            <p><strong>WhatsApp:</strong> ${CONFIG.whatsapp}</p>
+                        </div>
+                        <div class="bg-blue-50 p-4 rounded-lg border text-sm">
+                            <p class="font-bold mb-2">💡 Como usar:</p>
+                            <ul class="list-disc pl-5 space-y-1">
+                                <li>Salve imagens em sites gratuitos como Imgur/PostImage e cole o link aqui</li>
+                                <li>Tudo fica salvo direto no sistema, não precisa de banco de dados</li>
+                                <li>Para colocar no site público, é só chamar esses dados onde quiser</li>
+                                <li>Funciona 100% no GitHub Pages sem custos</li>
+                            </ul>
+                        </div>
+                        <a href="/" class="block w-full bg-primaria text-white text-center p-3 rounded-lg font-semibold hover:bg-[#2228d1] transition">Voltar ao Site</a>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>`;
 
-## 📱 3. Adaptação Mobile (Responsividade)
+    mostrarAba('programacao');
+}
 
-* **Menu Flutuante:** Substituição do menu superior por botão estilo Hamburger.
-* **Player Fixo:** Player compacto no topo ou rodapé da tela durante a navegação.
-* **Layout Adaptável:** Cards de notícias empilhados em coluna única na tela do celular.
+// Funções auxiliares
+let modoEdicao = null;
+let indiceEdicao = null;
 
----
+function mostrarAba(id) {
+    document.querySelectorAll('.conteudo-aba').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('.aba-btn').forEach(btn => btn.classList.remove('bg-destaque', 'text-black'));
+    document.getElementById(id).classList.remove('hidden');
+    document.querySelector([data-aba="${id}"]).classList.add('bg-destaque', 'text-black');
+    fecharForm();
+}
 
-## ⚙️ 4. Painel Administrativo (Dashboard de Gestão)
+function formNovo(tipo) {
+    modoEdicao = tipo;
+    indiceEdicao = null;
+    document.getElementById(form-${tipo}).classList.remove('hidden');
+    limparCampos();
+}
 
-### 4.1. Menu Lateral (Sidebar)
-1. `Dashboard` (Visão Geral)
-2. `Notícias`
-3. `Fotos`
-4. `Vídeos`
-5. `Programação`
-6. `Locutores`
-7. `Eventos`
-8. `Pedidos de Música`
-9. `Mensagens / Chat`
-10. `Enquetes`
-11. `Banners / Patrocinadores`
-12. `Configurações`
-13. `Usuários`
+function editarItem(tipo, indice) {
+    const dados = carregarDados();
+    modoEdicao = tipo;
+    indiceEdicao = indice;
+    const item = dados[tipo][indice];
+    document.getElementById(form-${tipo}).classList.remove('hidden');
+    
+    if(tipo === 'programacao') {
+        document.getElementById('prog-horario').value = item.horario;
+        document.getElementById('prog-nome').value = item.nome;
+        document.getElementById('prog-desc').value = item.descricao;
+        document.getElementById('prog-dia').value = item.dia;
+    }
+    if(tipo === 'noticias') {
+        document.getElementById('not-titulo').value = item.titulo;
+        document.getElementById('not-texto').value = item.texto;
+        document.getElementById('not-imagem').value = item.imagem;
+    }
+    if(tipo === 'galeria') {
+        document.getElementById('gal-link').value = item.link;
+        document.getElementById('gal-legenda').value = item.legenda;
+    }
+    if(tipo === 'avisos') {
+        document.getElementById('aviso-texto').value = item.texto;
+    }
+}
 
-### 4.2. Métricas do Dashboard (Indicadores em Tempo Real)
-* 📰 **Notícias:** `128`
-* 📷 **Fotos:** `342`
-* 🎥 **Vídeos:** `56`
-* 📅 **Eventos:** `18`
-* 🎵 **Pedidos de Música:** `87`
-* 💬 **Mensagens:** `232`
-* 🎧 **Ouvintes Online:** `320`
-* 👤 **Usuários no Sistema:** `5`
+function salvarItem(tipo) {
+    const dados = carregarDados();
+    let novoItem = {};
 
-### 4.3. Gráficos e Histórico
-* **Gráfico de Tráfego:** Acessos dos últimos 7 dias.
-* **Atividades Recentes:** Log em tempo real (Notícias publicadas, novas fotos nos álbuns e pedidos no chat).
+    if(tipo === 'programacao') {
+        novoItem = {
+            horario: document.getElementById('prog-horario').value,
+            nome: document.getElementById('prog-nome').value,
+            descricao: document.getElementById('prog-desc').value,
+            dia: document.getElementById('prog-dia').value
+        };
+    }
+    if(tipo === 'noticias') {
+        novoItem = {
+            titulo: document.getElementById('not-titulo').value,
+            texto: document.getElementById('not-texto').value,
+            imagem: document.getElementById('not-imagem').value
+        };
+    }
+    if(tipo === 'galeria') {
+        novoItem = {
+            link: document.getElementById('gal-link').value,
+            legenda: document.getElementById('gal-legenda').value
+        };
+    }
+    if(tipo === 'avisos') {
+        novoItem = { texto: document.getElementById('aviso-texto').value };
+    }
 
----
+    if(indiceEdicao !== null) {
+        dados[tipo][indiceEdicao] = novoItem;
+    } else {
+        dados[tipo].push(novoItem);
+    }
+    salvarDados(dados);
+}
 
-## 🛠️ 5. Requisitos Funcionais de Desenvolvimento
+function excluirItem(tipo, indice) {
+    if(confirm("Tem certeza que quer excluir?")) {
+        const dados = carregarDados();
+        dados[tipo].splice(indice, 1);
+        salvarDados(dados);
+    }
+}
 
-* [x] **Streaming Audio Server:** Conexão via protocolo Icecast/Shoutcast com leitor de Metadata em tempo real.
-* [x] **Painel CMS Completo:** Módulo CRUD para postagem de Notícias, Vídeos, Fotos e Programação.
-* [x] **Integração de WebSockets:** Atualização do contador de ouvintes online e chegada de novos pedidos de música sem recarregar a página.
-* [x] **Área Comercial:** Gerenciador de exibição de Banners com link direto para o WhatsApp dos anunciantes.
+function fecharForm() {
+    document.querySelectorAll('[id^="form-"]').forEach(el => el.classList.add('hidden'));
+    modoEdicao = null;
+    indiceEdicao = null;
+    limparCampos();
+}
+
+function limparCampos() {
+    document.querySelectorAll('input, textarea, select').forEach(el => el.value = '');
+}
+
+// Iniciar sistema
+carregarPagina();
+</script>
+
+</body>
+</html>
