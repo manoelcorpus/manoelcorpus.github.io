@@ -1,82 +1,115 @@
-# 🚀 Especificação de Interface e Sistema - Web Radio & Portal "Russas Ordinária"
+# 🚀 Especificação de Interface e Sistema - Web Radio & Portal Russas Ordinária
 
-## 🎯 Objetivo do Projeto
-Desenvolver uma plataforma web responsiva e um painel administrativo para a rádio e portal de notícias **Russas Ordinária** ("A Rádio da Nossa Gente!"). O sistema deve conter streaming de áudio ao vivo, gerenciador de conteúdo (CMS) e métricas em tempo real.
-
----
-
-## 🎨 Guia de Estilo & Identidade Visual
-
-* **Tema Base:** Dark Mode (Fundo escuro em tons de azul bem escuro `#0b0f19` e cinza grafite `#121824`).
-* **Cores de Destaque:** * Amarelo Ouro / Dourado (`#FFC700` ou similar) — usado em botões principais, títulos de destaque e branding.
-  * Azul Vibrante (`#0066FF`) — botões secundários e tags.
-  * Verde Neon (`#39FF14`) — para tags de "Eventos" e status "Ao Vivo".
-  * Roxo / Violeta — para categoria de "Vídeos".
-* **Tipografia:** Sans-serif moderna, legível e em caixa alta para títulos principais (ex: Montserrat, Inter ou Poppins).
+> **Projeto:** Plataforma Web & Painel Administrativo para Web Rádio e Portal de Notícias  
+> **Slogan:** "A Rádio da Nossa Gente!"  
+> **Cidade Base:** Russas - CE  
 
 ---
 
-## 🖥️ Layout Frontend (Visão do Usuário)
+## 🎨 1. Guia de Estilo & Identidade Visual
 
-### 1. Topo & Header
-* **Barra Superior (Top Bar):** * Indicador "AO VIVO" + Título da música atual (ex: *"Louvor e Adoração - Ministério Sarando a Terra Ferida"*).
-  * Redes sociais (Facebook, Instagram, YouTube) e WhatsApp com DDD (88).
-* **Header Principal:**
-  * Logo da rádio no lado esquerdo com slogan.
-  * Menu de Navegação: `Início`, `Notícias`, `Fotos`, `Vídeos`, `Programação`, `Locutores`, `Eventos`, `Contato`.
-  * Ícone de Busca + Botão de Ação Amarelo: `PEDIR MÚSICA 🎵`.
+| Elemento | Especificação / Cor | Código Hex | Aplicação |
+| :--- | :--- | :--- | :--- |
+| **Fundo Principal** | Dark Mode (Azul Noturno) | `#0B0F19` | Fundo geral da aplicação |
+| **Fundo Secundário** | Grafite Escuro | `#121824` | Cards, modais e containers |
+| **Destaque Principal** | Amarelo Ouro | `#FFC700` | Botões de ação, badges e chamadas |
+| **Destaque Secundário**| Azul Vibrante | `#0066FF` | Categoria Noticias e botões secundários |
+| **Tag Eventos** | Verde Neon | `#39FF14` | Badges de eventos e status Ao Vivo |
+| **Tag Vídeos** | Roxo / Violeta | `#8A2BE2` | Badges de vídeos e botões de play |
+| **Tipografia** | Sans-serif (Inter/Poppins) | - | Textos limpos e títulos em caixa alta |
 
-### 2. Banner Principal / Player de Destaque
-* **Lado Esquerdo:** Hero Section com fundo da cidade de Russas-CE, mensagem de boas-vindas e 4 destaques rápidos: *24h No Ar*, *Programação Variada*, *Música de Qualidade*, *Informação com Responsabilidade*. Botão principal: `OUVIR AGORA ▶`.
+---
+
+## 🖥️ 2. Estrutura do Frontend (Portal do Usuário)
+
+### 2.1. Topo & Header Superior
+* **Barra de Informações (Top Bar):**
+  * Status de transmissão no ar.
+  * Título da faixa atual: `Louvor e Adoração - Ministério Sarando a Terra Ferida`.
+  * Redes Sociais: Facebook, Instagram, YouTube.
+  * Contato direto via WhatsApp: `(88) 9 9999-9999`.
+* **Menu do Header:**
+  * **Logo:** *Russas Ordinária - A Rádio da Nossa Gente!*
+  * **Links de Navegação:** `Início` | `Notícias` | `Fotos` | `Vídeos` | `Programação` | `Locutores` | `Eventos` | `Contato`
+  * **Ferramentas:** Ícone de Busca + Botão `PEDIR MÚSICA 🎵`
+
+### 2.2. Banner Principal & Player Ao Vivo
+* **Lado Esquerdo (Hero Section):**
+  * Imagem de fundo da cidade de Russas-CE com overlay escuro.
+  * Título: `SEJA BEM-VINDO À RUSSAS ORDINÁRIA`.
+  * Grid de Recursos:
+    * `24H` - No Ar
+    * `PROGRAMAÇÃO` - Variada
+    * `MÚSICA` - De Qualidade
+    * `INFORMAÇÃO` - Com Responsabilidade
+  * Botão Call to Action: `OUVIR AGORA ▶`
 * **Lado Direito (Widget Rádio Ao Vivo):**
-  * Player estilizado com status "● AO VIVO".
-  * Logo centralizada com efeito de ondas de áudio.
-  * Informações da faixa em reprodução.
-  * Controles de player (Play/Pause, Volume).
-  * Contador de ouvintes conectados em tempo real (ex: `👥 320 ouvintes online`).
+  * Badge piscante: `● AO VIVO`.
+  * Animação de equalizador de áudio e logo central.
+  * Informações de reprodução em tempo real.
+  * Controles de player (Play/Pause, Barra de Volume).
+  * Contador de audiência: `👥 320 ouvintes online`.
 
-### 3. Seções de Conteúdo
-* **Destaques (Cards Grid):**
-  * Layout em cards com tags coloridas por categoria: `NOTÍCIAS` (Azul), `EVENTOS` (Verde), `VÍDEOS` (Roxo com botão de Play).
-  * Imagem de capa, título da matéria e data de publicação.
-* **Banner Comercial:** Espaço para anúncios patrocinados (`ANUNCIE AQUI - SUA MARCA EM DESTAQUE`) com botão `SAIBA MAIS`.
-* **Últimas Notícias:** Grid com filtros de categoria (`TODAS`, `CIDADE`, `POLÍTICA`, `GOSPEL`, `EVENTOS`).
-* **Programação do Dia:** Widget lateral listando horários, nome do programa e foto/nome do locutor (ex: *06:00 - 08:00 | Café com Fé - Pr. João Silva*).
-
----
-
-## 📱 Responsividade (Versão Mobile)
-
-* Menu estilo **Hamburger** no topo.
-* Player de áudio fixo ou compacto no topo da tela com o contador de ouvintes online (`👥 320`).
-* Feed de destaques em coluna única rolável.
-* Layout fluido e adaptado para telas de smartphones iOS e Android.
+### 2.3. Seções de Conteúdo & Anúncios
+* **Grid de Destaques (Cards):**
+  * **Notícias:** `Russas se prepara para o maior evento gospel da região` *(03 de Maio, 2024)*
+  * **Notícias:** `Novas obras transformam bairros de Russas` *(03 de Maio, 2024)*
+  * **Eventos:** `Grande Vigília de Louvor e Adoração em Russas` *(10 de Maio, 2024)*
+  * **Vídeos:** `Confira os melhores momentos do nosso aniversário` *(02 de Maio, 2024)*
+* **Espaço Publicitário (Banner Comercial):**
+  * Chamada: `ANUNCIE AQUI - SUA MARCA EM DESTAQUE`
+  * Botão: `SAIBA MAIS`
+* **Filtro de Notícias:** Categorias por `TODAS`, `CIDADE`, `POLÍTICA`, `GOSPEL`, `EVENTOS`.
+* **Widget de Programação:**
+  * Exibição do programa atual e do próximo locutor.
+  * Exemplo: `06:00 - 08:00` | `Café com Fé` *(Pr. João Silva)*.
 
 ---
 
-## ⚙️ Painel Administrativo (Dashboard Backoffice)
+## 📱 3. Adaptação Mobile (Responsividade)
 
-### 1. Sidebar (Navegação Lateral)
-* **Menu de Gestão:** `Dashboard`, `Notícias`, `Fotos`, `Vídeos`, `Programação`, `Locutores`, `Eventos`, `Pedidos de Música`, `Mensagens / Chat`, `Enquetes`, `Banners`, `Patrocinadores`, `Configurações`, `Usuários`, `Sair`.
-
-### 2. Visão Geral (Dashboard Metrics)
-* **Cards de Métricas:**
-  * Total de Notícias (ex: 128)
-  * Total de Fotos (ex: 342)
-  * Total de Vídeos (ex: 56)
-  * Total de Eventos (ex: 18)
-  * Pedidos de Música (ex: 87)
-  * Mensagens (ex: 232)
-  * Ouvintes Online no Momento (ex: 320)
-  * Usuários do Sistema (ex: 5)
-* **Gráfico de Desempenho:** Acessos dos últimos 7 dias (gráfico de linha).
-* **Feed de Atividades Recentes:** Log de ações no sistema (ex: *Nova notícia publicada*, *Foto adicionada ao álbum*, *Novo pedido de música*).
+* **Menu Flutuante:** Substituição do menu superior por botão estilo Hamburger.
+* **Player Fixo:** Player compacto no topo ou rodapé da tela durante a navegação.
+* **Layout Adaptável:** Cards de notícias empilhados em coluna única na tela do celular.
 
 ---
 
-## 🛠️ Requisitos Funcionais para Desenvolvimento
+## ⚙️ 4. Painel Administrativo (Dashboard de Gestão)
 
-1. **Streaming de Áudio:** Integração com servidor de streaming (Icecast/Shoutcast) para transmissão do áudio e metadata da música atual.
-2. **Sistema CMS completo:** CRUD para Notícias, Eventos, Fotos, Vídeos e Banners de Anúncio.
-3. **Módulo de Pedidos:** Formulário no frontend para o usuário enviar pedido de música diretamente para o Painel Admin.
-4. **Painel Dinâmico:** Atualização em tempo real do número de ouvintes e novos pedidos usando WebSockets/APIs.
+### 4.1. Menu Lateral (Sidebar)
+1. `Dashboard` (Visão Geral)
+2. `Notícias`
+3. `Fotos`
+4. `Vídeos`
+5. `Programação`
+6. `Locutores`
+7. `Eventos`
+8. `Pedidos de Música`
+9. `Mensagens / Chat`
+10. `Enquetes`
+11. `Banners / Patrocinadores`
+12. `Configurações`
+13. `Usuários`
+
+### 4.2. Métricas do Dashboard (Indicadores em Tempo Real)
+* 📰 **Notícias:** `128`
+* 📷 **Fotos:** `342`
+* 🎥 **Vídeos:** `56`
+* 📅 **Eventos:** `18`
+* 🎵 **Pedidos de Música:** `87`
+* 💬 **Mensagens:** `232`
+* 🎧 **Ouvintes Online:** `320`
+* 👤 **Usuários no Sistema:** `5`
+
+### 4.3. Gráficos e Histórico
+* **Gráfico de Tráfego:** Acessos dos últimos 7 dias.
+* **Atividades Recentes:** Log em tempo real (Notícias publicadas, novas fotos nos álbuns e pedidos no chat).
+
+---
+
+## 🛠️ 5. Requisitos Funcionais de Desenvolvimento
+
+* [x] **Streaming Audio Server:** Conexão via protocolo Icecast/Shoutcast com leitor de Metadata em tempo real.
+* [x] **Painel CMS Completo:** Módulo CRUD para postagem de Notícias, Vídeos, Fotos e Programação.
+* [x] **Integração de WebSockets:** Atualização do contador de ouvintes online e chegada de novos pedidos de música sem recarregar a página.
+* [x] **Área Comercial:** Gerenciador de exibição de Banners com link direto para o WhatsApp dos anunciantes.
