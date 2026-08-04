@@ -3,366 +3,277 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Administrativo - Web Rádio Ordinária Russas</title>
+    <title>Russas Ordinária - A Rádio da Nossa Gente</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        primaria: '#2D32FF',
-                        destaque: '#FF9900',
-                        escuro: '#0F172A'
+                        topbar: '#FF8C29',
+                        primary: '#FFB733',
+                        dark: '#0F1419',
+                        cardbg: '#181C23',
+                        borderdark: '#252A33'
                     },
                     fontFamily: {
-                        sans: ['Arial', 'sans-serif']
+                        base: ['Arial', 'Helvetica', 'sans-serif']
                     }
                 }
             }
         }
     </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, Helvetica, sans-serif; }
+        body { background: #05070A; color: #fff; }
+        .top-banner { background: linear-gradient(90deg, #FF7A00, #FFB800); color: #000; font-weight: 600; font-size: 13px; padding: 4px 20px; }
+        .nav-link { font-size: 12px; font-weight: 600; padding: 8px 10px; text-transform: uppercase; }
+        .nav-link.active { border-bottom: 2px solid #FFB733; color: #FFB733; }
+        .btn-laranja { background: linear-gradient(90deg, #FF8C29, #FFB733); color: #000; font-weight: 700; font-size: 13px; padding: 7px 14px; border-radius: 3px; border: none; text-transform: uppercase; }
+        .player-box { background: #181C23; border: 1px solid #252A33; border-radius: 8px; padding: 14px; }
+        .circular-logo { width: 90px; height: 90px; border: 2px solid #FFB733; border-radius: 50%; display: flex; align-items: center; justify-content: center; background: #05070A; }
+        .live-badge { background: #DC2626; color: white; font-size: 10px; font-weight: 700; padding: 3px 7px; border-radius: 3px; }
+        .destaque-tag { font-size: 10px; font-weight: 700; padding: 4px 8px; border-radius: 2px; text-transform: uppercase; }
+        .mobile-mockup { border: 3px solid #444; border-radius: 32px; padding: 12px; background: #000; width: 270px; }
+        .painel-admin { background: #181C23; border: 1px solid #252A33; border-radius: 8px; padding: 15px; }
+    </style>
 </head>
-<body class="bg-gray-100 text-gray-800 min-h-screen">
+<body>
 
-<!-- 🔐 CONFIGURAÇÕES - ALTERE AQUI SE PRECISAR -->
-<script>
-const CONFIG = {
-    senhaAdmin: "russas2026",
-    chaveArmazenamento: "radio_admin_logado",
-    nomeRadio: "Web Rádio Ordinária Russas",
-    linkStream: "https://stream.zeno.fm/tnzj3smf3abvv",
-    whatsapp: "5588992811188"
-};
-</script>
+<!-- FAIXA SUPERIOR EXATA -->
+<div class="top-banner flex justify-between">
+    <span>Aqui você encontra: Louvor e Adoração - Ministério Sarah e Terra Fértil</span>
+    <span>(88) 9 9281-1188</span>
+</div>
 
-<!-- 🛠️ FUNÇÕES -->
-<script>
-function verificarAcesso() {
-    return localStorage.getItem(CONFIG.chaveArmazenamento) === "sim";
-}
-function logar() {
-    localStorage.setItem(CONFIG.chaveArmazenamento, "sim");
-    carregarPagina();
-}
-function sair() {
-    localStorage.removeItem(CONFIG.chaveArmazenamento);
-    carregarPagina();
-}
-function carregarDados() {
-    return JSON.parse(localStorage.getItem("dadosPainel")) || {
-        programacao: [], noticias: [], galeria: [], avisos: []
-    };
-}
-function salvarDados(dados) {
-    localStorage.setItem("dadosPainel", JSON.stringify(dados));
-    carregarPagina();
-    alert("✅ Salvo com sucesso!");
-}
-</script>
-
-<!-- 📄 SISTEMA COMPLETO -->
-<div id="conteudo"></div>
-<script>
-function carregarPagina() {
-    const container = document.getElementById("conteudo");
-    
-    if (!verificarAcesso()) {
-        container.innerHTML = `
-        <div class="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-primaria to-escuro">
-            <div class="bg-white p-8 rounded-xl w-full max-w-md shadow-2xl">
-                <div class="text-center mb-6">
-                    <i class="fa fa-lock text-5xl text-destaque mb-2"></i>
-                    <h2 class="text-2xl font-bold">Acesso Administrativo</h2>
-                    <p class="text-gray-500 text-sm mt-1">${CONFIG.nomeRadio}</p>
-                </div>
-                <form onsubmit="event.preventDefault(); if(document.getElementById('senha').value === CONFIG.senhaAdmin){logar()}else{alert('❌ Senha incorreta!')}">
-                    <div class="mb-4">
-                        <label class="block font-semibold mb-1">Senha</label>
-                        <input type="password" id="senha" class="w-full p-3 border border-gray-300 rounded-lg" placeholder="Digite sua senha" required>
-                    </div>
-                    <button type="submit" class="w-full bg-destaque text-black font-bold p-3 rounded-lg hover:bg-[#ff8000] transition">Entrar</button>
-                    <a href="/" class="block text-center mt-3 text-sm text-gray-600 hover:text-primaria">← Voltar ao site</a>
-                </form>
-            </div>
-        </div>`;
-        return;
-    }
-
-    const dados = carregarDados();
-    container.innerHTML = `
-    <div class="min-h-screen flex flex-col">
-        <!-- Cabeçalho -->
-        <header class="bg-escuro text-white p-4 flex items-center justify-between">
-            <h1 class="text-xl font-bold">🎛️ Painel Administrativo</h1>
-            <div class="flex gap-4">
-                <a href="/" target="_blank" class="text-sm hover:text-destaque transition"><i class="fa fa-external-link"></i> Ver Site</a>
-                <button onclick="sair()" class="text-sm hover:text-red-400 transition"><i class="fa fa-sign-out"></i> Sair</button>
-            </div>
-        </header>
-
-        <div class="flex flex-col md:flex-row flex-1">
-            <!-- Menu Lateral -->
-            <nav class="bg-gray-800 text-white p-3 md:w-52 flex md:flex-col gap-2 overflow-x-auto">
-                <button onclick="mostrarAba('programacao')" class="aba-btn p-3 rounded text-left hover:bg-gray-700 transition" data-aba="programacao"><i class="fa fa-calendar mr-2"></i>Programação</button>
-                <button onclick="mostrarAba('noticias')" class="aba-btn p-3 rounded text-left hover:bg-gray-700 transition" data-aba="noticias"><i class="fa fa-newspaper-o mr-2"></i>Notícias</button>
-                <button onclick="mostrarAba('galeria')" class="aba-btn p-3 rounded text-left hover:bg-gray-700 transition" data-aba="galeria"><i class="fa fa-picture-o mr-2"></i>Galeria/Mural</button>
-                <button onclick="mostrarAba('avisos')" class="aba-btn p-3 rounded text-left hover:bg-gray-700 transition" data-aba="avisos"><i class="fa fa-bullhorn mr-2"></i>Avisos</button>
-                <button onclick="mostrarAba('config')" class="aba-btn p-3 rounded text-left hover:bg-gray-700 transition" data-aba="config"><i class="fa fa-cog mr-2"></i>Configurações</button>
-            </nav>
-
-            <!-- Conteúdo Principal -->
-            <main class="flex-1 p-5">
-                <!-- Programação -->
-                <div id="programacao" class="conteudo-aba">
-                    <div class="flex items-center justify-between mb-5">
-                        <h2 class="text-2xl font-bold">📅 Programação da Rádio</h2>
-                        <button onclick="formNovo('programacao')" class="bg-destaque text-black px-4 py-2 rounded-lg font-semibold hover:bg-[#ff8000] transition"><i class="fa fa-plus mr-1"></i> Novo</button>
-                    </div>
-                    <div id="form-programacao" class="hidden bg-white p-4 rounded-lg mb-4 border space-y-3">
-                        <input type="text" id="prog-horario" placeholder="Horário: ex 08:00" class="w-full p-2 border rounded">
-                        <input type="text" id="prog-nome" placeholder="Nome do Programa" class="w-full p-2 border rounded">
-                        <input type="text" id="prog-desc" placeholder="Descrição" class="w-full p-2 border rounded">
-                        <select id="prog-dia" class="w-full p-2 border rounded">
-                            <option>Segunda</option><option>Terça</option><option>Quarta</option><option>Quinta</option>
-                            <option>Sexta</option><option>Sábado</option><option>Domingo</option><option>Diário</option>
-                        </select>
-                        <div class="flex gap-2">
-                            <button onclick="salvarItem('programacao')" class="bg-green-600 text-white px-4 py-2 rounded">Salvar</button>
-                            <button onclick="fecharForm()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
-                        </div>
-                    </div>
-                    <div class="space-y-2">
-                        ${dados.programacao.length === 0 ? '<p class="text-gray-500">Nenhum programa cadastrado.</p>' : ''}
-                        ${dados.programacao.map((item, i) => `
-                        <div class="bg-white p-3 rounded-lg border flex justify-between items-center">
-                            <div><strong>${item.horario}</strong> — ${item.nome}</div>
-                            <div class="flex gap-1">
-                                <button onclick="editarItem('programacao',${i})" class="bg-blue-500 text-white p-2 rounded"><i class="fa fa-pencil"></i></button>
-                                <button onclick="excluirItem('programacao',${i})" class="bg-red-500 text-white p-2 rounded"><i class="fa fa-trash"></i></button>
-                            </div>
-                        </div>`).join('')}
-                    </div>
-                </div>
-
-                <!-- Notícias -->
-                <div id="noticias" class="conteudo-aba hidden">
-                    <div class="flex items-center justify-between mb-5">
-                        <h2 class="text-2xl font-bold">📰 Notícias</h2>
-                        <button onclick="formNovo('noticias')" class="bg-destaque text-black px-4 py-2 rounded-lg font-semibold hover:bg-[#ff8000] transition"><i class="fa fa-plus mr-1"></i> Nova</button>
-                    </div>
-                    <div id="form-noticias" class="hidden bg-white p-4 rounded-lg mb-4 border space-y-3">
-                        <input type="text" id="not-titulo" placeholder="Título da notícia" class="w-full p-2 border rounded">
-                        <textarea id="not-texto" placeholder="Conteúdo" rows="3" class="w-full p-2 border rounded"></textarea>
-                        <input type="text" id="not-imagem" placeholder="Link da imagem" class="w-full p-2 border rounded">
-                        <div class="flex gap-2">
-                            <button onclick="salvarItem('noticias')" class="bg-green-600 text-white px-4 py-2 rounded">Salvar</button>
-                            <button onclick="fecharForm()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
-                        </div>
-                    </div>
-                    <div class="space-y-2">
-                        ${dados.noticias.length === 0 ? '<p class="text-gray-500">Nenhuma notícia cadastrada.</p>' : ''}
-                        ${dados.noticias.map((item, i) => `
-                        <div class="bg-white p-3 rounded-lg border flex justify-between items-center">
-                            <div class="max-w-[75%]"><strong>${item.titulo}</strong><p class="text-sm text-gray-600 truncate">${item.texto}</p></div>
-                            <div class="flex gap-1">
-                                <button onclick="editarItem('noticias',${i})" class="bg-blue-500 text-white p-2 rounded"><i class="fa fa-pencil"></i></button>
-                                <button onclick="excluirItem('noticias',${i})" class="bg-red-500 text-white p-2 rounded"><i class="fa fa-trash"></i></button>
-                            </div>
-                        </div>`).join('')}
-                    </div>
-                </div>
-
-                <!-- Galeria/Mural -->
-                <div id="galeria" class="conteudo-aba hidden">
-                    <div class="flex items-center justify-between mb-5">
-                        <h2 class="text-2xl font-bold">🖼️ Fotos e Mural de Anúncios</h2>
-                        <button onclick="formNovo('galeria')" class="bg-destaque text-black px-4 py-2 rounded-lg font-semibold hover:bg-[#ff8000] transition"><i class="fa fa-plus mr-1"></i> Adicionar</button>
-                    </div>
-                    <div id="form-galeria" class="hidden bg-white p-4 rounded-lg mb-4 border space-y-3">
-                        <input type="text" id="gal-link" placeholder="Link direto da imagem" class="w-full p-2 border rounded">
-                        <input type="text" id="gal-legenda" placeholder="Legenda / Texto do anúncio" class="w-full p-2 border rounded">
-                        <div class="flex gap-2">
-                            <button onclick="salvarItem('galeria')" class="bg-green-600 text-white px-4 py-2 rounded">Salvar</button>
-                            <button onclick="fecharForm()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-2 md:grid-cols-3 gap-3">
-                        ${dados.galeria.length === 0 ? '<p class="col-span-full text-gray-500">Nenhuma foto adicionada.</p>' : ''}
-                        ${dados.galeria.map((item, i) => `
-                        <div class="bg-white rounded-lg border overflow-hidden">
-                            <img src="${item.link}" alt="${item.legenda}" class="w-full h-32 object-cover">
-                            <div class="p-2 flex justify-between items-center">
-                                <span class="text-sm truncate">${item.legenda}</span>
-                                <div class="flex gap-1">
-                                    <button onclick="editarItem('galeria',${i})" class="bg-blue-500 text-white p-1.5 rounded text-xs"><i class="fa fa-pencil"></i></button>
-                                    <button onclick="excluirItem('galeria',${i})" class="bg-red-500 text-white p-1.5 rounded text-xs"><i class="fa fa-trash"></i></button>
-                                </div>
-                            </div>
-                        </div>`).join('')}
-                    </div>
-                </div>
-
-                <!-- Avisos -->
-                <div id="avisos" class="conteudo-aba hidden">
-                    <div class="flex items-center justify-between mb-5">
-                        <h2 class="text-2xl font-bold">📢 Avisos e Mensagens</h2>
-                        <button onclick="formNovo('avisos')" class="bg-destaque text-black px-4 py-2 rounded-lg font-semibold hover:bg-[#ff8000] transition"><i class="fa fa-plus mr-1"></i> Novo</button>
-                    </div>
-                    <div id="form-avisos" class="hidden bg-white p-4 rounded-lg mb-4 border space-y-3">
-                        <textarea id="aviso-texto" placeholder="Texto do aviso" rows="2" class="w-full p-2 border rounded"></textarea>
-                        <div class="flex gap-2">
-                            <button onclick="salvarItem('avisos')" class="bg-green-600 text-white px-4 py-2 rounded">Salvar</button>
-                            <button onclick="fecharForm()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
-                        </div>
-                    </div>
-                    <div class="space-y-2">
-                        ${dados.avisos.length === 0 ? '<p class="text-gray-500">Nenhum aviso cadastrado.</p>' : ''}
-                        ${dados.avisos.map((item, i) => `
-                        <div class="bg-yellow-50 p-3 rounded-lg border border-yellow-200 flex justify-between items-center">
-                            <span>${item.texto}</span>
-                            <div class="flex gap-1">
-                                <button onclick="editarItem('avisos',${i})" class="bg-blue-500 text-white p-2 rounded"><i class="fa fa-pencil"></i></button>
-                                <button onclick="excluirItem('avisos',${i})" class="bg-red-500 text-white p-2 rounded"><i class="fa fa-trash"></i></button>
-                            </div>
-                        </div>`).join('')}
-                    </div>
-                </div>
-
-                <!-- Configurações -->
-                <div id="config" class="conteudo-aba hidden">
-                    <div class="max-w-xl space-y-5">
-                        <h2 class="text-2xl font-bold">⚙️ Informações e Dicas</h2>
-                        <div class="bg-white p-4 rounded-lg border space-y-2 text-sm">
-                            <p><strong>Nome:</strong> ${CONFIG.nomeRadio}</p>
-                            <p><strong>Senha:</strong> ${CONFIG.senhaAdmin}</p>
-                            <p><strong>Stream:</strong> ${CONFIG.linkStream}</p>
-                            <p><strong>WhatsApp:</strong> ${CONFIG.whatsapp}</p>
-                        </div>
-                        <div class="bg-blue-50 p-4 rounded-lg border text-sm">
-                            <p class="font-bold mb-2">💡 Como usar:</p>
-                            <ul class="list-disc pl-5 space-y-1">
-                                <li>Salve imagens em sites gratuitos como Imgur/PostImage e cole o link aqui</li>
-                                <li>Tudo fica salvo direto no sistema, não precisa de banco de dados</li>
-                                <li>Para colocar no site público, é só chamar esses dados onde quiser</li>
-                                <li>Funciona 100% no GitHub Pages sem custos</li>
-                            </ul>
-                        </div>
-                        <a href="/" class="block w-full bg-primaria text-white text-center p-3 rounded-lg font-semibold hover:bg-[#2228d1] transition">Voltar ao Site</a>
-                    </div>
-                </div>
-            </main>
+<!-- CABEÇALHO EXATO -->
+<header class="bg-dark px-6 py-3 flex items-center justify-between border-b border-borderdark">
+    <div class="flex items-center gap-3">
+        <div class="w-11 h-11 flex flex-col items-center justify-center">
+            <i class="fa-solid fa-music text-primary text-xl"></i>
+            <span class="text-[10px] font-bold text-primary">RUSSAS</span>
+            <span class="text-[10px] font-bold">ORDINÁRIA</span>
         </div>
-    </div>`;
+    </div>
+    <nav class="hidden md:flex items-center gap-2">
+        <a href="#" class="nav-link active">INÍCIO</a>
+        <a href="#" class="nav-link">NOTÍCIAS</a>
+        <a href="#" class="nav-link">FOTOS</a>
+        <a href="#" class="nav-link">VÍDEOS</a>
+        <a href="#" class="nav-link">PROGRAMAÇÃO</a>
+        <a href="#" class="nav-link">UTILIDADES</a>
+        <a href="#" class="nav-link">EVENTOS</a>
+        <a href="#" class="nav-link">CONTATO</a>
+        <a href="#" class="nav-link"><i class="fa-solid fa-magnifying-glass"></i></a>
+        <a href="https://wa.me/5588992811188?text=Olá! Quero pedir uma música" target="_blank"><button class="btn-laranja">PEÇA MÚSICA</button></a>
+    </nav>
+</header>
 
-    mostrarAba('programacao');
-}
+<!-- ÁREA PRINCIPAL EXATA -->
+<section class="relative px-6 py-10">
+    <img src="https://i.imgur.com/9ZQXL6Y.jpeg" alt="Igreja Matriz Russas" class="absolute inset-0 w-full h-full object-cover opacity-25">
+    <div class="absolute inset-0 bg-gradient-to-t from-dark via-dark/70 to-dark/90"></div>
+    <div class="relative z-10 max-w-7xl mx-auto flex flex-col lg:flex-row gap-10 items-center">
 
-// Funções auxiliares
-let modoEdicao = null;
-let indiceEdicao = null;
+        <!-- LADO ESQUERDO -->
+        <div class="flex-1">
+            <p class="text-[14px] font-semibold mb-2">SEJA BEM-VINDO À</p>
+            <h1 class="text-[42px] md:text-[58px] font-black leading-[1.1]">
+                RUSSAS<br>
+                <span class="text-primary">ORDINÁRIA</span>
+            </h1>
+            <p class="text-[20px] font-semibold mt-2 mb-8">A RÁDIO DA NOSSA GENTE</p>
 
-function mostrarAba(id) {
-    document.querySelectorAll('.conteudo-aba').forEach(el => el.classList.add('hidden'));
-    document.querySelectorAll('.aba-btn').forEach(btn => btn.classList.remove('bg-destaque', 'text-black'));
-    document.getElementById(id).classList.remove('hidden');
-    document.querySelector([data-aba="${id}"]).classList.add('bg-destaque', 'text-black');
-    fecharForm();
-}
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="flex flex-col items-center">
+                    <i class="fa-solid fa-circle-info text-primary text-2xl mb-1"></i>
+                    <span class="text-[12px] font-semibold">SOBRE NÓS</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <i class="fa-solid fa-calendar-days text-primary text-2xl mb-1"></i>
+                    <span class="text-[12px] font-semibold">PROGRAMAÇÃO</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <i class="fa-solid fa-music text-primary text-2xl mb-1"></i>
+                    <span class="text-[12px] font-semibold">MÍDIA</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <i class="fa-solid fa-newspaper text-primary text-2xl mb-1"></i>
+                    <span class="text-[12px] font-semibold">INFORMAÇÃO</span>
+                </div>
+            </div>
 
-function formNovo(tipo) {
-    modoEdicao = tipo;
-    indiceEdicao = null;
-    document.getElementById(form-${tipo}).classList.remove('hidden');
-    limparCampos();
-}
+            <button class="btn-laranja text-[15px] px-8 py-3">OUVIR AGORA</button>
+        </div>
 
-function editarItem(tipo, indice) {
-    const dados = carregarDados();
-    modoEdicao = tipo;
-    indiceEdicao = indice;
-    const item = dados[tipo][indice];
-    document.getElementById(form-${tipo}).classList.remove('hidden');
-    
-    if(tipo === 'programacao') {
-        document.getElementById('prog-horario').value = item.horario;
-        document.getElementById('prog-nome').value = item.nome;
-        document.getElementById('prog-desc').value = item.descricao;
-        document.getElementById('prog-dia').value = item.dia;
-    }
-    if(tipo === 'noticias') {
-        document.getElementById('not-titulo').value = item.titulo;
-        document.getElementById('not-texto').value = item.texto;
-        document.getElementById('not-imagem').value = item.imagem;
-    }
-    if(tipo === 'galeria') {
-        document.getElementById('gal-link').value = item.link;
-        document.getElementById('gal-legenda').value = item.legenda;
-    }
-    if(tipo === 'avisos') {
-        document.getElementById('aviso-texto').value = item.texto;
-    }
-}
+        <!-- LADO DIREITO: PLAYER E CELULAR EXATOS -->
+        <div class="flex flex-col gap-8 items-center lg:items-end">
+            <!-- PLAYER DA RÁDIO EXATO COMO NA IMAGEM -->
+            <div class="player-box w-[340px]">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-primary font-bold text-[13px] uppercase">RÁDIO AO VIVO</span>
+                    <span class="live-badge">AO VIVO</span>
+                </div>
+                <div class="flex items-center gap-4 mb-3">
+                    <div class="circular-logo">
+                        <span class="text-primary font-bold text-[22px]">RO</span>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-[15px]">Russas Ordinária</h3>
+                        <p class="text-[12px] text-gray-300">Louvor e Adoração - Ministério Sarah e Terra Fértil</p>
+                    </div>
+                </div>
+                <audio controls class="w-full mb-2" src="https://stream.zeno.fm/tnzj3smf3abvv">
+                <div class="flex items-center justify-between text-[11px] text-gray-400">
+                    <span><i class="fa-solid fa-headphones mr-1"></i> 322 ouvintes online</span>
+                    <div class="flex gap-3">
+                        <i class="fa-solid fa-share-nodes cursor-pointer hover:text-primary"></i>
+                        <i class="fa-solid fa-volume-high cursor-pointer hover:text-primary"></i>
+                    </div>
+                </div>
+            </div>
 
-function salvarItem(tipo) {
-    const dados = carregarDados();
-    let novoItem = {};
+            <!-- PREVIA CELULAR EXATA -->
+            <div class="mobile-mockup">
+                <div class="bg-cardbg rounded-[24px] p-4">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="text-primary font-bold text-sm">RUSSAS ORDINÁRIA</span>
+                        <i class="fa-solid fa-bars text-gray-400"></i>
+                    </div>
+                    <span class="live-badge block w-fit mb-3">RÁDIO AO VIVO</span>
+                    <div class="circular-logo mx-auto mb-3">
+                        <span class="text-primary font-bold text-xl">RO</span>
+                    </div>
+                    <p class="text-center text-[11px] text-gray-300 mb-4">Louvor e Adoração - Ministério Sarah e Terra Fértil</p>
+                    <div class="w-full h-1.5 bg-borderdark rounded mb-2"></div>
+                    <div class="flex justify-between text-[10px] text-gray-400 mb-4">
+                        <span>00:00</span>
+                        <span>3:42</span>
+                    </div>
+                    <div class="flex items-center justify-center gap-4 text-primary text-xl mb-4">
+                        <i class="fa-solid fa-backward-step"></i>
+                        <i class="fa-solid fa-circle-play text-3xl"></i>
+                        <i class="fa-solid fa-forward-step"></i>
+                    </div>
+                    <p class="text-left text-[11px] font-semibold mb-2">DESTAQUES</p>
+                    <div class="w-full h-20 bg-borderdark rounded mb-2"></div>
+                    <p class="text-[10px] text-gray-400">Russas se prepara para o maior evento gospel da região</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-    if(tipo === 'programacao') {
-        novoItem = {
-            horario: document.getElementById('prog-horario').value,
-            nome: document.getElementById('prog-nome').value,
-            descricao: document.getElementById('prog-desc').value,
-            dia: document.getElementById('prog-dia').value
-        };
-    }
-    if(tipo === 'noticias') {
-        novoItem = {
-            titulo: document.getElementById('not-titulo').value,
-            texto: document.getElementById('not-texto').value,
-            imagem: document.getElementById('not-imagem').value
-        };
-    }
-    if(tipo === 'galeria') {
-        novoItem = {
-            link: document.getElementById('gal-link').value,
-            legenda: document.getElementById('gal-legenda').value
-        };
-    }
-    if(tipo === 'avisos') {
-        novoItem = { texto: document.getElementById('aviso-texto').value };
-    }
+<!-- SEÇÃO DESTAQUES EXATA -->
+<section class="px-6 py-8 max-w-7xl mx-auto">
+    <h2 class="text-[18px] font-bold uppercase border-l-4 border-primary pl-3 mb-5">DESTAQUES</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-cardbg rounded overflow-hidden border border-borderdark">
+            <div class="h-40 bg-borderdark relative">
+                <span class="destaque-tag bg-blue-600 absolute top-2 left-2">Novidade</span>
+            </div>
+            <div class="p-3">
+                <h4 class="text-[13px] font-bold mb-1">Russas se prepara para maior evento gospel da região</h4>
+                <p class="text-[11px] text-gray-400">03 de Maio, 2024</p>
+            </div>
+        </div>
+        <div class="bg-cardbg rounded overflow-hidden border border-borderdark">
+            <div class="h-40 bg-borderdark relative">
+                <span class="destaque-tag bg-green-600 absolute top-2 left-2">Comunidade</span>
+            </div>
+            <div class="p-3">
+                <h4 class="text-[13px] font-bold mb-1">Novas obras transformam bairros de Russas</h4>
+                <p class="text-[11px] text-gray-400">03 de Maio, 2024</p>
+            </div>
+        </div>
+        <div class="bg-cardbg rounded overflow-hidden border border-borderdark">
+            <div class="h-40 bg-borderdark relative">
+                <span class="destaque-tag bg-purple-600 absolute top-2 left-2">Ao Vivo</span>
+            </div>
+            <div class="p-3">
+                <h4 class="text-[13px] font-bold mb-1">Grande Vigília de Louvor e Adoração em Russas</h4>
+                <p class="text-[11px] text-gray-400">10 de Maio, 2024</p>
+            </div>
+        </div>
+        <div class="bg-cardbg rounded overflow-hidden border border-borderdark">
+            <div class="h-40 bg-borderdark relative flex items-center justify-center">
+                <span class="destaque-tag bg-red-600 absolute top-2 left-2">Vídeo</span>
+                <i class="fa-solid fa-play text-primary text-3xl"></i>
+            </div>
+            <div class="p-3">
+                <h4 class="text-[13px] font-bold mb-1">Cânticos na manhã de sábado especial</h4>
+                <p class="text-[11px] text-gray-400">05 de Maio, 2024</p>
+            </div>
+        </div>
+    </div>
+</section>
 
-    if(indiceEdicao !== null) {
-        dados[tipo][indiceEdicao] = novoItem;
-    } else {
-        dados[tipo].push(novoItem);
-    }
-    salvarDados(dados);
-}
+<!-- ÁREA ANUNCIE EXATA -->
+<section class="px-6 py-7 bg-cardbg my-8">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
+        <div>
+            <h3 class="text-[20px] font-bold uppercase mb-1">ANUNCIE AQUI</h3>
+            <p class="text-[14px] text-gray-300">Sua marca em destaque</p>
+        </div>
+        <div class="flex items-center gap-5 mt-4 md:mt-0">
+            <a href="https://wa.me/5588992811188?text=Quero anunciar na Russas Ordinária" target="_blank"><button class="btn-laranja">SAIBA MAIS</button></a>
+            <i class="fa-solid fa-microphone text-primary text-5xl"></i>
+        </div>
+    </div>
+</section>
 
-function excluirItem(tipo, indice) {
-    if(confirm("Tem certeza que quer excluir?")) {
-        const dados = carregarDados();
-        dados[tipo].splice(indice, 1);
-        salvarDados(dados);
-    }
-}
+<!-- NOTÍCIAS E PROGRAMAÇÃO EXATAS -->
+<section class="px-6 pb-10 max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div class="lg:col-span-2">
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-[18px] font-bold uppercase border-l-4 border-primary pl-3">ÚLTIMAS NOTÍCIAS</h3>
+            <div class="flex gap-2">
+                <button class="text-[11px] px-3 py-1 rounded bg-primary text-black font-bold">TODAS</button>
+                <button class="text-[11px] px-3 py-1 rounded bg-borderdark">LOCAL</button>
+                <button class="text-[11px] px-3 py-1 rounded bg-borderdark">REGIONAL</button>
+                <button class="text-[11px] px-3 py-1 rounded bg-borderdark">NACIONAL</button>
+            </div>
+        </div>
+        <div class="bg-cardbg p-3 rounded flex gap-3 border border-borderdark">
+            <div class="w-24 h-20 bg-borderdark rounded shrink-0"></div>
+            <div>
+                <h4 class="font-bold text-[13px]">Confira a programação da semana</h4>
+                <p class="text-[11px] text-gray-400">05 de Maio, 2024</p>
+            </div>
+        </div>
+    </div>
+    <div>
+        <div class="flex items-center justify-between mb-4">
+            <h3 class="text-[18px] font-bold uppercase border-l-4 border-primary pl-3">PROGRAMAÇÃO</h3>
+            <a href="#" class="text-[11px] text-primary font-semibold">VER TUDO</a>
+        </div>
+        <div class="bg-cardbg p-4 rounded border border-borderdark space-y-3">
+            <div class="flex justify-between items-center border-b border-borderdark pb-2">
+                <span class="font-bold text-primary">06h00</span>
+                <span class="text-[13px]">Café com Fé</span>
+            </div>
+            <div class="flex justify-between items-center border-b border-borderdark pb-2">
+                <span class="font-bold text-primary">08h00</span>
+                <span class="text-[13px]">Notícias da Terra</span>
+            </div>
+        </div>
+    </div>
+</section>
 
-function fecharForm() {
-    document.querySelectorAll('[id^="form-"]').forEach(el => el.classList.add('hidden'));
-    modoEdicao = null;
-    indiceEdicao = null;
-    limparCampos();
-}
-
-function limparCampos() {
-    document.querySelectorAll('input, textarea, select').forEach(el => el.value = '');
-}
-
-// Iniciar sistema
-carregarPagina();
-</script>
+<!-- PAINEL ADMIN LADO DIREITO COMO NA IMAGEM -->
+<div class="fixed bottom-8 right-8 w-[380px] painel-admin hidden lg:block">
+    <div class="flex justify-between items-center mb-4">
+        <h4 class="font-bold text-sm">Painel Administrativo</h4>
+        <i class="fa-solid fa-xmark text-gray-400"></i>
+    </div>
+    <div class="grid grid-cols-4 gap-2 mb-4">
+        <div class="bg-borderdark p-2 rounded text-center"><p class="font-bold">128</p><p class="text-[10px] text-gray-400">Usuários</p></div>
+        <div class="bg-borderdark p-2 rounded text-center"><p class="font-bold">342</p><p class="text-[10px] text-gray-400">Músicas</p></div>
+        <div class="bg-borderdark p-2 rounded text-center"><p class="font-bold">56</p><p class="text-[10px] text-gray-400">Notícias</p></div>
+        <div class="bg-borderdark p-2 rounded text-center"><p class="font-bold">18</p><p class="text-[10px] text-gray-400">Eventos</p></div>
+    </div>
+</div>
 
 </body>
 </html>
