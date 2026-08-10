@@ -1,196 +1,244 @@
 <!DOCTYPE html>
- <html lang="pt-BR">
- <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Web Rádio Ordinária Russas</title>
-   <style>
-     * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
-     body { background: #121212; color: #fff; min-height: 100vh; }
-     /* CABEÇALHO — LARANJA E PRETO */
-     header { background: linear-gradient(90deg, #ff6a00, #ff9500); padding: 1.2rem; text-align: center; }
-     .logo { font-size: 1.8rem; font-weight: bold; color: #000; }
-     .slogan { font-size: 1rem; color: #2b2b2b; margin-top: 0.3rem; }
-     /* MENU DE NAVEGAÇÃO */
-     nav { background: #000; padding: 0.8rem; text-align: center; position: sticky; top: 0; z-index: 100; }
-     nav a { color: #ff9500; margin: 0 0.7rem; text-decoration: none; font-weight: 600; display: inline-block; padding: 0.3rem; }
-     nav a:hover { color: #ffea00; }
-     section { padding: 1.5rem; max-width: 1200px; margin: 0 auto; }
-     h2 { color: #ff9500; margin-bottom: 1rem; border-bottom: 2px solid #ff6a00; padding-bottom: 0.5rem; }
-     /* PLAYER COMPLETO — COM VOLUME E CONTROLES */
-     .player-container { background: #1f1f1f; padding: 2rem; text-align: center; margin: 1rem; border-radius: 12px; border: 3px solid #ff6a00; }
-     audio { width: 95%; max-width: 550px; margin-top: 1.2rem; height: 54px; }
-     /* GALERIA DE FOTOS — CLICA E AMPLIA */
-     .galeria-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
-     .foto { background: #2b2b2b; border-radius: 8px; overflow: hidden; cursor: pointer; transition: transform 0.3s; border: 2px solid #444; }
-     .foto:hover { transform: scale(1.05); border-color: #ff9500; }
-     .foto img { width: 100%; height: 150px; object-fit: cover; }
-     /* ZOOM DA FOTO — FUNCIONANDO */
-     .zoom-fundo { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 9999; }
-     .zoom-fundo.mostrar { display: flex; }
-     .zoom-fundo img { max-width: 90%; max-height: 85%; border-radius: 8px; border: 4px solid #ff6a00; }
-     /* PEDIR MÚSICA — BOTÃO WHATSAPP */
-     .pedido-box { background: #1f1f1f; padding: 1.8rem; border-radius: 10px; text-align: center; border: 2px solid #ff6a00; }
-     .btn-whats { display: inline-block; background: #25d366; color: #fff; padding: 0.9rem 1.6rem; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.1rem; margin-top: 1rem; transition: background 0.2s; }
-     .btn-whats:hover { background: #1fb859; }
-     /* ENQUETE */
-     .enquete-box { background: #1f1f1f; padding: 1.5rem; border-radius: 10px; margin-top: 1rem; border: 2px solid #ff6a00; }
-     .enquete-opcao { padding: 0.8rem; margin: 0.5rem 0; background: #2b2b2b; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
-     .enquete-opcao:hover { background: #444; }
-     .barra { height: 10px; background: #ff6a00; border-radius: 5px; margin-top: 0.3rem; width: 0%; transition: width 0.4s ease; }
-     .resultado { margin-top: 0.3rem; font-size: 0.9rem; color: #ffea00; }
-     /* ÁREA ADMINISTRATIVA */
-     .admin-box { background: #1f1f1f; padding: 1.5rem; border-radius: 10px; margin-top: 2rem; border: 2px solid #ff6a00; }
-     .painel { display: none; margin-top: 1rem; }
-     .painel.aberto { display: block; }
-     input, textarea { width: 100%; padding: 0.7rem; margin: 0.5rem 0; border-radius: 5px; border: none; font-size: 1rem; background: #2b2b2b; color: #fff; }
-     button { background: #ff6a00; color: #000; border: none; padding: 0.7rem 1.3rem; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1rem; margin: 0.3rem; }
-     button:hover { background: #ff9500; }
-     .btn-verde { background: #16a34a; color: #fff; }
-     .btn-verde:hover { background: #15803d; }
-     .erro { color: #ff6b6b; display: none; margin-top: 0.5rem; }
-     .sucesso { color: #86efac; display: none; margin-top: 0.5rem; }
-     /* RODAPÉ */
-     footer { background: #000; text-align: center; padding: 1.5rem; margin-top: 2rem; border-top: 3px solid #ff6a00; color: #ff9500; }
-   </style>
- </head>
- <body>
-   <header>
-     <div class="logo">📻 Web Rádio Ordinária Russas</div>
-     <div class="slogan">A Melhor Companhia 24h Com Você</div>
-   </header>
-   <nav>
-     <a href="#inicio">Início</a>
-     <a href="#player">Ouvir</a>
-     <a href="#galeria">Galeria</a>
-     <a href="#enquete">Enquete</a>
-     <a href="#pedido">Pedir Música</a>
-     <a href="#admin">Admin</a>
-   </nav>
-   <!-- PLAYER COMPLETO — CONTROLES, VOLUME, AVANÇAR -->
-   <section id="player" class="player-container">
-     <h2>🎧 Ouvir Ao Vivo</h2>
-     <p>Agora estamos ao vivo! Use os controles abaixo: tocar, pausar, volume e mais</p>
-     <audio controls autoplay>
-       <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
-       Seu navegador não suporta áudio.
-     
-   </section>
-   <!-- GALERIA — CLICA NA FOTO E ELA AMPLIA -->
-   <section id="galeria">
-     <h2>📸 Galeria — Clique pra Ampliar</h2>
-     <div class="galeria-grid">
-       <div class="foto" onclick="abrirZoom(this)">
-         <img src="https://via.placeholder.com/400x300?text=Foto+1" alt="Foto 1">
-       </div>
-       <div class="foto" onclick="abrirZoom(this)">
-         <img src="https://via.placeholder.com/400x300?text=Foto+2" alt="Foto 2">
-       </div>
-       <div class="foto" onclick="abrirZoom(this)">
-         <img src="https://via.placeholder.com/400x300?text=Foto+3" alt="Foto 3">
-       </div>
-       <div class="foto" onclick="abrirZoom(this)">
-         <img src="https://via.placeholder.com/400x300?text=Foto+4" alt="Foto 4">
-       </div>
-     </div>
-   </section>
-   <!-- TELA DE ZOOM -->
-   <div class="zoom-fundo" id="telaZoom" onclick="fecharZoom()">
-     <img id="imgAmpliada" src="" alt="Ampliada">
-   </div>
-   <!-- ENQUETE FUNCIONANDO -->
-   <section id="enquete">
-     <h2>🗳️ Enquete</h2>
-     <div class="enquete-box">
-       <p><strong>Qual sua preferência?</strong></p>
-       <div class="enquete-opcao" onclick="votar(0)">🎵 Músicas Novas</div>
-       <div class="enquete-opcao" onclick="votar(1)">🎶 Músicas Clássicas</div>
-       <div class="enquete-opcao" onclick="votar(2)">🔥 Os Maiores Sucessos</div>
-       <div style="margin-top: 1rem;">
-         <button onclick="verResultados()">Ver Resultados</button>
-       </div>
-       <div id="resultadosAqui" style="margin-top: 1rem;"></div>
-     </div>
-   </section>
-   <!-- PEDIR MÚSICA — ABRE WHATSAPP DIRETO -->
-   <section id="pedido">
-     <h2>🎵 Peça Sua Música</h2>
-     <div class="pedido-box">
-       <p>Quer ouvir aquela música? Clique abaixo e peça pelo WhatsApp!</p>
-       <a class="btn-whats" href="https://wa.me/5588992811188?text=Olá! Quero pedir uma música: " target="_blank">💬 Pedir Música Agora</a>
-     </div>
-   </section>
-   <!-- ÁREA ADMINISTRATIVA — SENHA: russas2026 -->
-   <section id="admin" class="admin-box">
-     <h2>🔐 Área Administrativa</h2>
-     <div id="loginArea">
-       <p>Digite a senha para acessar:</p>
-       <input type="password" id="senhaInput" placeholder="Senha...">
-       <button onclick="entrarAdmin()">Entrar</button>
-       <div class="erro" id="erroSenha">❌ Senha incorreta!</div>
-     </div>
-     <div class="painel" id="painelAdmin">
-       <p style="color:#86efac;">✅ Bem-vindo, Administrador!</p>
-       <hr style="margin: 0.8rem 0; border-color:#ff6a00;">
-       
-       <p><strong>📷 Trocar fotos:</strong> Troque o link da imagem direto no código onde diz "Foto 1, Foto 2..."</p>
-       <input type="text" id="linkNovaFoto" placeholder="Cole aqui o link da nova foto">
-       <button class="btn-verde" onclick="copiarLink()">📋 Copiar Link</button>
-       <div class="sucesso" id="avisoCopiado">✅ Link copiado! Vá no código e substitua</div>
-     </div>
-   </section>
-   <footer>
-     <p>📻 Web Rádio Ordinária Russas — A Melhor Companhia 24h Com Você</p>
-     <p>📞 WhatsApp: (88) 9 9281-1118</p>
-   </footer>
-   <script>
-     // === ZOOM DAS FOTOS ===
-     function abrirZoom(elemento) {
-       const img = elemento.querySelector('img').src;
-       document.getElementById('imgAmpliada').src = img;
-       document.getElementById('telaZoom').classList.add('mostrar');
-       document.body.style.overflow = 'hidden';
-     }
-     function fecharZoom() {
-       document.getElementById('telaZoom').classList.remove('mostrar');
-       document.body.style.overflow = 'auto';
-     }
-     // === ENQUETE ===
-     let votos = [0, 0, 0];
-     let jaVotou = false;
-     function votar(opcao) {
-       if (jaVotou) { alert('Você já votou!'); return; }
-       votos[opcao]++;
-       jaVotou = true;
-       alert('✅ Voto registrado! Obrigado!');
-     }
-     function verResultados() {
-       const total = votos.reduce((a,b) => a+b, 0) || 1;
-       const nomes = ['Músicas Novas', 'Músicas Clássicas', 'Maiores Sucessos'];
-       let html = '';
-       for(let i=0; i<3; i++) {
-         const porcento = Math.round((votos[i]/total)*100);
-         html += <div><strong>${nomes[i]}:</strong> ${votos[i]} voto(s) — ${porcento}%<div class="barra" style="width:${porcento}%"></div></div>;
-       }
-       document.getElementById('resultadosAqui').innerHTML = html;
-     }
-     // === ADMINISTRAÇÃO ===
-     const SENHA_CORRETA = 'russas2026';
-     function entrarAdmin() {
-       const senha = document.getElementById('senhaInput').value;
-       if (senha === SENHA_CORRETA) {
-         document.getElementById('loginArea').style.display = 'none';
-         document.getElementById('painelAdmin').classList.add('aberto');
-       } else {
-         document.getElementById('erroSenha').style.display = 'block';
-       }
-     }
-     function copiarLink() {
-       const link = document.getElementById('linkNovaFoto').value;
-       if(!link) return;
-       navigator.clipboard.writeText(link);
-       document.getElementById('avisoCopiado').style.display = 'block';
-     }
-   </script>
- </body>
- </html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web Rádio Ordinária Russas</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { background: #121212; color: #fff; min-height: 100vh; }
+
+    header { background: linear-gradient(90deg, #ff6a00, #ff9500); padding: 1.2rem; text-align: center; }
+    .logo { font-size: 1.8rem; font-weight: bold; color: #000; }
+    .slogan { font-size: 1rem; color: #2b2b2b; margin-top: 0.3rem; }
+
+    nav { background: #000; padding: 0.8rem; text-align: center; position: sticky; top: 0; z-index: 100; }
+    nav a { color: #ff9500; margin: 0 0.6rem; text-decoration: none; font-weight: 600; display: inline-block; padding: 0.3rem; }
+    nav a:hover { color: #ffea00; }
+
+    section { padding: 1.5rem; max-width: 1200px; margin: 0 auto; }
+    h2 { color: #ff9500; margin-bottom: 1rem; border-bottom: 2px solid #ff6a00; padding-bottom: 0.5rem; }
+
+    .player-container { background: #1f1f1f; padding: 2rem; text-align: center; margin: 1rem; border-radius: 12px; border: 3px solid #ff6a00; }
+    audio { width: 95%; max-width: 550px; margin-top: 1.2rem; height: 54px; }
+
+    .galeria-box { background: #1f1f1f; padding: 1.5rem; border-radius: 10px; border: 2px solid #ff6a00; }
+    .upload-area { background: #2b2b2b; padding: 1.2rem; border-radius: 8px; margin-bottom: 1rem; text-align: center; }
+    input[type="file"] { color: #ff9500; margin: 0.5rem; }
+    .galeria-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem; }
+    .foto { background: #2b2b2b; border-radius: 8px; overflow: hidden; cursor: pointer; border: 2px solid #444; position: relative; }
+    .foto:hover { border-color: #ff9500; }
+    .foto img { width: 100%; height: 140px; object-fit: cover; }
+    .foto .excluir { position: absolute; top: 4px; right: 4px; background: red; color: #fff; border: none; border-radius: 50%; width: 24px; height: 24px; cursor: pointer; font-weight: bold; }
+
+    .zoom-fundo { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 9999; }
+    .zoom-fundo.mostrar { display: flex; }
+    .zoom-fundo img { max-width: 90%; max-height: 85%; border-radius: 8px; border: 4px solid #ff6a00; }
+
+    .patrocinadores-box { background: #1f1f1f; padding: 1.5rem; border-radius: 10px; border: 2px solid #ff6a00; margin-top: 1rem; }
+    .lista-patrocinadores { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.5rem; }
+    .patrocinador { background: #2b2b2b; padding: 0.8rem 1.2rem; border-radius: 6px; border-left: 4px solid #ff6a00; }
+
+    .enquete-box { background: #1f1f1f; padding: 1.5rem; border-radius: 10px; border: 2px solid #ff6a00; margin-top: 1rem; }
+    .enquete-opcao { padding: 0.8rem; margin: 0.5rem 0; background: #2b2b2b; border-radius: 6px; cursor: pointer; }
+    .enquete-opcao:hover { background: #444; }
+    .barra { height: 10px; background: #ff6a00; border-radius: 5px; margin-top: 0.3rem; width: 0%; transition: width 0.4s ease; }
+
+    .pedido-box { background: #1f1f1f; padding: 1.8rem; border-radius: 10px; border: 2px solid #ff6a00; text-align: center; margin-top: 1rem; }
+    .btn-whats { display: inline-block; background: #25d366; color: #fff; padding: 0.9rem 1.6rem; border-radius: 8px; text-decoration: none; font-weight: bold; font-size: 1.1rem; margin-top: 1rem; }
+    .btn-whats:hover { background: #1fb859; }
+
+    .admin-box { background: #1f1f1f; padding: 1.5rem; border-radius: 10px; border: 2px solid #ff6a00; margin-top: 2rem; }
+    .painel { display: none; margin-top: 1rem; }
+    .painel.aberto { display: block; }
+    input { width: 100%; padding: 0.7rem; margin: 0.5rem 0; border-radius: 5px; border: none; font-size: 1rem; background: #2b2b2b; color: #fff; }
+    button { background: #ff6a00; color: #000; border: none; padding: 0.7rem 1.3rem; border-radius: 5px; cursor: pointer; font-weight: bold; font-size: 1rem; margin: 0.3rem; }
+    button:hover { background: #ff9500; }
+    .btn-verde { background: #16a34a; color: #fff; }
+    .erro { color: #ff6b6b; display: none; margin-top: 0.5rem; }
+
+    .rodape-texto { background: #000; padding: 0.6rem; overflow: hidden; border-top: 2px solid #ff6a00; }
+    .texto-passando { white-space: nowrap; animation: passar 20s linear infinite; color: #ff9500; font-weight: bold; }
+    @keyframes passar { from { transform: translateX(100%); } to { transform: translateX(-100%); } }
+    footer { background: #0a0a0a; text-align: center; padding: 1rem; color: #ff9500; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">📻 Web Rádio Ordinária Russas</div>
+    <div class="slogan">A Melhor Companhia 24h Com Você</div>
+  </header>
+
+  <nav>
+    <a href="#player">Ouvir</a>
+    <a href="#galeria">Galeria</a>
+    <a href="#patrocinadores">Patrocinadores</a>
+    <a href="#enquete">Enquete</a>
+    <a href="#pedido">Pedir Música</a>
+    <a href="#admin">Admin</a>
+  </nav>
+
+  <section id="player" class="player-container">
+    <h2>🎧 Ouvir Ao Vivo</h2>
+    <p>Toque no botão abaixo para ouvir:</p>
+    <audio controls autoplay>
+      <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
+      Seu navegador não suporta áudio.
+    
+  </section>
+
+  <section id="galeria" class="galeria-box">
+    <h2>📸 Galeria de Fotos — Suba suas fotos aqui</h2>
+    <div class="upload-area">
+      <input type="file" id="escolherFoto" accept="image/*" onchange="subirFoto(this)">
+      <p>⬆️ Escolha uma foto do seu aparelho e ela aparece aqui abaixo</p>
+    </div>
+    <div class="galeria-grid" id="gradeFotos"></div>
+  </section>
+
+  <div class="zoom-fundo" id="telaZoom" onclick="fecharZoom()">
+    <img id="imgAmpliada" src="" alt="Ampliada">
+  </div>
+
+  <section id="patrocinadores" class="patrocinadores-box">
+    <h2>🤝 Nossos Patrocinadores</h2>
+    <div class="lista-patrocinadores" id="listaPat">
+      <div class="patrocinador">🏪 Comércio Local</div>
+      <div class="patrocinador">🔧 Serviços Gerais</div>
+      <div class="patrocinador">🍽️ Lanchonete do Zé</div>
+    </div>
+    <div id="addPat" style="margin-top: 1rem; display: none;">
+      <input type="text" id="nomePat" placeholder="Nome do Patrocinador">
+      <button class="btn-verde" onclick="adicionarPatrocinador()">➕ Adicionar</button>
+    </div>
+  </section>
+
+  <section id="enquete" class="enquete-box">
+    <h2>🗳️ Enquete</h2>
+    <p><strong>Qual sua preferência?</strong></p>
+    <div class="enquete-opcao" onclick="votar(0)">🎵 Músicas Novas</div>
+    <div class="enquete-opcao" onclick="votar(1)">🎶 Músicas Clássicas</div>
+    <div class="enquete-opcao" onclick="votar(2)">🔥 Os Maiores Sucessos</div>
+    <button onclick="verResultados()">Ver Resultados</button>
+    <div id="resEnq" style="margin-top: 1rem;"></div>
+  </section>
+
+  <section id="pedido" class="pedido-box">
+    <h2>🎵 Peça Sua Música</h2>
+    <p>Clique abaixo e peça pelo WhatsApp!</p>
+    <a class="btn-whats" href="https://wa.me/5588992811188?text=Olá! Quero pedir uma música: " target="_blank">💬 Pedir Música Agora</a>
+  </section>
+
+  <section id="admin" class="admin-box">
+    <h2>🔐 Área Administrativa</h2>
+    <div id="loginArea">
+      <p>Digite a senha:</p>
+      <input type="password" id="senhaInput" placeholder="Senha...">
+      <button onclick="entrarAdmin()">Entrar</button>
+      <div class="erro" id="erroSenha">❌ Senha incorreta!</div>
+    </div>
+    <div class="painel" id="painelAdmin">
+      <p style="color:#86efac;">✅ Bem-vindo!</p>
+      <hr style="margin: 0.8rem 0; border-color:#ff6a00;">
+      <p>• Na galeria, basta escolher a foto do seu aparelho que ela é adicionada automaticamente</p>
+      <p>• Para trocar o texto que passa no rodapé, edite direto no código</p>
+      <p>• Para adicionar patrocinador, use o campo em Patrocinadores</p>
+      <button onclick="document.getElementById('addPat').style.display='block'">➕ Adicionar Patrocinador</button>
+    </div>
+  </section>
+
+  <div class="rodape-texto">
+    <div class="texto-passando">📻 Web Rádio Ordinária Russas — A Melhor Companhia 24h Com Você — 📞 Telefone: (88) 9 9281-1118 — Siga nosso trabalho e obrigado por ouvir! 🎧</div>
+  </div>
+  <footer>
+    <p>📻 Web Rádio Ordinária Russas — A Melhor Companhia 24h Com Você</p>
+    <p>📞 Telefone/WhatsApp: (88) 9 9281-1118</p>
+  </footer>
+
+  <script>
+    let fotosSalvas = JSON.parse(localStorage.getItem('fotos') || '[]');
+    let votos = [0,0,0], jaVotou = false;
+
+    function renderizarFotos() {
+      const grade = document.getElementById('gradeFotos');
+      grade.innerHTML = '';
+      fotosSalvas.forEach((src, i) => {
+        const div = document.createElement('div');
+        div.className = 'foto';
+        div.innerHTML = `
+          <button class="excluir" onclick="excluirFoto(${i})">×</button>
+          <img src="${src}" alt="Foto" onclick="abrirZoom('${src}')">
+        `;
+        grade.appendChild(div);
+      });
+    }
+
+    function subirFoto(input) {
+      if (!input.files.length) return;
+      const arq = input.files[0];
+      const leitor = new FileReader();
+      leitor.onload = e => {
+        fotosSalvas.push(e.target.result);
+        localStorage.setItem('fotos', JSON.stringify(fotosSalvas));
+        renderizarFotos();
+      };
+      leitor.readAsDataURL(arq);
+    }
+
+    function excluirFoto(indice) {
+      if(confirm('Excluir essa foto?')) {
+        fotosSalvas.splice(indice, 1);
+        localStorage.setItem('fotos', JSON.stringify(fotosSalvas));
+        renderizarFotos();
+      }
+    }
+
+    function abrirZoom(src) {
+      document.getElementById('imgAmpliada').src = src;
+      document.getElementById('telaZoom').classList.add('mostrar');
+    }
+    function fecharZoom() {
+      document.getElementById('telaZoom').classList.remove('mostrar');
+    }
+
+    function votar(op) {
+      if(jaVotou) { alert('Você já votou!'); return; }
+      votos[op]++; jaVotou = true;
+      alert('✅ Voto registrado!');
+    }
+    function verResultados() {
+      const total = votos.reduce((a,b)=>a+b,0)||1;
+      const nomes = ['Músicas Novas', 'Clássicas', 'Maiores Sucessos'];
+      let html = '';
+      nomes.forEach((n,i)=>{
+        let p = Math.round((votos[i]/total)*100);
+        html += <div><strong>${n}:</strong> ${votos[i]} voto(s) — ${p}%<div class="barra" style="width:${p}%"></div></div>;
+      });
+      document.getElementById('resEnq').innerHTML = html;
+    }
+
+    const SENHA = '1234';
+    function entrarAdmin() {
+      if(document.getElementById('senhaInput').value === SENHA) {
+        document.getElementById('loginArea').style.display = 'none';
+        document.getElementById('painelAdmin').classList.add('aberto');
+      } else {
+        document.getElementById('erroSenha').style.display = 'block';
+      }
+    }
+
+    function adicionarPatrocinador() {
+      const nome = document.getElementById('nomePat').value.trim();
+      if(!nome) return;
+      const div = document.createElement('div');
+      div.className = 'patrocinador';
+      div.textContent = '⭐ ' + nome;
+      document.getElementById('listaPat').appendChild(div);
+      document.getElementById('nomePat').value = '';
+    }
+
+    renderizarFotos();
+  </script>
+</body>
+</html>
