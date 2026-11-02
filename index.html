@@ -1,31 +1,106 @@
-📝 Prompt para deixar o site da Web Rádio Ordinária Russas funcional
- 
-Você pode copiar todo esse texto e enviar para o gerador de IA para atualizar o código do site  manoelcorpus.github.io .
- 
- 
- 
-Prompt completo para gerar código atualizado:
-Atualize o site da Web Rádio Ordinária Russas (página única HTML+CSS+JavaScript, para hospedar no GitHub Pages) com base no conteúdo original:
-Nome: Web Rádio Ordinária Russas
-Slogan: A Melhor Companhia 24h Com Você
-Contato WhatsApp: (88) 9 9281‑1118
- 
-Seções obrigatórias (todas funcionais):
- 
-1. 🎧 Ouvir ao vivo: adicionar player de áudio com botão tocar/pausar e controle de volume (deixe espaço para inserir o link do stream da rádio depois)
-2. 📸 Galeria de fotos: área para selecionar fotos do celular e exibir na página (funciona no navegador, não precisa de servidor para salvar por enquanto)
-3. 🤝 Patrocinadores: área para divulgar comércios locais, serviços gerais e Lanchonete do Zé
-4. 🗳️ Enquete: botões para votar em: Músicas Novas / Músicas Clássicas / Os Maiores Sucessos — mostrar contagem de votos na tela (salva no navegador do usuário)
-5. 🎵 Pedir música: botão que abre diretamente o WhatsApp da rádio com mensagem pronta: “Olá, quero pedir uma música para a Web Rádio Ordinária Russas!” 
-6. 🔐 Área Administrativa: campo de senha simples para acessar painel de ajustes da enquete e galeria (senha padrão:  radio123 )
- 
-Regras de desenvolvimento:
- 
-- Layout responsivo, funcione bem no celular (prioridade) e computador
-- Design moderno, cores quentes (laranja + azul escuro), estilo de rádio comunitária do interior do Ceará
-- A navegação superior: Ouvir | Galeria | Patrocinadores | Enquete | Pedir Música | Admin
-- Não use frameworks pesados: apenas HTML5, CSS e JavaScript básico
-- No final do código, adicione comentários explicando onde colar o link do stream e como alterar a senha administrativa
-- Mantenha todo o conteúdo original da rádio, só torne os botões e seções funcionais
- 
-Devolva apenas o código HTML completo para substituir o arquivo atual do GitHub Pages.
+
+<!DOCTYPE html>
+<html lang="pt‑BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rádio Online</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#111;color:#fff;line-height:1.6}
+header{background:#e67700;padding:20px;text-align:center}
+.banner{width:100%;max-width:800px;height:220px;background:#222;margin:15px auto;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#aaa}
+.container{max-width:800px;margin:0 auto;padding:20px}
+.player{background:#222;padding:25px;border-radius:10px;text-align:center;margin:20px 0}
+.status{font-size:18px;margin-bottom:15px;color:#ffaa22}
+audio{width:100%;margin:10px 0}
+.btn{background:#e67700;border:none;color:#fff;padding:12px 24px;border-radius:6px;font-size:16px;margin:8px;cursor:pointer}
+.btn‑adm{background:#333}
+.horarios{background:#222;padding:20px;border-radius:8px;margin:20px 0}
+.painel{display:none;background:#1a1a1a;padding:20px;border-radius:10px;margin-top:20px}
+.campo{width:100%;padding:10px;margin:10px 0;border-radius:4px;border:none;background:#333;color:#fff}
+.aviso{background:#2a2a2a;padding:15px;border-radius:6px;margin:15px 0}
+</style>
+</head>
+<body>
+<header>
+  <h1 id="nomeRadio">Rádio Nossa Voz</h1>
+  <p>Sua rádio ao vivo 24h</p>
+</header>
+<div class="container">
+  <div class="banner" id="bannerArea">
+    [Espaço para banner — altere no painel ADM]
+  </div>
+
+  <div class="player">
+    <div class="status">🟠 NO AR</div>
+    <audio id="playerAudio" controls>
+      <source src="COLOQUE‑SEU‑LINK‑DO‑STREAM‑AQUI" type="audio/mpeg">
+      Seu navegador não suporta áudio.
+    
+    <button class="btn" onclick="tocarRadio()">OUVIR AGORA</button>
+  </div>
+
+  <div class="horarios">
+    <h3>📅 Programação</h3>
+    <p>06:00 — Manhã da Alegria</p>
+    <p>12:00 — Almoço com Música</p>
+    <p>18:00 — Noite de Sucessos</p>
+  </div>
+
+  <button class="btn btn‑adm" onclick="abrirLogin()">🔐 Área de Administração</button>
+
+  <div id="telaLogin" style="display:none;background:#1a1a1a;padding:20px;border-radius:10px">
+    <h3>Acesso ADM</h3>
+    <input type="password" id="senhaInput" class="campo" placeholder="Digite a senha">
+    <button class="btn" onclick="verificarSenha()">Entrar</button>
+  </div>
+
+  <div id="painelAdm" class="painel">
+    <h3>Painel de Controle</h3>
+    <input type="text" id="novoNome" class="campo" placeholder="Nome da rádio">
+    <input type="text" id="linkBanner" class="campo" placeholder="Link da imagem do banner">
+    <input type="text" id="linkStream" class="campo" placeholder="Link do stream de áudio">
+    <textarea id="textoAviso" class="campo" placeholder="Escreva avisos para o site"></textarea>
+    <button class="btn" onclick="salvarAlteracoes()">Salvar Alterações</button>
+    <button class="btn" onclick="sairAdm()">Sair</button>
+  </div>
+
+  <div class="aviso" id="caixaAviso"></div>
+</div>
+
+<script>
+// Senha fixa
+const senhaCorreta = "radio123";
+
+// Carregar dados salvos
+let dados = JSON.parse(localStorage.getItem("dadosRadio")) || {
+  nome:"Rádio Nossa Voz",
+  banner:"",
+  stream:"COLOQUE‑SEU‑LINK‑DO‑STREAM‑AQUI",
+  aviso:"Bem‑vindo à nossa rádio!"
+};
+
+// Aplicar dados na página
+function carregarDados(){
+  document.getElementById("nomeRadio").innerText = dados.nome;
+  if(dados.banner) document.getElementById("bannerArea").innerHTML = <img src="${dados.banner}" style="width:100%;border-radius:8px">;
+  document.getElementById("playerAudio").src = dados.stream;
+  document.getElementById("caixaAviso").innerText = dados.aviso;
+}
+
+function tocarRadio(){
+  const audio = document.getElementById("playerAudio");
+  if(audio.paused) audio.play();
+  else audio.pause();
+}
+
+function abrirLogin(){
+  document.getElementById("telaLogin").style.display = "block";
+  document.getElementById("painelAdm").style.display = "none";
+}
+
+function verificarSenha(){
+  const senhaDigitada = document.getElementById("senhaInput").value.trim();
+  if(senhaDigitada === senhaCorreta){
+    do
