@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="pt‑BR">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rádio Online</title>
+<title>Rádio Russas Ordinária</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
 body{background:#111;color:#fff;line-height:1.6}
@@ -24,7 +23,7 @@ audio{width:100%;margin:10px 0}
 </head>
 <body>
 <header>
-  <h1 id="nomeRadio">Rádio Nossa Voz</h1>
+  <h1 id="nomeRadio">Rádio Russas Ordinária</h1>
   <p>Sua rádio ao vivo 24h</p>
 </header>
 <div class="container">
@@ -35,7 +34,7 @@ audio{width:100%;margin:10px 0}
   <div class="player">
     <div class="status">🟠 NO AR</div>
     <audio id="playerAudio" controls>
-      <source src="COLOQUE‑SEU‑LINK‑DO‑STREAM‑AQUI" type="audio/mpeg">
+      <source src="https://stream.zeno.fm/tnzj3smf3abvv" type="audio/mpeg">
       Seu navegador não suporta áudio.
     
     <button class="btn" onclick="tocarRadio()">OUVIR AGORA</button>
@@ -60,7 +59,7 @@ audio{width:100%;margin:10px 0}
     <h3>Painel de Controle</h3>
     <input type="text" id="novoNome" class="campo" placeholder="Nome da rádio">
     <input type="text" id="linkBanner" class="campo" placeholder="Link da imagem do banner">
-    <input type="text" id="linkStream" class="campo" placeholder="Link do stream de áudio">
+    <input type="text" id="linkStream" class="campo" placeholder="Link do stream">
     <textarea id="textoAviso" class="campo" placeholder="Escreva avisos para o site"></textarea>
     <button class="btn" onclick="salvarAlteracoes()">Salvar Alterações</button>
     <button class="btn" onclick="sairAdm()">Sair</button>
@@ -70,18 +69,15 @@ audio{width:100%;margin:10px 0}
 </div>
 
 <script>
-// Senha fixa
 const senhaCorreta = "radio123";
 
-// Carregar dados salvos
 let dados = JSON.parse(localStorage.getItem("dadosRadio")) || {
-  nome:"Rádio Nossa Voz",
+  nome:"Rádio Russas Ordinária",
   banner:"",
-  stream:"COLOQUE‑SEU‑LINK‑DO‑STREAM‑AQUI",
-  aviso:"Bem‑vindo à nossa rádio!"
+  stream:"https://stream.zeno.fm/tnzj3smf3abvv",
+  aviso:"Bem‑vindo à Rádio Russas Ordinária!"
 };
 
-// Aplicar dados na página
 function carregarDados(){
   document.getElementById("nomeRadio").innerText = dados.nome;
   if(dados.banner) document.getElementById("bannerArea").innerHTML = <img src="${dados.banner}" style="width:100%;border-radius:8px">;
@@ -91,8 +87,11 @@ function carregarDados(){
 
 function tocarRadio(){
   const audio = document.getElementById("playerAudio");
-  if(audio.paused) audio.play();
-  else audio.pause();
+  if(audio.paused){
+    audio.play();
+  }else{
+    audio.pause();
+  }
 }
 
 function abrirLogin(){
@@ -103,4 +102,33 @@ function abrirLogin(){
 function verificarSenha(){
   const senhaDigitada = document.getElementById("senhaInput").value.trim();
   if(senhaDigitada === senhaCorreta){
-    do
+    document.getElementById("telaLogin").style.display = "none";
+    document.getElementById("painelAdm").style.display = "block";
+    document.getElementById("novoNome").value = dados.nome;
+    document.getElementById("linkBanner").value = dados.banner;
+    document.getElementById("linkStream").value = dados.stream;
+    document.getElementById("textoAviso").value = dados.aviso;
+  }else{
+    alert("Senha incorreta!");
+  }
+}
+
+function salvarAlteracoes(){
+  dados.nome = document.getElementById("novoNome").value;
+  dados.banner = document.getElementById("linkBanner").value;
+  dados.stream = document.getElementById("linkStream").value;
+  dados.aviso = document.getElementById("textoAviso").value;
+  localStorage.setItem("dadosRadio", JSON.stringify(dados));
+  carregarDados();
+  alert("Alterações salvas!");
+}
+
+function sairAdm(){
+  document.getElementById("painelAdm").style.display = "none";
+  document.getElementById("senhaInput").value = "";
+}
+
+carregarDados();
+</script>
+</body>
+</html>
